@@ -18,6 +18,7 @@ dependencies {
     compile("org.apache.logging.log4j", "log4j-slf4j-impl", "2.10.0")
     compile("org.eclipse.jetty.websocket", "websocket-server", "9.4.8.v20171121")
     compile("org.eclipse.jetty.websocket", "websocket-client", "9.4.8.v20171121")
+    compile("com.google.code.gson:gson:2.8.2")
 
     testCompile("junit", "junit", "4.12")
 }

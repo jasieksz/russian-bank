@@ -3,8 +3,10 @@ package pl.edu.agh.to2.russianBank.net.client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
+import pl.edu.agh.to2.russianBank.net.transport.Message;
 
 import java.net.URI;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class RussianBankClient implements AutoCloseable {
@@ -18,13 +20,14 @@ public class RussianBankClient implements AutoCloseable {
         this.socket = socket;
     }
 
-    public static RussianBankClient connect(String serverUri) throws Exception {
+    public static CompletableFuture<RussianBankClient> connect(String serverUri) throws Exception {
         return connect(new URI(serverUri));
     }
 
-    public static RussianBankClient connect(URI serverUri) throws Exception {
+    public static CompletableFuture<RussianBankClient> connect(URI serverUri) throws Exception {
+        final CompletableFuture<Void> connected = new CompletableFuture<>();
         final WebSocketClient wsClient = new WebSocketClient();
-        final RussianBankClientWebSocket socket = new RussianBankClientWebSocket();
+        final RussianBankClientWebSocket socket = new RussianBankClientWebSocket(connected);
 
         LOG.debug("Starting WebSocket client");
         wsClient.start();
@@ -32,7 +35,12 @@ public class RussianBankClient implements AutoCloseable {
         LOG.debug("Connecting to {}", serverUri);
         wsClient.connect(socket, serverUri);
 
-        return new RussianBankClient(wsClient, socket);
+        return connected.thenApply(_void -> new RussianBankClient(wsClient, socket));
+    }
+
+    // TODO: This should become private after higher-level API stabilizes
+    public CompletableFuture<Void> sendMessage(Message message) {
+        return socket.sendMessage(message);
     }
 
     /**

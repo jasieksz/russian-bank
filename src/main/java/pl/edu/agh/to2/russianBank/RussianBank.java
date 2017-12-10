@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.client.RussianBankClient;
 import pl.edu.agh.to2.russianBank.net.server.RussianBankServer;
+import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.ui.RootLayout;
 
 import java.io.IOException;
@@ -22,7 +23,8 @@ public class RussianBank extends Application {
         if (Arrays.asList(args).contains("-server")) {
             RussianBankServer.main(args);
         } else {
-            try(RussianBankClient client = RussianBankClient.connect("ws://localhost:8666/game")) {
+            try(RussianBankClient client = RussianBankClient.connect("ws://localhost:8666/game").get()) {
+                client.sendMessage(Message.HELLO).get();
                 client.awaitClose(8, TimeUnit.SECONDS);
             } catch (Exception e) {
                 LOG.error(e);
