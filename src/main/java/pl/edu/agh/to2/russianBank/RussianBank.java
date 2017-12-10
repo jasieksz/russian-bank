@@ -5,14 +5,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.net.client.RussianBankClient;
+import pl.edu.agh.to2.russianBank.net.server.RussianBankServer;
 import pl.edu.agh.to2.russianBank.ui.RootLayout;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
+    private static final Logger LOG = LogManager.getLogger();
 
     public static void main(String[] args) {
-        launch(args);
+        if (Arrays.asList(args).contains("-server")) {
+            RussianBankServer.main(args);
+        } else {
+            try(RussianBankClient client = RussianBankClient.connect("ws://localhost:8666/game")) {
+                client.awaitClose(8, TimeUnit.SECONDS);
+            } catch (Exception e) {
+                LOG.error(e);
+            }
+
+//            launch(args);
+        }
     }
 
     @Override
