@@ -6,6 +6,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 import pl.edu.agh.to2.russianBank.net.JettyUtil;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
+import pl.edu.agh.to2.russianBank.net.transport.MessageSerializer;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
@@ -52,7 +53,7 @@ public class RussianBankClientWebSocket {
     }
 
     public CompletableFuture<Void> sendMessage(Message message) {
-        return sendString(message.serialize());
+        return sendString(MessageSerializer.GLOBAL.serialize(message));
     }
 
     private CompletableFuture<Void> sendString(String string) {

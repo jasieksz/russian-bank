@@ -40,6 +40,7 @@ public class RussianBankClient implements AutoCloseable {
 
     // TODO: This should become private after higher-level API stabilizes
     public CompletableFuture<Void> sendMessage(Message message) {
+        LOG.debug("Sending {}", message);
         return socket.sendMessage(message);
     }
 

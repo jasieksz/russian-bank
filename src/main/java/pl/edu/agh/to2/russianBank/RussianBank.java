@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.client.RussianBankClient;
 import pl.edu.agh.to2.russianBank.net.server.RussianBankServer;
+import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.ui.RootLayout;
 
@@ -24,8 +25,7 @@ public class RussianBank extends Application {
             RussianBankServer.main(args);
         } else {
             try(RussianBankClient client = RussianBankClient.connect("ws://localhost:8666/game").get()) {
-                client.sendMessage(Message.HELLO).get();
-                client.awaitClose(8, TimeUnit.SECONDS);
+                client.sendMessage(new HelloMessage("ziomek")).get();
             } catch (Exception e) {
                 LOG.error(e);
             }
