@@ -8,7 +8,8 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 public final class MessageSerializer {
-    public static final MessageSerializer GLOBAL = new MessageSerializer();
+    public static final MessageSerializer GLOBAL = new MessageSerializer()
+            .withType(HelloMessage.class);
 
     private final ImmutableMap<String, Type> typeMap;
 
@@ -40,7 +41,7 @@ public final class MessageSerializer {
         return gson.toJson(message);
     }
 
-    public Message deserialize(String text) {
+    public Message deserialize(String text) throws JsonParseException {
         return gson.fromJson(text, Message.class);
     }
 
