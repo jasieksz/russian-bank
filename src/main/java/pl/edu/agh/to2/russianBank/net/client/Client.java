@@ -9,25 +9,25 @@ import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public class RussianBankClient implements AutoCloseable {
+public class Client implements AutoCloseable {
     private static final Logger LOG = LogManager.getLogger();
 
     private final WebSocketClient wsClient;
-    private final RussianBankClientWebSocket socket;
+    private final ClientWS socket;
 
-    private RussianBankClient(WebSocketClient wsClient, RussianBankClientWebSocket socket) {
+    private Client(WebSocketClient wsClient, ClientWS socket) {
         this.wsClient = wsClient;
         this.socket = socket;
     }
 
-    public static CompletableFuture<RussianBankClient> connect(String serverUri) throws Exception {
+    public static CompletableFuture<Client> connect(String serverUri) throws Exception {
         return connect(new URI(serverUri));
     }
 
-    public static CompletableFuture<RussianBankClient> connect(URI serverUri) throws Exception {
+    public static CompletableFuture<Client> connect(URI serverUri) throws Exception {
         final CompletableFuture<Void> connected = new CompletableFuture<>();
         final WebSocketClient wsClient = new WebSocketClient();
-        final RussianBankClientWebSocket socket = new RussianBankClientWebSocket(connected);
+        final ClientWS socket = new ClientWS(connected);
 
         LOG.debug("Starting WebSocket client");
         wsClient.start();
@@ -35,7 +35,7 @@ public class RussianBankClient implements AutoCloseable {
         LOG.debug("Connecting to {}", serverUri);
         wsClient.connect(socket, serverUri);
 
-        return connected.thenApply(_void -> new RussianBankClient(wsClient, socket));
+        return connected.thenApply(_void -> new Client(wsClient, socket));
     }
 
     // TODO: This should become private after higher-level API stabilizes

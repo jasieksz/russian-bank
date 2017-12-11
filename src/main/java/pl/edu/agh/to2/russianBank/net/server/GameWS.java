@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Set;
 
-public class GameWebSocket implements WebSocketConfig {
+public class GameWS implements WebSocketConfig {
     private static final Logger LOG = LogManager.getLogger();
 
     private final Set<WsSession> pendingSessionsForAck = Sets.newConcurrentHashSet();

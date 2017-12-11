@@ -7,24 +7,22 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.edu.agh.to2.russianBank.net.client.RussianBankClient;
-import pl.edu.agh.to2.russianBank.net.server.RussianBankServer;
+import pl.edu.agh.to2.russianBank.net.client.Client;
+import pl.edu.agh.to2.russianBank.net.server.Server;
 import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
-import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.ui.RootLayout;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
 
     public static void main(String[] args) {
         if (Arrays.asList(args).contains("-server")) {
-            RussianBankServer.main(args);
+            Server.main(args);
         } else {
-            try(RussianBankClient client = RussianBankClient.connect("ws://localhost:8666/game").get()) {
+            try(Client client = Client.connect("ws://localhost:8666/game").get()) {
                 client.sendMessage(new HelloMessage("ziomek")).get();
             } catch (Exception e) {
                 LOG.error(e);

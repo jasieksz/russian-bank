@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 @WebSocket
-public class RussianBankClientWebSocket {
+public class ClientWS {
     private static final Logger LOG = LogManager.getLogger();
 
     private final CountDownLatch closeLatch = new CountDownLatch(1);
@@ -21,7 +21,7 @@ public class RussianBankClientWebSocket {
 
     private Session session;
 
-    RussianBankClientWebSocket(CompletableFuture<Void> connected) {
+    ClientWS(CompletableFuture<Void> connected) {
         this.connected = connected;
     }
 

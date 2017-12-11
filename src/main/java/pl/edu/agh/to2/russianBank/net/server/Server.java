@@ -4,7 +4,7 @@ import io.javalin.Javalin;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RussianBankServer {
+public class Server {
     public static final int SERVER_PORT = 8666;
     private static final Logger LOG = LogManager.getLogger();
 
@@ -13,7 +13,7 @@ public class RussianBankServer {
 
         Javalin.create()
                 .port(SERVER_PORT)
-                .ws("/game", new GameWebSocket())
+                .ws("/game", new GameWS())
                 .start();
     }
 }
