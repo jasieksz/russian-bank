@@ -6,7 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.StartGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0"
+            prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.edu.agh.to2.russianBank.ui.StartGameController">
    <children>
       <Pane layoutX="216.0" layoutY="67.0" prefHeight="99.0" prefWidth="75.0" style="-fx-background-color: #ffffff;" />
       <Pane layoutX="216.0" layoutY="175.0" prefHeight="99.0" prefWidth="75.0" style="-fx-background-color: #ffffff;" />

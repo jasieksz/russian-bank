@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class StartGameController implements Initializable {
 
     @FXML
     public ImageView imageView1;

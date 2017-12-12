@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+
+<?import javafx.geometry.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+      prefWidth="800.0" style="-fx-background-color: #123432;" xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="pl.edu.agh.to2.russianBank.ui.StartGameController">
+
+   <children>
+      <Label layoutX="309.0" layoutY="97.0" prefHeight="53.0" prefWidth="158.0" text="Welcome" textFill="#f8f3f3">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+
+   <children>
+      <Label layoutX="180.0" layoutY="214.0" prefHeight="27.0" prefWidth="102.0" text="User name:" textFill="#f4ecec">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+
+   <children>
+      <TextField fx:id="nameField" layoutX="309.0" layoutY="208.0" />
+   </children>
+
+   <children>
+   <Button fx:id = "okButton" layoutX="486.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0"
+           prefWidth="47.0" text="OK" onAction="#handleOkAction"/>
+
+   </children>
+</Pane>
