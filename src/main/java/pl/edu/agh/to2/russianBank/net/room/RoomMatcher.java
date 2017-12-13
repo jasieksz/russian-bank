@@ -11,8 +11,8 @@ public class RoomMatcher {
     private final ConcurrentLinkedQueue<PlayerConnection> freeMatches;
 
     public RoomMatcher() {
-        rooms = new ConcurrentHashMap<PlayerConnection, Room>();
-        freeMatches = new ConcurrentLinkedQueue<PlayerConnection>();
+        rooms = new ConcurrentHashMap<>();
+        freeMatches = new ConcurrentLinkedQueue<>();
     }
 
     /**
