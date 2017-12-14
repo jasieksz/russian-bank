@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,12 @@ public class GameController implements Initializable {
     private boolean firstChosen;
     private ImageView firstChosenCard;
 
+    public String field1ID;
+    public String field2ID;
+    public Field selectedField1;
+    public Field selectedField2;
+
+
     @FXML
     public AnchorPane rootPane;
 
@@ -88,18 +95,55 @@ public class GameController implements Initializable {
         add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16);}};
     }
 
+
+    //TODO nie dziala :(
     @FXML
     public void changeCard(MouseEvent mouseEvent) throws IOException {
 
-        if(!firstChosen) {
-            firstChosenCard = (ImageView)mouseEvent.getSource();
-            //tu jeszcze indeks zczytać
-        }
-        else {
-            ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
+        try {
+            if(!firstChosen) {
+                firstChosenCard = (ImageView)mouseEvent.getSource();
 
-        }
+
+                //na razie ustawiam wszedzie gore za pierwsza zaznaczona karte
+                File file = new File("resources/Karty/Góra2.jpg");
+                Image image = new Image(file.toURI().toString());
+                ImageView imageView = new ImageView(image);
+
+                // id w stringu karty ktora zaznaczylismy
+                field1ID = firstChosenCard.getId();
+                selectedField1 = GameController.class.getField(field1ID);
+                System.out.println(selectedField1);
+                GameController game = new GameController();
+                selectedField1.set(game,imageView);
+                System.out.println(this.field3);
+                System.out.println(this.field4);
+
+               // System.out.println(field1);
+
+                //tu jeszcze indeks zczytać
+            }
+            else {
+                ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
+
+                field2ID = secondlyChosenCard.getId();
+                selectedField2 = GameController.class.getField(field2ID);
+                System.out.println(selectedField2);
+                GameController game = new GameController();
+
+                selectedField1.set(game, firstChosenCard);
+
+                System.out.println(this.field3);
+                System.out.println(this.field4);
+            }
             firstChosen = !firstChosen;
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
