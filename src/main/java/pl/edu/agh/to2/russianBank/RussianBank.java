@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.edu.agh.to2.russianBank.ui.RootLayout;
+import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
 

@@ -9,7 +9,7 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.RootLayout">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.views.RootLayout">
    <center>
       <Label text="Welcome" BorderPane.alignment="CENTER" />
 

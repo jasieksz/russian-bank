@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.russianBank.ui;
+package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 
 import javafx.stage.Stage;
+import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 /*import java.awt.*;
 import java.awt.Button;
@@ -35,7 +36,7 @@ public class StartMenuController {
         try {
             Stage oldStage = (Stage) okButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("StartGame.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("views/StartGame.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));
