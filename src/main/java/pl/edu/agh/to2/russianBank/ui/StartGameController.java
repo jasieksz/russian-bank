@@ -20,10 +20,8 @@ public class StartGameController implements Initializable {
     @FXML
     public Button startButton;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     @FXML
