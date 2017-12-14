@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
@@ -35,39 +36,39 @@ public class GameController implements Initializable {
     private List<Pane> paneList ;
 
     @FXML
-    private Pane p1 ;
+    private ImageView p1 ;
     @FXML
-    public Pane p2;
+    public ImageView p2;
     @FXML
-    public Pane p3;
+    public ImageView p3;
     @FXML
-    public Pane p4;
+    public ImageView p4;
     @FXML
-    public Pane p5;
+    public ImageView p5;
     @FXML
-    public Pane p6;
+    public ImageView p6;
     @FXML
-    public Pane p7;
+    public ImageView p7;
     @FXML
-    public Pane p8;
+    public ImageView p8;
     @FXML
-    public Pane p9;
+    public ImageView p9;
     @FXML
-    public Pane p10;
+    public ImageView p10;
     @FXML
-    public Pane p11;
+    public ImageView p11;
     @FXML
-    public Pane p12;
+    public ImageView p12;
     @FXML
-    public Pane p13;
+    public ImageView p13;
     @FXML
-    public Pane p14;
+    public ImageView p14;
     @FXML
-    public Pane p15;
+    public ImageView p15;
     @FXML
-    public Pane p16;
+    public ImageView p16;
     //tu nie FXML
-    private Pane[] paneArray;
+    private List<ImageView> imagesList;
     private boolean firstChosen;
     private ImageView firstChosenCard;
 
@@ -76,7 +77,9 @@ public class GameController implements Initializable {
 
     public void initialize() {
         int count = 1 ;
-        for (Pane pane : paneList) {
+
+
+        for (ImageView images : imagesList) {
             //pane.setText("Message " + (count++) );
         }
         firstChosen = false;
@@ -84,7 +87,8 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        paneArray = new Pane[]{p1,p1};
+        imagesList = new ArrayList<ImageView>() {{add(p1); add(p2); add(p3); add(p4); add(p5); add(p6); add(p7); add(p8);
+        add(p9); add(p10); add(p11); add(p12); add(p13); add(p14); add(p15); add(p16);}};
     }
 
     @FXML
