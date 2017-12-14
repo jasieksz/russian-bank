@@ -5,47 +5,88 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="565.0" prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.112"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.GameController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.GameController">
 
 
-    <ImageView layoutX="216.0" layoutY="67.0" fitHeight="99.0" fitWidth="75.0"   />
-    <ImageView layoutX="216.0" layoutY="175.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="216.0" layoutY="283.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="216.0" layoutY="393.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="511.0" layoutY="393.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="511.0" layoutY="283.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="511.0" layoutY="175.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="511.0" layoutY="67.0"  fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="322.0" layoutY="283.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="322.0" layoutY="393.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="407.0" layoutY="393.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="407.0" layoutY="283.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="407.0" layoutY="175.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="407.0" layoutY="67.0"  fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="322.0" layoutY="175.0" fitHeight="99.0" fitWidth="75.0"  />
-    <ImageView layoutX="322.0" layoutY="67.0"  fitHeight="99.0" fitWidth="75.0"  />
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="67.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="175.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="283.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="393.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="393.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="283.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="175.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="67.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/White.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="283.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="393.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="393.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="283.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="175.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="67.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="175.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
+    <ImageView fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="67.0">
+      <image>
+         <Image url="@../../../../../../../../../resources/Karty/Ecru.jpg" />
+      </image></ImageView>
 
-  <ImageView fx:id="stackA" fitHeight="129.0" fitWidth="90.0" layoutX="34.0" layoutY="430.0"
-             onMouseClicked="#uncoverCardFromStack" pickOnBounds="true" preserveRatio="true">
+  <ImageView fx:id="stackA" fitHeight="129.0" fitWidth="90.0" layoutX="14.0" layoutY="427.0" onMouseClicked="#uncoverCardFromStack" pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../../../../../../../resources/Karty/Góra2.jpg" />
   </ImageView>
-  <ImageView fx:id="binA" fitHeight="124.0" fitWidth="90.0" layoutX="111.0" layoutY="430.0"
-             onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
+  <ImageView fx:id="binA" fitHeight="124.0" fitWidth="90.0" layoutX="111.0" layoutY="430.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
      <effect>
         <ColorInput />
      </effect>
   </ImageView>
-  <ImageView fx:id="binB" fitHeight="124.0" fitWidth="90.0" layoutX="597.0" layoutY="14.0"
-             onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
+  <ImageView fx:id="binB" fitHeight="124.0" fitWidth="90.0" layoutX="597.0" layoutY="14.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
      <effect>
         <ColorInput />
      </effect>
   </ImageView>
-  <ImageView fx:id="stackB" fitHeight="129.0" fitWidth="90.0" layoutX="694.0" layoutY="14.0"
-             onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
+  <ImageView fx:id="stackB" fitHeight="129.0" fitWidth="90.0" layoutX="694.0" layoutY="14.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../../../../../../../resources/Karty/Góra1.jpg" />
   </ImageView>
 
