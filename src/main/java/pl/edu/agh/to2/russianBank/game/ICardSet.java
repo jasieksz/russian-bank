@@ -6,7 +6,7 @@ import java.util.List;
 
 abstract class ICardSet {
     private List<Card> cards;
-    abstract Boolean tryTakeTopCard();
+    abstract Boolean tryTakeTopCard(); // TODO : tryPut instead of tryTake?
     abstract Card takeTopCard();
     abstract void putCard();
     abstract Integer getSize();
