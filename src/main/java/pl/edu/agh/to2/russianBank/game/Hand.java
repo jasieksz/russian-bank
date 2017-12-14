@@ -1,6 +1,7 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Hand extends ICardSet {
 
@@ -11,27 +12,23 @@ public class Hand extends ICardSet {
     }
 
     @Override
-    Boolean tryTakeTopCard() {
+    public Optional<Card> takeTopCard() { // removes top card
+        return Optional.empty();
+    }
+
+    @Override
+    public Boolean putCard(Card card) {
+        return this.cards.add(card);
+    }
+
+
+    @Override
+    public Integer getSize() {
         return null;
     }
 
     @Override
-    Card takeTopCard() {
-        return null;
-    }
-
-    @Override
-    void putCard() {
-
-    }
-
-    @Override
-    Integer getSize() {
-        return null;
-    }
-
-    @Override
-    Boolean isVisible() {
+    public Boolean isVisible() {
         return false;
     }
 }
