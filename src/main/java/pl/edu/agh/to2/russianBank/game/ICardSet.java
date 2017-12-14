@@ -1,14 +1,13 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-abstract class ICardSet {
+public abstract class ICardSet {
     private List<Card> cards;
-    abstract Boolean tryTakeTopCard(); // TODO : tryPut instead of tryTake?
-    abstract Card takeTopCard();
-    abstract void putCard();
-    abstract Integer getSize();
-    abstract Boolean isVisible();
+    public abstract Optional<Card> takeTopCard();
+    public abstract Boolean putCard(Card card);
+    public abstract Integer getSize();
+    public abstract Boolean isVisible();
 }
