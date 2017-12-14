@@ -1,25 +1,20 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
 public class Player {
-    private String name;
-    private Hand hand; // TODO : is private correct?
-    private Waste waste;
 
-    public Player(String name, Hand hand, Waste waste) {
+    private String name;
+    private PlayerDeck playerDeck;
+
+    public Player(String name, PlayerDeck playerDeck) {
         this.name = name;
-        this.hand = hand;
-        this.waste = waste;
+        this.playerDeck = playerDeck;
     }
 
     public String getName() {
         return name;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public Waste getWaste() {
-        return waste;
+    public PlayerDeck getPlayerDeck() {
+        return playerDeck;
     }
 }
