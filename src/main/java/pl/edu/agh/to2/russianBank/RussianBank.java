@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class RussianBank extends Application {
@@ -21,8 +23,13 @@ public class RussianBank extends Application {
             Parent root =
                     //FXMLLoader.load(RootLayout.class.getResource("RootLayout.fxml"));
                     FXMLLoader.load(RootLayout.class.getResource("StartMenu.fxml"));
+
+            Scene scene = new Scene(root, 800, 600);
+
             primaryStage.setTitle("Garibaldka");
-            primaryStage.setScene(new Scene(root, 800, 600));
+            //primaryStage.getIcons().add(new Image("russian-bank/resources/image.png"));
+                    //("@../../../../../../../../../../resources/image.png"));
+            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

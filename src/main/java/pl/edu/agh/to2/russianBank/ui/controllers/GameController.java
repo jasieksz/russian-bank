@@ -104,7 +104,6 @@ public class GameController implements Initializable {
             if(!firstChosen) {
                 firstChosenCard = (ImageView)mouseEvent.getSource();
 
-
                 //na razie ustawiam wszedzie gore za pierwsza zaznaczona karte
                 File file = new File("resources/Karty/Góra2.jpg");
                 Image image = new Image(file.toURI().toString());
@@ -114,27 +113,51 @@ public class GameController implements Initializable {
                 field1ID = firstChosenCard.getId();
                 selectedField1 = GameController.class.getField(field1ID);
                 System.out.println(selectedField1);
-                GameController game = new GameController();
-                selectedField1.set(game,imageView);
-                System.out.println(this.field3);
-                System.out.println(this.field4);
+                //GameController game = new GameController();
+                //selectedField1.set(game,imageView);
+
+                // /System.out.println(this.field3);
+                //System.out.println(this.field4);
 
                // System.out.println(field1);
 
                 //tu jeszcze indeks zczytać
             }
             else {
+
+                File file = new File("resources/Karty/Góra2.jpg");
+                Image image = new Image(file.toURI().toString());
+
                 ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
 
                 field2ID = secondlyChosenCard.getId();
                 selectedField2 = GameController.class.getField(field2ID);
                 System.out.println(selectedField2);
+                //GameController game = new GameController();
+
+                String s = selectedField1.getName();
+                System.out.println(s);
+                Field field = GameController.class.getField(s);
                 GameController game = new GameController();
+                //Object value = field.get(game);
 
-                selectedField1.set(game, firstChosenCard);
+                //field.setImage(game,new );
+                //selectedField1.set(game, firstChosenCard);
+                //Class<?> t = selectedField1.getType();
+                //t i = selectedField1;
+                //ImageView i = (ImageView) selectedField1;
 
-                System.out.println(this.field3);
-                System.out.println(this.field4);
+                ImageView i = (ImageView) selectedField1.get(this);
+
+                //selectedField1.imageProperty().ser(image);
+
+                //Class<?> myType = Integer.TYPE;
+                //if(selectedField1.getType().isAssignableFrom(ImageView))
+
+                i.imageProperty().set(image);
+
+                //System.out.println(this.field3);
+                //System.out.println(this.field4);
             }
             firstChosen = !firstChosen;
 
@@ -143,6 +166,9 @@ public class GameController implements Initializable {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+            /*} catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }*/
 
     }
 
@@ -155,7 +181,8 @@ public class GameController implements Initializable {
             File file = new File("resources/Karty/K_2.jpg");
             System.out.println("Clicked!"); // change functionality
             Image image = new Image(file.toURI().toString());
-            this.stackA.setImage(image);
+            this.stackA.imageProperty().set(image);
+            //this.stackA.setImage(image);
         });
     }
 }

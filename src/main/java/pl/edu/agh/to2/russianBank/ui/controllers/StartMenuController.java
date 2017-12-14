@@ -22,7 +22,6 @@ public class StartMenuController {
     @FXML
     public TextField nameField;
 
-
     @FXML
     public Button okButton;
     public javafx.scene.control.Button deleteButton;
