@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +35,7 @@ public class StartGameController implements Initializable {
         try {
             Stage oldStage = (Stage) startButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("views/Game.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));

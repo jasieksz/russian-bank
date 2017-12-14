@@ -19,7 +19,7 @@ public class RussianBank extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root =
-                    //FXMLLoader.load(RootLayout.class.getResource("RootLayout.fxml"));
+        //FXMLLoader.load(RootLayout.class.getResource("RootLayout.fxml"));
                     FXMLLoader.load(RootLayout.class.getResource("StartMenu.fxml"));
             primaryStage.setTitle("Garibaldka");
             primaryStage.setScene(new Scene(root, 800, 600));

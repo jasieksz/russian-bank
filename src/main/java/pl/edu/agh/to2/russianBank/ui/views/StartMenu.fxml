@@ -4,6 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+
+<?import javafx.geometry.*?>
 
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
@@ -32,8 +38,8 @@
    </children>
 
    <children>
-   <Button fx:id = "okButton" layoutX="486.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
-           prefHeight="27.0" prefWidth="47.0" text="OK" onAction="#handleOkAction"/>
+      <Button fx:id = "okButton" layoutX="486.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0"
+              prefWidth="47.0" text="OK" onAction="#handleOkAction"/>
 
    </children>
 </Pane>
