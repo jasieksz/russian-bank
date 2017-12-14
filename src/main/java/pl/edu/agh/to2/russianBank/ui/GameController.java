@@ -1,9 +1,6 @@
 package pl.edu.agh.to2.russianBank.ui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
@@ -36,37 +33,37 @@ public class GameController implements Initializable {
     private List<Pane> paneList ;
 
     @FXML
-    private ImageView p1 ;
+    public ImageView field1;
     @FXML
-    public ImageView p2;
+    public ImageView field2;
     @FXML
-    public ImageView p3;
+    public ImageView field3;
     @FXML
-    public ImageView p4;
+    public ImageView field4;
     @FXML
-    public ImageView p5;
+    public ImageView field5;
     @FXML
-    public ImageView p6;
+    public ImageView field6;
     @FXML
-    public ImageView p7;
+    public ImageView field7;
     @FXML
-    public ImageView p8;
+    public ImageView field8;
     @FXML
-    public ImageView p9;
+    public ImageView field9;
     @FXML
-    public ImageView p10;
+    public ImageView field10;
     @FXML
-    public ImageView p11;
+    public ImageView field11;
     @FXML
-    public ImageView p12;
+    public ImageView field12;
     @FXML
-    public ImageView p13;
+    public ImageView field13;
     @FXML
-    public ImageView p14;
+    public ImageView field14;
     @FXML
-    public ImageView p15;
+    public ImageView field15;
     @FXML
-    public ImageView p16;
+    public ImageView field16;
     //tu nie FXML
     private List<ImageView> imagesList;
     private boolean firstChosen;
@@ -87,8 +84,8 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imagesList = new ArrayList<ImageView>() {{add(p1); add(p2); add(p3); add(p4); add(p5); add(p6); add(p7); add(p8);
-        add(p9); add(p10); add(p11); add(p12); add(p13); add(p14); add(p15); add(p16);}};
+        imagesList = new ArrayList<ImageView>() {{add(field1); add(field2); add(field3); add(field4); add(field5); add(field6); add(field7); add(field8);
+        add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16);}};
     }
 
     @FXML
