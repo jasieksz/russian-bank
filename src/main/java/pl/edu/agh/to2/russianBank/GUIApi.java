@@ -1,9 +1,12 @@
 package pl.edu.agh.to2.russianBank;
 
 
-public interface GUIApi {
-    /*void startGame(GameTable table);
+import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.Player;
 
-    void movingCard(Player player, Slot previousSlot, Slot newSlot);
-    */
+public interface GUIApi {
+    void startGame(GameTable table);
+
+    void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 }

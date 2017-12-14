@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.russianBank.ui;
+package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +34,7 @@ public class StartGameController implements Initializable {
         try {
             Stage oldStage = (Stage) startButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("views/Game.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));

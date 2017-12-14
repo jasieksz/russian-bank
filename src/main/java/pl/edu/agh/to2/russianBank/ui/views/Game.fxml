@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="565.0" prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.112"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.GameController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
 
 
     <ImageView layoutX="216.0" layoutY="67.0" fitHeight="99.0" fitWidth="75.0"   />
@@ -30,7 +30,7 @@
 
   <ImageView fx:id="stackA" fitHeight="129.0" fitWidth="90.0" layoutX="34.0" layoutY="430.0"
              onMouseClicked="#uncoverCardFromStack" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../../../../../../../resources/Karty/Góra2.jpg" />
+      <Image url="@../../../../../../../../../../resources/Karty/Góra2.jpg" />
   </ImageView>
   <ImageView fx:id="binA" fitHeight="124.0" fitWidth="90.0" layoutX="111.0" layoutY="430.0"
              onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
@@ -46,7 +46,7 @@
   </ImageView>
   <ImageView fx:id="stackB" fitHeight="129.0" fitWidth="90.0" layoutX="694.0" layoutY="14.0"
              onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../../../../../../../../resources/Karty/Góra1.jpg" />
+        <Image url="@../../../../../../../../../../resources/Karty/Góra1.jpg" />
   </ImageView>
 
 

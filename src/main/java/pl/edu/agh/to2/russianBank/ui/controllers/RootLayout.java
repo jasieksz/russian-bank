@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.russianBank.ui;
+package pl.edu.agh.to2.russianBank.ui.controllers;
 
 public class RootLayout {
 }
