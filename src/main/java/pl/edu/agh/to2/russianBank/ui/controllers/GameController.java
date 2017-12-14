@@ -109,19 +109,10 @@ public class GameController implements Initializable {
                 Image image = new Image(file.toURI().toString());
                 ImageView imageView = new ImageView(image);
 
-                // id w stringu karty ktora zaznaczylismy
                 field1ID = firstChosenCard.getId();
                 selectedField1 = GameController.class.getField(field1ID);
                 System.out.println(selectedField1);
-                //GameController game = new GameController();
-                //selectedField1.set(game,imageView);
-
-                // /System.out.println(this.field3);
-                //System.out.println(this.field4);
-
-               // System.out.println(field1);
-
-                //tu jeszcze indeks zczytać
+                
             }
             else {
 
@@ -133,49 +124,23 @@ public class GameController implements Initializable {
                 field2ID = secondlyChosenCard.getId();
                 selectedField2 = GameController.class.getField(field2ID);
                 System.out.println(selectedField2);
-                //GameController game = new GameController();
 
                 String s = selectedField1.getName();
                 System.out.println(s);
-                Field field = GameController.class.getField(s);
-                GameController game = new GameController();
-                //Object value = field.get(game);
-
-                //field.setImage(game,new );
-                //selectedField1.set(game, firstChosenCard);
-                //Class<?> t = selectedField1.getType();
-                //t i = selectedField1;
-                //ImageView i = (ImageView) selectedField1;
-
                 ImageView i = (ImageView) selectedField1.get(this);
-
-                //selectedField1.imageProperty().ser(image);
-
-                //Class<?> myType = Integer.TYPE;
-                //if(selectedField1.getType().isAssignableFrom(ImageView))
-
                 i.imageProperty().set(image);
 
-                //System.out.println(this.field3);
-                //System.out.println(this.field4);
             }
             firstChosen = !firstChosen;
 
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-            /*} catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }*/
-
     }
 
 
     @FXML
     public void uncoverCardFromStack(){
-
         //this.stackA.setPickOnBounds(true);
         this.stackA.setOnMouseClicked((MouseEvent e) -> {
             File file = new File("resources/Karty/K_2.jpg");
