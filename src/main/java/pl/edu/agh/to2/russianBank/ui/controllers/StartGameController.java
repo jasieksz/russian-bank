@@ -35,7 +35,7 @@ public class StartGameController implements Initializable {
         try {
             Stage oldStage = (Stage) startButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("views/Game.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));

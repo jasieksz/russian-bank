@@ -36,7 +36,7 @@ public class StartMenuController {
         try {
             Stage oldStage = (Stage) okButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("views/StartGame.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("StartGame.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));
