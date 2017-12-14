@@ -1,8 +1,14 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Waste extends ICardSet {
+
+    public Waste() {
+        cards = Collections.emptyList();
+    }
+
     private List<Card> cards;
 
     @Override
