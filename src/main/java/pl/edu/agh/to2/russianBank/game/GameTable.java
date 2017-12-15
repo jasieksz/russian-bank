@@ -3,25 +3,25 @@ package main.java.pl.edu.agh.to2.russianBank.game;
 import java.util.List;
 
 public class GameTable {
-    private List<main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck> playersCard;
-    private List<main.java.pl.edu.agh.to2.russianBank.game.House> houses;
-    private List<main.java.pl.edu.agh.to2.russianBank.game.Foundation> foundations;
+    private List<PlayerDeck> playersCard;
+    private List<House> houses;
+    private List<Foundation> foundations;
 
-    public GameTable(List<main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck> playersCard, List<main.java.pl.edu.agh.to2.russianBank.game.House> houses, List<main.java.pl.edu.agh.to2.russianBank.game.Foundation> foundations) {
+    public GameTable(List<PlayerDeck> playersCard, List<House> houses, List<Foundation> foundations) {
         this.playersCard = playersCard;
         this.houses = houses;
         this.foundations = foundations;
     }
 
-    public List<main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck> getPlayers() {
+    public List<PlayerDeck> getPlayers() {
         return playersCard;
     }
 
-    public List<main.java.pl.edu.agh.to2.russianBank.game.House> getHouses() {
+    public List<House> getHouses() {
         return houses;
     }
 
-    public List<main.java.pl.edu.agh.to2.russianBank.game.Foundation> getFoundations() {
+    public List<Foundation> getFoundations() {
         return foundations;
     }
 }

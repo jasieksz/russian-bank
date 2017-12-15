@@ -4,17 +4,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class Waste extends main.java.pl.edu.agh.to2.russianBank.game.ICardSet {
+public class Waste extends ICardSet {
 
     public Waste() {
         cards = Collections.emptyList();
     }
 
-    private List<main.java.pl.edu.agh.to2.russianBank.game.Card> cards;
+    private List<Card> cards;
 
     @Override
-    public Optional<main.java.pl.edu.agh.to2.russianBank.game.Card> takeTopCard() {
-        Optional<main.java.pl.edu.agh.to2.russianBank.game.Card> result = Optional.empty();
+    public Optional<Card> takeTopCard() {
+        Optional<Card> result = Optional.empty();
         if(tryTakeTopCard()){
             result = Optional.of(cards.remove(cards.size() - 1));
         }
@@ -25,17 +25,17 @@ public class Waste extends main.java.pl.edu.agh.to2.russianBank.game.ICardSet {
         return cards.size()>0;
     }
 
-    private main.java.pl.edu.agh.to2.russianBank.game.Card lookUpTopCard(){
+    private Card lookUpTopCard(){
         return cards.get(cards.size() - 1);
     }
 
 
-    private Boolean tryPutCard(main.java.pl.edu.agh.to2.russianBank.game.Card card) {
+    private Boolean tryPutCard(Card card) {
         return true;
     }
 
     @Override
-    public Boolean putCard(main.java.pl.edu.agh.to2.russianBank.game.Card card) {
+    public Boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
     }
     @Override
