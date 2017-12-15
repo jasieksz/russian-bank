@@ -4,12 +4,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.paint.*?>
-
-<?import javafx.geometry.*?>
 
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
@@ -34,12 +28,13 @@
    </children>
 
    <children>
-      <TextField fx:id="nameField" layoutX="309.0" layoutY="208.0" />
+      <TextField fx:id="nameField" layoutX="290.0" layoutY="208.0" prefHeight="30.0" prefWidth="197.0" />
    </children>
 
    <children>
-      <Button fx:id = "okButton" layoutX="486.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0"
-              prefWidth="47.0" text="OK" onAction="#handleOkAction"/>
+      <Button fx:id = "okButton" layoutX="400.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
+              prefHeight="8.0" prefWidth="87.0" text="OK" onAction="#handleOkAction" styleClass="startButton"
+              stylesheets="@style.css"/>
 
    </children>
 </Pane>

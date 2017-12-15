@@ -143,6 +143,7 @@ public class GameController implements Initializable {
                 selectedField1 = GameController.class.getField(field1ID);
                 System.out.println(selectedField1);
 
+
 //                ImageView i = (ImageView) selectedField1.get(this);
 //                i.setImage(image);
                 //GameController game = new GameController();

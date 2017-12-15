@@ -21,7 +21,7 @@
    <children>
       <Button fx:id="startButton" alignment="CENTER" layoutX="293.0" layoutY="317.0" mnemonicParsing="false"
               nodeOrientation="LEFT_TO_RIGHT" onAction="#handleStartAction" prefHeight="39.0" prefWidth="209.0"
-              text="START" styleClass="startButton" stylesheets="@style.css"/>
+              text="START GAME" styleClass="startButton" stylesheets="@style.css"/>
 
    </children>
 </Pane>
