@@ -1,7 +1,7 @@
-package main.java.pl.edu.agh.to2.russianBank.game.command;
+package pl.edu.agh.to2.russianBank.game.command;
 
-import main.java.pl.edu.agh.to2.russianBank.game.Card;
-import main.java.pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.Card;
+import pl.edu.agh.to2.russianBank.game.ICardSet;
 
 import java.util.Optional;
 

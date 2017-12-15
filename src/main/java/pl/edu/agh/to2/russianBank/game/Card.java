@@ -1,5 +1,6 @@
-package main.java.pl.edu.agh.to2.russianBank.game;
+package pl.edu.agh.to2.russianBank.game;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Card {
     }
 
     public List<CardSuit> getOppositeSuits() {
-        List ret = Collections.emptyList();
+        List ret = new ArrayList<CardSuit>();
         ret.add(CardSuit.values()[(this.suit.getSuitId() + 1) % CardSuit.values().length]);
         ret.add(CardSuit.values()[(this.suit.getSuitId() + 3) % CardSuit.values().length]);
         return ret;

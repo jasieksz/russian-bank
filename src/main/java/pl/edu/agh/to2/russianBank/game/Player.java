@@ -1,4 +1,4 @@
-package main.java.pl.edu.agh.to2.russianBank.game;
+package pl.edu.agh.to2.russianBank.game;
 
 public class Player {
 
