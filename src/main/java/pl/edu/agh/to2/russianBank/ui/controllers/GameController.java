@@ -74,6 +74,9 @@ public class GameController implements Initializable {
     public String field2ID;
     public Field selectedField1;
     public Field selectedField2;
+    public Image imageToSet;
+    public Integer position1;
+    public Integer position2;
 
 
     @FXML
@@ -94,9 +97,34 @@ public class GameController implements Initializable {
         imagesList = new ArrayList<ImageView>() {{add(field1); add(field2); add(field3); add(field4); add(field5); add(field6); add(field7); add(field8);
         add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16);}};
     }
+/*
+    @FXML
+    public void getPositionToMove(MouseEvent mouseEvent) throws IOException{
+
+        if(!firstChosen) {
+
+            firstChosenCard = (ImageView)mouseEvent.getSource();
+            field1ID = firstChosenCard.getId();
+            position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
+
+        }else {
+            ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
+            field2ID = secondlyChosenCard.getId();
+            position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
+            .tryToMoveCard(position1,position2);
+        }
+
+        firstChosen = !firstChosen;
+
+    }
+
+    @FXML
+    public void moveCard(pozycja x, pozycja y){
+        // metoda wywolywana na nas
+        // implementacja podobna do changeCard
+    }*/
 
 
-    //TODO nie dziala :(
     @FXML
     public void changeCard(MouseEvent mouseEvent) throws IOException {
 
@@ -110,9 +138,13 @@ public class GameController implements Initializable {
                 ImageView imageView = new ImageView(image);
 
                 // id w stringu karty ktora zaznaczylismy
+                imageToSet =firstChosenCard.getImage();
                 field1ID = firstChosenCard.getId();
                 selectedField1 = GameController.class.getField(field1ID);
                 System.out.println(selectedField1);
+
+//                ImageView i = (ImageView) selectedField1.get(this);
+//                i.setImage(image);
                 //GameController game = new GameController();
                 //selectedField1.set(game,imageView);
 
@@ -125,39 +157,15 @@ public class GameController implements Initializable {
             }
             else {
 
-                File file = new File("resources/Karty/Góra2.jpg");
-                Image image = new Image(file.toURI().toString());
-
+              //  File file = new File("resources/Karty/Góra2.jpg");
+               // Image image = new Image(file.toURI().toString());
                 ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
-
                 field2ID = secondlyChosenCard.getId();
                 selectedField2 = GameController.class.getField(field2ID);
-                System.out.println(selectedField2);
-                //GameController game = new GameController();
+              //  String s = selectedField1.getName();
+                ImageView i = (ImageView) selectedField2.get(this);
+                i.imageProperty().set(imageToSet);
 
-                String s = selectedField1.getName();
-                System.out.println(s);
-                Field field = GameController.class.getField(s);
-                GameController game = new GameController();
-                //Object value = field.get(game);
-
-                //field.setImage(game,new );
-                //selectedField1.set(game, firstChosenCard);
-                //Class<?> t = selectedField1.getType();
-                //t i = selectedField1;
-                //ImageView i = (ImageView) selectedField1;
-
-                ImageView i = (ImageView) selectedField1.get(this);
-
-                //selectedField1.imageProperty().ser(image);
-
-                //Class<?> myType = Integer.TYPE;
-                //if(selectedField1.getType().isAssignableFrom(ImageView))
-
-                i.imageProperty().set(image);
-
-                //System.out.println(this.field3);
-                //System.out.println(this.field4);
             }
             firstChosen = !firstChosen;
 
