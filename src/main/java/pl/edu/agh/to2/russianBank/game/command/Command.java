@@ -1,4 +1,4 @@
-package main.java.pl.edu.agh.to2.russianBank.command;
+package main.java.pl.edu.agh.to2.russianBank.game.command;
 
 import main.java.pl.edu.agh.to2.russianBank.game.Card;
 

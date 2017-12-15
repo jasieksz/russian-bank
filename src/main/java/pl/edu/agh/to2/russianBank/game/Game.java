@@ -1,6 +1,6 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
-import main.java.pl.edu.agh.to2.russianBank.command.MoveController;
+import main.java.pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.List;
 
