@@ -1,10 +1,18 @@
 package main.java.pl.edu.agh.to2.russianBank.game;
 
 public enum CardSuit {
-    //changed the order, it IS important for a function checking opposite Suits.
-    // TODO: better option, unreliant on ordering of enum values
-    HEARTS,
-    CLUBS,
-    DIAMONDS,
-    SPADES
+    HEARTS(0),
+    CLUBS(1),
+    DIAMONDS(2),
+    SPADES(3);
+
+    public Integer getSuitId() {
+        return suitId;
+    }
+
+    private Integer suitId;
+
+    CardSuit(Integer suitId) {
+        this.suitId = suitId;
+    }
 }

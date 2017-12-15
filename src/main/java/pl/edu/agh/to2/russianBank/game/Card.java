@@ -14,8 +14,8 @@ public class Card {
 
     public List<CardSuit> getOppositeSuits() {
         List ret = Collections.emptyList();
-        ret.add(CardSuit.values()[(this.suit.ordinal() + 1) % 4]);
-        ret.add(CardSuit.values()[(this.suit.ordinal() + 3) % 4]);
+        ret.add(CardSuit.values()[(this.suit.ordinal() + 1) % CardSuit.values().length]);
+        ret.add(CardSuit.values()[(this.suit.ordinal() + 3) % CardSuit.values().length]);
         return ret;
     }
 
