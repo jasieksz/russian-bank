@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 
 public class RussianBank extends Application {
@@ -27,7 +28,9 @@ public class RussianBank extends Application {
             Scene scene = new Scene(root, 800, 600);
 
             primaryStage.setTitle("Garibaldka");
-            //primaryStage.getIcons().add(new Image("russian-bank/resources/image.png"));
+            File file = new File("resources/image.png");
+            Image image = new Image(file.toURI().toString());
+            primaryStage.getIcons().add(image);
                     //("@../../../../../../../../../../resources/image.png"));
             primaryStage.setScene(scene);
             primaryStage.show();

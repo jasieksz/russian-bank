@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.*;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -96,7 +98,6 @@ public class GameController implements Initializable {
     }
 
 
-    //TODO nie dziala :(
     @FXML
     public void changeCard(MouseEvent mouseEvent) throws IOException {
 
@@ -111,14 +112,19 @@ public class GameController implements Initializable {
 
                 field1ID = firstChosenCard.getId();
                 selectedField1 = GameController.class.getField(field1ID);
+
+                ScaleTransition st = new ScaleTransition(Duration.millis(1000), firstChosenCard);
+                st.setByX(-0.1f);
+                st.setByY(-0.1f);
+                //st.setCycleCount(2);
+                st.setAutoReverse(true);
+
+                st.play();
                 System.out.println(selectedField1);
-                
             }
             else {
-
                 File file = new File("resources/Karty/Góra2.jpg");
                 Image image = new Image(file.toURI().toString());
-
                 ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
 
                 field2ID = secondlyChosenCard.getId();
@@ -130,6 +136,7 @@ public class GameController implements Initializable {
                 ImageView i = (ImageView) selectedField1.get(this);
                 i.imageProperty().set(image);
 
+                //firstChosenCard.imageProperty().set(image);
             }
             firstChosen = !firstChosen;
 
