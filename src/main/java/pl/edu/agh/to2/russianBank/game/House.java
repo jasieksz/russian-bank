@@ -26,15 +26,17 @@ public class House extends ICardSet {
         return cards.size()>0;
     }
 
-    private Card lookUpTopCard(){
-        return cards.get(cards.size() - 1);
+    private Optional<Card> lookUpTopCard(){
+        return Optional.ofNullable(cards.get(cards.size() - 1));
     }
 
 
+    // TODO : optional isPresent!!
+
     private Boolean tryPutCard(Card card) {
-        Card topCard = lookUpTopCard();
-        return (topCard.getOppositeSuits().contains(card.getSuit()) &&
-                (topCard.getRank().getRank() == (card.getRank().getRank() - 1)));
+        Optional<Card> topCard = lookUpTopCard();
+        return (topCard.get().getOppositeSuits().contains(card.getSuit()) &&
+                (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1)));
     }
 
     @Override

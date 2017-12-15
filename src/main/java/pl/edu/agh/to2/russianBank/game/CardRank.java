@@ -9,9 +9,10 @@ public enum CardRank {
     CARD_7(7),
     CARD_8(8),
     CARD_9(9),
-    JACK(10),
-    QUEEN(11),
-    KING(12),
+    CARD_10(10),
+    JACK(11),
+    QUEEN(12),
+    KING(13),
     ACE(1);
 
     private Integer rank;

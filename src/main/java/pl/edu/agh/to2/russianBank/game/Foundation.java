@@ -28,18 +28,19 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     }
 
     // TODO : add case when stack is empty => put card && set suit
+    // TODO : when using Optional, check isPresent !
     private Boolean tryPutCard(Card card) {
-        Card topCard = lookUpTopCard();
-        return (topCard.getSuit() == card.getSuit()) &&
-                (topCard.getRank().getRank() == (card.getRank().getRank() - 1));
+        Optional<Card> topCard = lookUpTopCard();
+        return (topCard.get().getSuit() == card.getSuit()) &&
+                (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1));
     }
 
     private Boolean tryTakeTopCard(){
         return false;
     }
 
-    private Card lookUpTopCard(){
-        return cards.get(cards.size() - 1);
+    private Optional<Card> lookUpTopCard(){
+        return Optional.of(cards.get(cards.size() - 1));
     }
 
     @Override
