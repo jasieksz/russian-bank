@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class Move implements Command {
-    ICardSet source;
-    ICardSet target;
+    private ICardSet source;
+    private ICardSet target;
+
+    // TODO : Do we need to know which player is making move?
 
     public Move(ICardSet source, ICardSet target) {
         this.source = source;
@@ -18,9 +20,7 @@ public class Move implements Command {
     @Override
     public Optional<Card> execute() {
         Optional<Card> result = source.takeTopCard();
-        if (result.isPresent()) {
-            target.putCard(result.get());
-        }
+        result.ifPresent(card -> target.putCard(card));
         return result;
     }
 

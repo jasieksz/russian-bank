@@ -12,7 +12,8 @@ public class Hand extends ICardSet {
     }
 
 
-    //TODO should we automatically reshuffle if no more cards present?
+    // TODO should we automatically reshuffle if no more cards present?
+    // TODO : PlayerDeck should be responsible for this, it contains both hand & waste @J
     @Override
     public Optional<Card> takeTopCard() { // removes top card
         return cards.size()>0 ? Optional.of(cards.remove(cards.size()-1)) : Optional.empty();

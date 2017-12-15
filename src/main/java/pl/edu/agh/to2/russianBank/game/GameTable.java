@@ -3,7 +3,7 @@ package main.java.pl.edu.agh.to2.russianBank.game;
 import java.util.List;
 
 public class GameTable {
-    private List<PlayerDeck> playersCard;
+    private List<PlayerDeck> playersCard; // hand & waste
     private List<House> houses;
     private List<Foundation> foundations;
 

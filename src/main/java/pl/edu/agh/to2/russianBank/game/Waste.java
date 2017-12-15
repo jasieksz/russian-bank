@@ -34,6 +34,13 @@ public class Waste extends ICardSet {
         return true;
     }
 
+    private Boolean enemyTryPutCard(Card card) {
+        Card topCard = lookUpTopCard();
+        return (topCard.getSuit().getSuitId().equals(card.getSuit().getSuitId()))
+                && (topCard.getRank().getRank().equals(card.getRank().getRank() - 1)
+                    || topCard.getRank().getRank().equals(card.getRank().getRank() + 1));
+    }
+
     @Override
     public Boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);

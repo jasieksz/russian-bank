@@ -27,6 +27,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         return tryPutCard(card) && cards.add(card);
     }
 
+    // TODO : add case when stack is empty => put card && set suit
     private Boolean tryPutCard(Card card) {
         Card topCard = lookUpTopCard();
         return (topCard.getSuit() == card.getSuit()) &&
