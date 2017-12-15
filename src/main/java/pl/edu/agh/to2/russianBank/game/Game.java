@@ -3,19 +3,19 @@ package main.java.pl.edu.agh.to2.russianBank.game;
 import java.util.List;
 
 public class Game {
-    private List<Player> players;
-    private GameTable gameTable;
+    private List<main.java.pl.edu.agh.to2.russianBank.game.Player> players;
+    private main.java.pl.edu.agh.to2.russianBank.game.GameTable gameTable;
 
-    public Game(List<Player> players, GameTable gameTable) {
+    public Game(List<main.java.pl.edu.agh.to2.russianBank.game.Player> players, main.java.pl.edu.agh.to2.russianBank.game.GameTable gameTable) {
         this.players = players;
         this.gameTable = gameTable;
     }
 
-    public List<Player> getPlayers() {
+    public List<main.java.pl.edu.agh.to2.russianBank.game.Player> getPlayers() {
         return players;
     }
 
-    public GameTable getGameTable() {
+    public main.java.pl.edu.agh.to2.russianBank.game.GameTable getGameTable() {
         return gameTable;
     }
 }

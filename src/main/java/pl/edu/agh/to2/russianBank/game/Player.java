@@ -3,9 +3,9 @@ package main.java.pl.edu.agh.to2.russianBank.game;
 public class Player {
 
     private String name;
-    private PlayerDeck playerDeck;
+    private main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck playerDeck;
 
-    public Player(String name, PlayerDeck playerDeck) {
+    public Player(String name, main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck playerDeck) {
         this.name = name;
         this.playerDeck = playerDeck;
     }
@@ -14,7 +14,7 @@ public class Player {
         return name;
     }
 
-    public PlayerDeck getPlayerDeck() {
+    public main.java.pl.edu.agh.to2.russianBank.game.PlayerDeck getPlayerDeck() {
         return playerDeck;
     }
 }
