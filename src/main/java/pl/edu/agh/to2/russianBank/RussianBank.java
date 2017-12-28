@@ -27,6 +27,7 @@ public class RussianBank extends Application {
 
             Scene scene = new Scene(root, 800, 600);
 
+
             primaryStage.setTitle("Garibaldka");
             File file = new File("resources/image.png");
             Image image = new Image(file.toURI().toString());

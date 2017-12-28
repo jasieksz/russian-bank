@@ -7,10 +7,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,6 +39,9 @@ public class StartGameController implements Initializable {
             oldStage.close();
             Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
             Stage stage = new Stage();
+            File file = new File("resources/image.png");
+            Image image = new Image(file.toURI().toString());
+            stage.getIcons().add(image);
             stage.setTitle("Garibaldka");
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
