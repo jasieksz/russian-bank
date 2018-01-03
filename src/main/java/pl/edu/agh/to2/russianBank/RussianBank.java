@@ -14,6 +14,7 @@ import pl.edu.agh.to2.russianBank.ui.RootLayout;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
@@ -24,6 +25,7 @@ public class RussianBank extends Application {
         } else {
             try(Client client = Client.connect("ws://localhost:8666/game").get()) {
                 client.sendMessage(new HelloMessage("ziomek")).get();
+                client.awaitClose(1, TimeUnit.MINUTES);
             } catch (Exception e) {
                 LOG.error(e);
             }
