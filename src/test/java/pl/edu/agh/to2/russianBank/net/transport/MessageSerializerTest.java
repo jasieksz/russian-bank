@@ -50,6 +50,11 @@ public class MessageSerializerTest {
         }
 
         @Override
+        public void accept(MessageVisitor visitor) {
+            throw new RuntimeException("not implemented");
+        }
+
+        @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
