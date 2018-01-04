@@ -15,7 +15,7 @@ public enum CardRank {
     KING(13),
     ACE(1);
 
-    private Integer rank;
+    public Integer rank;
     CardRank(Integer rank) {
         this.rank = rank;
     }

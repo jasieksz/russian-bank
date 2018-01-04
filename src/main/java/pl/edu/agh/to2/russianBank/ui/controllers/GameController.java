@@ -62,6 +62,8 @@ public class GameController implements Initializable {
     public Integer position2;
 
 
+    GameTable table;
+
     @FXML
     public AnchorPane rootPane;
 
@@ -81,6 +83,8 @@ public class GameController implements Initializable {
        /* imagesList = new ArrayList<ImageView>(); {add(field3); add(field4); add(field5); add(field6); add(field7); add(field8);
             add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16); add(field17);add(field18);}; cos tu nie dziala, ta metoda add*/
 
+
+       findPicture(CardRank.KING, CardSuit.HEARTS);
     File file1 = new File("resources/Karty/Gora1.jpg");
     Image image1 = new Image(file1.toURI().toString());
     File file2 = new File("resources/Karty/White.jpg");
@@ -95,13 +99,9 @@ public class GameController implements Initializable {
         field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
-
-
     field2 = new ImageView(image2);
         field2.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field2.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
-
-
 
     field3 = new ImageView(image2);
         field3.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
@@ -121,9 +121,6 @@ public class GameController implements Initializable {
     field6 = new ImageView(image2);
         field6.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field6.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
-
-
-
 
     field7 = new ImageView(image3);
         field7.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
@@ -270,9 +267,6 @@ public class GameController implements Initializable {
 
 
 
-
-
-
     @FXML
     public void uncoverCardFromStack(){
 
@@ -288,6 +282,7 @@ public class GameController implements Initializable {
 
     public void updateCards(GameTable table) {
 
+        this.table = table;
         List<House> house = table.getHouses();
         List<Foundation> foundations = table.getFoundations();
         List<PlayerDeck> playersCards = table.getPlayers();
@@ -301,15 +296,62 @@ public class GameController implements Initializable {
         //teraz już mamy wszystko -> ustawić to co trzeba, czyli chyba
         // tylko hand i waste
 
-       //Optional<Card> card1 =
-        CardSuit s;
-        CardRank r;
-        //hand1.takeTopCard().ifPresent
-        //        (c -> {s = c.getSuit(); r = c.getRank()});
-        //field1.setImage
+        hand1.takeTopCard().ifPresent
+               (c -> {
+                   String picture = findPicture(c.getRank(), c.getSuit());
+                   File file = new File("resources/Karty/"+picture+"jpg");
+                   Image image = new Image(file.toURI().toString());
+                   field1.setImage(image);
+               });
+
 
     }
 
+
+    String findPicture(CardRank r, CardSuit s) {
+
+        String res = "";
+        String res2 = "";
+        Integer suit = s.getSuitId();
+        switch(suit) {
+            case 0:
+                res = "S";
+                break;
+            case 1:
+                res = "T";
+                break;
+            case 2:
+                res = "K";
+                break;
+            case 3:
+                res = "W";
+                break;
+        }
+
+        Integer rank = r.getRank();
+        switch(rank) {
+            case 1:
+                res2 = "AS";
+                break;
+            case 11:
+                res2 = "J";
+                break;
+            case 12:
+                res2 = "Q";
+                break;
+            case 13:
+                res2 = "K";
+                break;
+            default:
+                res2 = Integer.toString(rank);
+                break;
+        }
+
+        String result = res + "_"+res2;
+        System.out.println(result);
+
+        return result;
+    }
 
 }
 
