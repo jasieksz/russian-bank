@@ -196,10 +196,10 @@ public class GameController implements Initializable {
 
         field1.setId("hand1");
         field2.setId("waste2");
-        field3.setId("hause3");
-        field4.setId("hause4");
-        field5.setId("hause5");
-        field6.setId("hause6");
+        field3.setId("house3");
+        field4.setId("house4");
+        field5.setId("house5");
+        field6.setId("house6");
         field7.setId("foundation7");
         field8.setId("foundation8");
         field9.setId("foundation9");
@@ -208,10 +208,10 @@ public class GameController implements Initializable {
         field12.setId("foundation12");
         field13.setId("foundation13");
         field14.setId("foundation14");
-        field15.setId("hause15");
-        field16.setId("hause16");
-        field17.setId("hause17");
-        field18.setId("hause18");
+        field15.setId("house15");
+        field16.setId("house16");
+        field17.setId("house17");
+        field18.setId("house18");
         field19.setId("waste19");
         field20.setId("hand20");
 
@@ -311,7 +311,7 @@ public class GameController implements Initializable {
                     }
                 }
                 break;
-            case "hause":
+            case "house":
                 for (House h:table.getHouses()) {
                     if(h.getPosition().equals(position)){
                         card = h;
