@@ -12,10 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StartGameController implements Initializable {
@@ -50,6 +52,7 @@ public class StartGameController implements Initializable {
             Scene scene = new Scene(root, 1200, 1200);
 
 
+
             scene.widthProperty().addListener(new ChangeListener<Number>() {
 
                 @Override
@@ -61,7 +64,7 @@ public class StartGameController implements Initializable {
             stage.setScene(scene);
 
 
-            //stage.setMaximized(true);
+            stage.setMaximized(true);
             stage.show();
             //GameController.updateWidthConstaints(scene.getWidth());
 
@@ -69,6 +72,7 @@ public class StartGameController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
 
 }

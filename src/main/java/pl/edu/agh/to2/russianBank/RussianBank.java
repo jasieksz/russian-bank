@@ -1,7 +1,6 @@
 package pl.edu.agh.to2.russianBank;
 
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +16,7 @@ import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
@@ -27,9 +27,11 @@ public class RussianBank extends Application {
         } else {
 //            try(Client client = Client.connect("ws://localhost:8666/game").get()) {
 //                client.sendMessage(new HelloMessage("ziomek")).get();
+//                client.awaitClose(1, TimeUnit.MINUTES);
 //            } catch (Exception e) {
 //                LOG.error(e);
 //            }
+
             launch(args);
         }
     }
@@ -41,8 +43,7 @@ public class RussianBank extends Application {
                     //FXMLLoader.load(RootLayout.class.getResource("RootLayout.fxml"));
                     FXMLLoader.load(RootLayout.class.getResource("StartGame.fxml"));
 
-            Scene scene = new Scene(root, 1000, 600);
-
+            Scene scene = new Scene(root, 800, 600);
 
 
             primaryStage.setTitle("Garibaldka");
@@ -52,8 +53,6 @@ public class RussianBank extends Application {
             //("@../../../../../../../../../../resources/image.png"));
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
-            primaryStage.centerOnScreen();
-
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -59,9 +59,6 @@ public class GUI implements GUIApi {
 
     }
 
-    public void updateCards(GameTable table) {
-
-    }
 
 
 }
