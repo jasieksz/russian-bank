@@ -39,7 +39,7 @@ public class GUI implements GUIApi {
 
             stage.setScene(scene);
 
-            //stage.setMaximized(true);
+            stage.setMaximized(true);
             stage.show();
             //GameController.updateWidthConstaints(scene.getWidth());
 

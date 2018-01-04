@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -94,19 +95,14 @@ public class GameController implements Initializable {
         field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
-        field1.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                field1.setImage(image2);
+        field1.setOnMouseClicked(changeCards);
 
-            }
-        });
 
     field2 = new ImageView(image2);
         field2.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field2.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
+        field2.setOnMouseClicked(changeCards);
 
     field3 = new ImageView(image2);
         field3.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
@@ -126,6 +122,12 @@ public class GameController implements Initializable {
     field6 = new ImageView(image2);
         field6.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field6.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
+        field3.setOnMouseClicked(changeCards);
+        field4.setOnMouseClicked(changeCards);
+        field5.setOnMouseClicked(changeCards);
+        field6.setOnMouseClicked(changeCards);
+
 
 
     field7 = new ImageView(image3);
@@ -272,81 +274,84 @@ public class GameController implements Initializable {
     }*/
 
 
-    @FXML
-    public void changeCard(MouseEvent mouseEvent) throws IOException {
 
-        try {
-            if(!firstChosen) {
-                firstChosenCard = (ImageView)mouseEvent.getSource();
+    EventHandler<MouseEvent> changeCards = new EventHandler<MouseEvent>() {
 
-                File file = new File("resources/Karty/Góra2.jpg");
-                Image image = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(image);
+        @Override
+        public void handle(MouseEvent mouseEvent) {
 
-                imageToSet =firstChosenCard.getImage();
-                field1ID = firstChosenCard.getId();
-                selectedField1 = GameController.class.getField(field1ID);
+            try {
+                if (!firstChosen) {
+                    firstChosenCard = (ImageView) mouseEvent.getSource();
 
-                ScaleTransition st = new ScaleTransition(Duration.millis(1000), firstChosenCard);
-                st.setByX(-0.1f);
-                st.setByY(-0.1f);
-                st.setCycleCount(2);
-                st.setAutoReverse(true);
+                    File file = new File("resources/Karty/Góra2.jpg");
+                    Image image = new Image(file.toURI().toString());
+                    ImageView imageView = new ImageView(image);
 
-                st.play();
-                System.out.println(selectedField1);
+                    imageToSet = firstChosenCard.getImage();
+                    field1ID = firstChosenCard.getId();
+                    selectedField1 = GameController.class.getField(field1ID);
+
+                    ScaleTransition st = new ScaleTransition(Duration.millis(1000), firstChosenCard);
+                    st.setByX(-0.1f);
+                    st.setByY(-0.1f);
+                    st.setCycleCount(2);
+                    st.setAutoReverse(true);
+
+                    st.play();
+                    System.out.println(selectedField1);
 
 
 //                ImageView i = (ImageView) selectedField1.get(this);
 //                i.setImage(image);
-                //GameController game = new GameController();
-                //selectedField1.set(game,imageView);
-                // /System.out.println(this.field3);
-                //System.out.println(this.field4);
-                // System.out.println(field1);
+                    //GameController game = new GameController();
+                    //selectedField1.set(game,imageView);
+                    // /System.out.println(this.field3);
+                    //System.out.println(this.field4);
+                    // System.out.println(field1);
 
+                } else {
+
+                    //  File file = new File("resources/Karty/Góra2.jpg");
+                    // Image image = new Image(file.toURI().toString());
+                    ImageView secondlyChosenCard = (ImageView) mouseEvent.getSource();
+                    field2ID = secondlyChosenCard.getId();
+                    selectedField2 = GameController.class.getField(field2ID);
+                    //  String s = selectedField1.getName();
+                    ScaleTransition st = new ScaleTransition(Duration.millis(1000), secondlyChosenCard);
+                    st.setByX(-0.1f);
+                    st.setByY(-0.1f);
+                    st.setCycleCount(2);
+                    st.setAutoReverse(true);
+
+                    st.play();
+                    ImageView i = (ImageView) selectedField2.get(this);
+                    i.imageProperty().set(imageToSet);
+
+                }
+                firstChosen = !firstChosen;
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
-            else {
 
-                //  File file = new File("resources/Karty/Góra2.jpg");
-                // Image image = new Image(file.toURI().toString());
-                ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
-                field2ID = secondlyChosenCard.getId();
-                selectedField2 = GameController.class.getField(field2ID);
-                //  String s = selectedField1.getName();
-                ScaleTransition st = new ScaleTransition(Duration.millis(1000), secondlyChosenCard);
-                st.setByX(-0.1f);
-                st.setByY(-0.1f);
-                st.setCycleCount(2);
-                st.setAutoReverse(true);
-
-                st.play();
-                ImageView i = (ImageView) selectedField2.get(this);
-                i.imageProperty().set(imageToSet);
-
-            }
-            firstChosen = !firstChosen;
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
-
-    }
+    };
 
 
     @FXML
     public void uncoverCardFromStack(){
 
         //this.stackA.setPickOnBounds(true);
-        this.field1.setOnMouseClicked((MouseEvent e) -> {
+        //this.field1.setOnMouseClicked((MouseEvent e) -> {
             File file = new File("resources/Karty/K_2.jpg");
             System.out.println("Clicked!"); // change functionality
             Image image = new Image(file.toURI().toString());
-            this.field1.imageProperty().set(image);
+            //this.field1.imageProperty().set(image);
             //this.stackA.setImage(image);
-        });
+        //});
     }
 
     public void updateCards(GameTable table) {
@@ -361,6 +366,15 @@ public class GameController implements Initializable {
         Waste waste1 = player1.getWaste();
         Waste waste2 = player1.getWaste();
 
+        //teraz już mamy wszystko -> ustawić to co trzeba, czyli chyba
+        // tylko hand i waste
+
+       //Optional<Card> card1 =
+        CardSuit s;
+        CardRank r;
+        //hand1.takeTopCard().ifPresent
+        //        (c -> {s = c.getSuit(); r = c.getRank()});
+        //field1.setImage
 
     }
 
