@@ -25,12 +25,12 @@ public class RussianBank extends Application {
         if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
-            try(Client client = Client.connect("ws://localhost:8666/game").get()) {
-                client.sendMessage(new HelloMessage("ziomek")).get();
-                client.awaitClose(1, TimeUnit.MINUTES);
-            } catch (Exception e) {
-                LOG.error(e);
-            }
+//            try(Client client = Client.connect("ws://localhost:8666/game").get()) {
+//                client.sendMessage(new HelloMessage("ziomek")).get();
+//                client.awaitClose(1, TimeUnit.MINUTES);
+//            } catch (Exception e) {
+//                LOG.error(e);
+//            }
 
             launch(args);
         }
