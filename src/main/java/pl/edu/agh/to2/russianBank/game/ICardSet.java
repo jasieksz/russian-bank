@@ -1,12 +1,8 @@
-/*package pl.edu.agh.to2.russianBank.game;
-
-public class ICardSet {
-}*/
 package pl.edu.agh.to2.russianBank.game;
 
 
-        import java.util.List;
-        import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class ICardSet {
     private List<Card> cards;
