@@ -8,9 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import pl.edu.agh.to2.russianBank.game.Hand;
-import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -98,9 +99,11 @@ public class GameController implements Initializable {
         field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
 
+
     field2 = new ImageView(image2);
         field2.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field2.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
 
 
     field3 = new ImageView(image2);
@@ -121,6 +124,8 @@ public class GameController implements Initializable {
     field6 = new ImageView(image2);
         field6.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field6.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
+
 
 
     field7 = new ImageView(image3);
@@ -274,7 +279,9 @@ public class GameController implements Initializable {
 //            return new Hand;
 //        }
 
-        gridPane.getChildren().addAll(field1,field2,field3,field4, field5, field6, field7,field8,field9,field10,field11,field12, field13, field14, field15, field16,field17,field18,field19,field20);
+        gridPane.getChildren().addAll(field1,field2,field3,field4, field5, field6,
+                field7,field8,field9,field10,field11,field12, field13, field14, field15,
+                field16,field17,field18,field19,field20);
         GridPane.setConstraints(field1, 0,11);
         GridPane.setConstraints(field2,1,11);
         GridPane.setConstraints(field3,11,3);
@@ -296,8 +303,8 @@ public class GameController implements Initializable {
         GridPane.setConstraints(field19,25,1);
         GridPane.setConstraints(field20,26,1);
 
-
 }
+
 /*
     @FXML
     public void getPositionToMove(MouseEvent mouseEvent) throws IOException{
@@ -327,82 +334,47 @@ public class GameController implements Initializable {
 
 
 
- /*   @FXML
-    public void changeCard(MouseEvent mouseEvent) throws IOException {
 
-        try {
-            if(!firstChosen) {
-                firstChosenCard = (ImageView)mouseEvent.getSource();
-
-                File file = new File("resources/Karty/Góra2.jpg");
-                Image image = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(image);
-
-                imageToSet =firstChosenCard.getImage();
-                field1ID = firstChosenCard.getId();
-                selectedField1 = GameController.class.getField(field1ID);
-
-                ScaleTransition st = new ScaleTransition(Duration.millis(1000), firstChosenCard);
-                st.setByX(-0.1f);
-                st.setByY(-0.1f);
-                st.setCycleCount(2);
-                st.setAutoReverse(true);
-
-                st.play();
-                System.out.println(selectedField1);
-
-
-//                ImageView i = (ImageView) selectedField1.get(this);
-//                i.setImage(image);
-                //GameController game = new GameController();
-                //selectedField1.set(game,imageView);
-                // /System.out.println(this.field3);
-                //System.out.println(this.field4);
-                // System.out.println(field1);
-
-            }
-            else {
-
-                //  File file = new File("resources/Karty/Góra2.jpg");
-                // Image image = new Image(file.toURI().toString());
-                ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
-                field2ID = secondlyChosenCard.getId();
-                selectedField2 = GameController.class.getField(field2ID);
-                //  String s = selectedField1.getName();
-                ScaleTransition st = new ScaleTransition(Duration.millis(1000), secondlyChosenCard);
-                st.setByX(-0.1f);
-                st.setByY(-0.1f);
-                st.setCycleCount(2);
-                st.setAutoReverse(true);
-
-                st.play();
-                ImageView i = (ImageView) selectedField2.get(this);
-                i.imageProperty().set(imageToSet);
-
-            }
-            firstChosen = !firstChosen;
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 
 
     @FXML
     public void uncoverCardFromStack(){
 
         //this.stackA.setPickOnBounds(true);
-        this.field1.setOnMouseClicked((MouseEvent e) -> {
+        //this.field1.setOnMouseClicked((MouseEvent e) -> {
             File file = new File("resources/Karty/K_2.jpg");
             System.out.println("Clicked!"); // change functionality
             Image image = new Image(file.toURI().toString());
-            this.field1.imageProperty().set(image);
+            //this.field1.imageProperty().set(image);
             //this.stackA.setImage(image);
-        });
+        //});
     }
+
+    public void updateCards(GameTable table) {
+
+        List<House> house = table.getHouses();
+        List<Foundation> foundations = table.getFoundations();
+        List<PlayerDeck> playersCards = table.getPlayers();
+        PlayerDeck player1 = playersCards.get(0);
+        PlayerDeck player2 = playersCards.get(1);
+        Hand hand1 = player1.getHand();
+        Hand hand2 = player1.getHand();
+        Waste waste1 = player1.getWaste();
+        Waste waste2 = player1.getWaste();
+
+        //teraz już mamy wszystko -> ustawić to co trzeba, czyli chyba
+        // tylko hand i waste
+
+       //Optional<Card> card1 =
+        CardSuit s;
+        CardRank r;
+        //hand1.takeTopCard().ifPresent
+        //        (c -> {s = c.getSuit(); r = c.getRank()});
+        //field1.setImage
+
+    }
+
+
 }
 
 

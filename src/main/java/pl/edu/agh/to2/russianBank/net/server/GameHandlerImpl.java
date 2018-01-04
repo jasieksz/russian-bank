@@ -4,7 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
+import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
+import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 import pl.edu.agh.to2.russianBank.net.transport.ShutdownMessage;
 
 public class GameHandlerImpl implements GameHandler {
@@ -28,6 +30,24 @@ public class GameHandlerImpl implements GameHandler {
     @Override
     public void onMessage(PlayerConnection player, Message message) {
         LOG.debug("Message from player {}: {}", player, message);
-        // TODO
+        message.accept(new Visitor(player));
+    }
+
+    private class Visitor implements MessageVisitor {
+        private final PlayerConnection player;
+
+        private Visitor(PlayerConnection player) {
+            this.player = player;
+        }
+
+        @Override
+        public void visit(HelloMessage message) {
+            LOG.info("Hello {}!", message.getPlayerName());
+        }
+
+        @Override
+        public void visit(ShutdownMessage message) {
+            LOG.info("I won!");
+        }
     }
 }

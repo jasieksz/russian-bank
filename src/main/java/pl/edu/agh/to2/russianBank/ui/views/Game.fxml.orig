@@ -3,10 +3,36 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false"
-          style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+<<<<<<< HEAD
+<?import javafx.scene.effect.ColorInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<!--maxHeight="-Infinity" minHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity"
+      prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}"-->
+
+
+<?import javafx.stage.Screen?>
+<?import javafx.scene.layout.StackPane?>
+<AnchorPane fx:id="rootPane" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+
+
+<!--minHeight="0.0" minWidth="0.0"  prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}"-->
+
+    <fx:define>
+        <Screen fx:factory="getPrimary" fx:id="screen" />
+    </fx:define>
+
+    <children>
+        <StackPane AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <fx:include fx:id="child" source="child.fxml"/>
+        </StackPane>
+    </children>
+</AnchorPane>
+=======
+<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
     <columnConstraints>
         <ColumnConstraints fx:id="col1" halignment="CENTER" hgrow="ALWAYS" percentWidth="10.0" />
         <ColumnConstraints halignment="LEFT" percentWidth="10" hgrow="ALWAYS" />
@@ -52,3 +78,4 @@
         <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
     </rowConstraints>
 </GridPane>
+>>>>>>> 8bfbdee709966f27269fecd4e303dd9c3fa7371f

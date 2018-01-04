@@ -1,0 +1,23 @@
+package pl.edu.agh.to2.russianBank.game;
+
+public class Player {
+<<<<<<< HEAD
+=======
+
+    private String name;
+    private PlayerDeck playerDeck;
+
+    public Player(String name, PlayerDeck playerDeck) {
+        this.name = name;
+        this.playerDeck = playerDeck;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public PlayerDeck getPlayerDeck() {
+        return playerDeck;
+    }
+>>>>>>> 81b52ee052c8f2039725333a85976833c435986a
+}

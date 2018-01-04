@@ -1,0 +1,29 @@
+<<<<<<< HEAD
+/*package pl.edu.agh.to2.russianBank.game;
+
+public class ICardSet {
+}*/
+package pl.edu.agh.to2.russianBank.game;
+
+
+        import java.util.List;
+        import java.util.Optional;
+=======
+package pl.edu.agh.to2.russianBank.game;
+
+
+import java.util.List;
+import java.util.Optional;
+>>>>>>> 81b52ee052c8f2039725333a85976833c435986a
+
+public abstract class ICardSet {
+    private List<Card> cards;
+    public abstract Optional<Card> takeTopCard();
+    public abstract Boolean putCard(Card card);
+    public abstract Integer getSize();
+    public abstract Boolean isVisible();
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 81b52ee052c8f2039725333a85976833c435986a

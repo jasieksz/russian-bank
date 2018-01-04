@@ -12,6 +12,11 @@ public class ShutdownMessage extends Message {
     }
 
     @Override
+    public void accept(MessageVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
