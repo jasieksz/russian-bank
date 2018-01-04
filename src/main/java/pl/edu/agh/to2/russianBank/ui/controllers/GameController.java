@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class GameController implements Initializable {
     public Integer position2;
     public String type1;
     public String type2;
+    private GameTable table;
 
 
     @FXML
@@ -242,8 +244,6 @@ public class GameController implements Initializable {
 
 
 
-
-
         EventHandler<MouseEvent> getPositionToMove = new EventHandler<MouseEvent>() {
 
             @Override
@@ -254,6 +254,7 @@ public class GameController implements Initializable {
                     firstChosenCard = (ImageView) mouseEvent.getSource();
                     field1ID = firstChosenCard.getId();
                     type1 = field1ID.replaceAll("\\d","");
+                    System.out.println(type1);
                     position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
                     System.out.println(position1);
 
@@ -261,9 +262,12 @@ public class GameController implements Initializable {
                 }else {
                     ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
                     field2ID = secondlyChosenCard.getId();
+                    type2 = field2ID.replaceAll("\\d","");
+                    System.out.println(type2);
                     position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
                     System.out.println(position2);
-
+                    Move move = new Move(getProperCard(type1,position1),getProperCard(type2,position2));
+        //            System.out.println(move.getSource() + "  ....  " + move.getTarget());
                 }
 
                 firstChosen = !firstChosen;
@@ -275,9 +279,7 @@ public class GameController implements Initializable {
             i.setPreserveRatio(true);
         }
 
-//        ICardSet getProperCard(String name){
-//            return new Hand;
-//        }
+
 
         gridPane.getChildren().addAll(field1,field2,field3,field4, field5, field6,
                 field7,field8,field9,field10,field11,field12, field13, field14, field15,
@@ -304,38 +306,42 @@ public class GameController implements Initializable {
         GridPane.setConstraints(field20,26,1);
 
 }
+    public ICardSet getProperCard(String type, Integer position){
+        ICardSet card = null;
+        switch (type){
+            case "foundation":
+                for (Foundation f:table.getFoundations()) {
+                    if(f.getPosition().equals(position)){
+                        card = f;
+                    }
+                }
+                break;
+            case "hause":
+                for (House h:table.getHouses()) {
+                    if(h.getPosition().equals(position)){
+                        card = h;
+                    }
+                }
+                break;
+            case "waste":
+                if(position.equals(2)) card = table.getPlayers().get(0).getWaste();
+                else card = table.getPlayers().get(1).getWaste();
+                break;
+            case "hand":
+                if (position.equals(1)) card = table.getPlayers().get(0).getHand();
+                else card = table.getPlayers().get(1).getHand();
 
-/*
-    @FXML
-    public void getPositionToMove(MouseEvent mouseEvent) throws IOException{
-
-        if(!firstChosen) {
-
-            firstChosenCard = (ImageView) mouseEvent.getSource();
-           /// field1ID = firstChosenCard.getId();
-            position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
-
-        }else {
-            ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
-            field2ID = secondlyChosenCard.getId();
-            position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
 
         }
+        return card;
+    }
 
-        firstChosen = !firstChosen;
-
-    }*/
 
 /*    @FXML
     public void moveCard(pozycja x, pozycja y){
         // metoda wywolywana na nas
         // implementacja podobna do changeCard
     }*/
-
-
-
-
-
 
     @FXML
     public void uncoverCardFromStack(){

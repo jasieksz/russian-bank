@@ -52,4 +52,8 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     public Boolean isVisible() {
         return true;
     }
+
+    public Integer getPosition() {
+        return position;
+    }
 }

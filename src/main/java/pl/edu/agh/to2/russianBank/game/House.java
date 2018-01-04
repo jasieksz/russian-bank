@@ -52,4 +52,8 @@ public class House extends ICardSet {
     public Boolean isVisible() {
         return true;
     }
+
+    public Integer getPosition() {
+        return position;
+    }
 }
