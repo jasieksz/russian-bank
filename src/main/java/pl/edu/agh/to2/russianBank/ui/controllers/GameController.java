@@ -1,6 +1,5 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
-import javafx.animation.ScaleTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,18 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -49,6 +44,11 @@ public class GameController implements Initializable {
     public ImageView field18;
     public ImageView field19;
     public ImageView field20;
+
+    public ImageView stack1_1;
+    public ImageView stack1_2;
+    public ImageView stack1_3;
+    public ImageView stack1_4;
 
     private List<Pane> paneList;
     private List<ImageView> imagesList;
@@ -96,6 +96,10 @@ public class GameController implements Initializable {
     Image image3 = new Image(file3.toURI().toString());
     File file4 = new File("resources/Karty/Gora2.jpg");
     Image image4 = new Image(file4.toURI().toString());
+    File file5 = new File("resources/Karty/K_2.jpg");
+    Image image5 = new Image(file5.toURI().toString());
+    File file6 = new File("resources/Karty/W_2.jpg");
+    Image image6 = new Image(file6.toURI().toString());
 
 
     field1 = new ImageView(image1);
@@ -193,6 +197,21 @@ public class GameController implements Initializable {
         field20.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field20.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
+        stack1_1 = new ImageView(image5);
+        stack1_1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
+        stack1_1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
+        stack1_2 = new ImageView(image6);
+        stack1_2.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
+        stack1_2.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
+        stack1_3 = new ImageView(image5);
+        stack1_3.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
+        stack1_3.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
+
+        stack1_4 = new ImageView(image6);
+        stack1_4.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
+        stack1_4.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
         field1.setId("hand1");
         field2.setId("waste2");
@@ -258,13 +277,18 @@ public class GameController implements Initializable {
             i.setPreserveRatio(true);
         }
 
+        stack1_1.setPreserveRatio(true);
+        stack1_2.setPreserveRatio(true);
+        stack1_3.setPreserveRatio(true);
+        stack1_4.setPreserveRatio(true);
+
 //        ICardSet getProperCard(String name){
 //            return new Hand;
 //        }
 
         gridPane.getChildren().addAll(field1,field2,field3,field4, field5, field6,
                 field7,field8,field9,field10,field11,field12, field13, field14, field15,
-                field16,field17,field18,field19,field20);
+                field16,field17,field18,field19,field20, stack1_1,stack1_2,stack1_3,stack1_4);
         GridPane.setConstraints(field1, 0,11);
         GridPane.setConstraints(field2,1,11);
         GridPane.setConstraints(field3,11,3);
@@ -285,6 +309,10 @@ public class GameController implements Initializable {
         GridPane.setConstraints(field18,15,9);
         GridPane.setConstraints(field19,25,1);
         GridPane.setConstraints(field20,26,1);
+        GridPane.setConstraints(stack1_1,10,3);
+        GridPane.setConstraints(stack1_2,9,3);
+        GridPane.setConstraints(stack1_3,8,3);
+        GridPane.setConstraints(stack1_4,7,3);
 
 }
     public ICardSet getProperCard(String type, Integer position){
