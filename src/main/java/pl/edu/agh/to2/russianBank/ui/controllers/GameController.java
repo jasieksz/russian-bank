@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -60,6 +61,8 @@ public class GameController implements Initializable {
     public Image imageToSet;
     public Integer position1;
     public Integer position2;
+    public String type1;
+    public String type2;
 
 
     GameTable table;
@@ -191,26 +194,87 @@ public class GameController implements Initializable {
         field20.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
 
-        field1.setPreserveRatio(true);
-        field2.setPreserveRatio(true);
-        field3.setPreserveRatio(true);
-        field4.setPreserveRatio(true);
-        field5.setPreserveRatio(true);
-        field6.setPreserveRatio(true);
-        field7.setPreserveRatio(true);
-        field8.setPreserveRatio(true);
-        field9.setPreserveRatio(true);
-        field10.setPreserveRatio(true);
-        field11.setPreserveRatio(true);
-        field12.setPreserveRatio(true);
-        field13.setPreserveRatio(true);
-        field14.setPreserveRatio(true);
-        field15.setPreserveRatio(true);
-        field16.setPreserveRatio(true);
-        field17.setPreserveRatio(true);
-        field18.setPreserveRatio(true);
-        field19.setPreserveRatio(true);
-        field20.setPreserveRatio(true);
+        field1.setId("hand1");
+        field2.setId("waste2");
+        field3.setId("hause3");
+        field4.setId("hause4");
+        field5.setId("hause5");
+        field6.setId("hause6");
+        field7.setId("foundation7");
+        field8.setId("foundation8");
+        field9.setId("foundation9");
+        field10.setId("foundation10");
+        field11.setId("foundation11");
+        field12.setId("foundation12");
+        field13.setId("foundation13");
+        field14.setId("foundation14");
+        field15.setId("hause15");
+        field16.setId("hause16");
+        field17.setId("hause17");
+        field18.setId("hause18");
+        field19.setId("waste19");
+        field20.setId("hand20");
+
+        List<ImageView> imageViewList = new ArrayList<>();
+        imageViewList.add(field1);
+        imageViewList.add(field2);
+        imageViewList.add(field3);
+        imageViewList.add(field4);
+        imageViewList.add(field5);
+        imageViewList.add(field6);
+        imageViewList.add(field7);
+        imageViewList.add(field8);
+        imageViewList.add(field9);
+        imageViewList.add(field10);
+        imageViewList.add(field11);
+        imageViewList.add(field12);
+        imageViewList.add(field13);
+        imageViewList.add(field14);
+        imageViewList.add(field15);
+        imageViewList.add(field16);
+        imageViewList.add(field17);
+        imageViewList.add(field18);
+        imageViewList.add(field19);
+        imageViewList.add(field20);
+
+
+
+
+
+        EventHandler<MouseEvent> getPositionToMove = new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                if(!firstChosen) {
+
+                    firstChosenCard = (ImageView) mouseEvent.getSource();
+                    field1ID = firstChosenCard.getId();
+                    type1 = field1ID.replaceAll("\\d","");
+                    position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
+                    System.out.println(position1);
+
+
+                }else {
+                    ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
+                    field2ID = secondlyChosenCard.getId();
+                    position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
+                    System.out.println(position2);
+
+                }
+
+                firstChosen = !firstChosen;
+            }
+        };
+
+        for (ImageView i:imageViewList) {
+            i.setOnMouseClicked(getPositionToMove);
+            i.setPreserveRatio(true);
+        }
+
+//        ICardSet getProperCard(String name){
+//            return new Hand;
+//        }
 
         gridPane.getChildren().addAll(field1,field2,field3,field4, field5, field6,
                 field7,field8,field9,field10,field11,field12, field13, field14, field15,
@@ -244,22 +308,22 @@ public class GameController implements Initializable {
 
         if(!firstChosen) {
 
-            firstChosenCard = (ImageView)mouseEvent.getSource();
-            field1ID = firstChosenCard.getId();
+            firstChosenCard = (ImageView) mouseEvent.getSource();
+           /// field1ID = firstChosenCard.getId();
             position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
 
         }else {
             ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
             field2ID = secondlyChosenCard.getId();
             position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
-            ?.tryToMoveCard(position1,position2);
+
         }
 
         firstChosen = !firstChosen;
 
-    }
+    }*/
 
-    @FXML
+/*    @FXML
     public void moveCard(pozycja x, pozycja y){
         // metoda wywolywana na nas
         // implementacja podobna do changeCard
