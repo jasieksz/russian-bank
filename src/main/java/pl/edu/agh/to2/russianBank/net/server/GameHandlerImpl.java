@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
+import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
 import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
-import pl.edu.agh.to2.russianBank.net.transport.ShutdownMessage;
 
 public class GameHandlerImpl implements GameHandler {
     private static final Logger LOG = LogManager.getLogger();
@@ -23,7 +23,7 @@ public class GameHandlerImpl implements GameHandler {
     public void onClose(PlayerConnection player) {
         LOG.debug("Closing player {}", player);
         Room room = roomMatcher.getRoom(player);
-        room.unicast(player, new ShutdownMessage());
+        room.unicast(player, new EndGameMessage());
         roomMatcher.deleteRoom(room);
     }
 
@@ -46,7 +46,7 @@ public class GameHandlerImpl implements GameHandler {
         }
 
         @Override
-        public void visit(ShutdownMessage message) {
+        public void visit(EndGameMessage message) {
             LOG.info("I won!");
         }
     }

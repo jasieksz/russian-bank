@@ -11,14 +11,6 @@ import java.util.concurrent.TimeUnit;
  * Low level client interface
  */
 public interface RawClient extends AutoCloseable {
-    static CompletableFuture<RawClient> connect(String serverUri) throws Exception {
-        return connect(new URI(serverUri));
-    }
-
-    static CompletableFuture<RawClient> connect(URI serverUri) throws Exception {
-        return RawClientImpl.connect(serverUri);
-    }
-
     void addListener(MessageVisitor visitor);
 
     void removeListener(MessageVisitor visitor);

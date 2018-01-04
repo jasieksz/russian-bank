@@ -9,4 +9,6 @@ public interface GUIApi {
     void startGame(GameTable table);
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
+
+    void endGame(String message);
 }

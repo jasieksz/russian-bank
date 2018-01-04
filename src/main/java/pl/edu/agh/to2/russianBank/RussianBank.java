@@ -8,17 +8,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.edu.agh.to2.russianBank.net.client.RawClient;
 import pl.edu.agh.to2.russianBank.net.server.Server;
-import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
-import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
-import pl.edu.agh.to2.russianBank.net.transport.ShutdownMessage;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
@@ -27,19 +22,24 @@ public class RussianBank extends Application {
         if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
-//            try(RawClient client = RawClient.connect("ws://localhost:8666/game").get()) {
-//                client.addListener(new MessageVisitor() {
-//                    @Override
-//                    public void visit(HelloMessage message) {
-//                        LOG.info("hello {}", message.getPlayerName());
-//                    }
+//            GUIApi gui = new GUIApi() {
+//                @Override
+//                public void startGame(GameTable table) {
 //
-//                    @Override
-//                    public void visit(ShutdownMessage message) {
-//                        LOG.info("shutdown: {}", message.getContent());
-//                    }
-//                });
-//                client.sendMessage(new HelloMessage("ziomek")).get();
+//                }
+//
+//                @Override
+//                public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
+//
+//                }
+//
+//                @Override
+//                public void endGame(String message) {
+//                    LOG.info("end game: {}", message);
+//                }
+//            };
+//            try (Client client = Client.connect(new URI("ws://localhost:8666/game"), gui).get()) {
+//                client.hello("ziomek").get();
 //                client.awaitClose(10, TimeUnit.SECONDS);
 //            } catch (Exception e) {
 //                LOG.error(e);

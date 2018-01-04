@@ -16,4 +16,9 @@ public class GUI implements GUIApi {
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
 
     }
+
+    @Override
+    public void endGame(String message) {
+
+    }
 }

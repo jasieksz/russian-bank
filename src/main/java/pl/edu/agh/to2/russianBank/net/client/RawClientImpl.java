@@ -25,7 +25,7 @@ public class RawClientImpl implements RawClient {
         this.listeners = listeners;
     }
 
-    static CompletableFuture<RawClient> connect(URI serverUri) throws Exception {
+    public static CompletableFuture<RawClient> connect(URI serverUri) throws Exception {
         final CompletableFuture<Void> connected = new CompletableFuture<>();
         final WebSocketClient wsClient = new WebSocketClient();
         final Set<MessageVisitor> listeners = ConcurrentHashMap.newKeySet(1);
