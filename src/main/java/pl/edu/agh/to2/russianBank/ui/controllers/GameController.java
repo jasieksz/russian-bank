@@ -3,12 +3,20 @@ package pl.edu.agh.to2.russianBank.ui.controllers;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import pl.edu.agh.to2.russianBank.game.*;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -20,6 +28,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
+
 
     @FXML
     public ImageView stackA;
@@ -84,20 +93,33 @@ public class GameController implements Initializable {
     @FXML
     public AnchorPane rootPane;
 
+
+    @FXML
+    public StackPane stackPane;
+
+
     public void initialize() {
         int count = 1 ;
 
-
+        stackPane.setPrefSize(800,800);
         for (ImageView images : imagesList) {
             //pane.setText("Message " + (count++) );
         }
         firstChosen = false;
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imagesList = new ArrayList<ImageView>() {{add(field1); add(field2); add(field3); add(field4); add(field5); add(field6); add(field7); add(field8);
         add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16);}};
+        //stackPane.setPrefSize(rootPane.getPrefWidth(),rootPane.getPrefHeight());
+        rootPane.boundsInParentProperty();
+        Parent scene = rootPane.getParent();
+
+        Bounds boundsInScreen = rootPane.localToScreen(rootPane.getBoundsInLocal());
+
+        //scene.sceneToLocal(rootPane);
     }
 /*
     @FXML
@@ -203,4 +225,30 @@ public class GameController implements Initializable {
             //this.stackA.setImage(image);
         });
     }
+
+    public void updateWidthConstaints(double width) {
+        // roughly give to the list 66% while to the button 33% of available
+        // space, besides paddings.
+        // +5s are for extra padding
+        AnchorPane.setRightAnchor(stackPane, width * 1 / 3 + 5);
+        //AnchorPane.setLeftAnchor(, width * 2 / 3 + 5);
+    }
+
+
+    public void updateCards(GameTable table) {
+
+        List<House> house = table.getHouses();
+        List<Foundation> foundations = table.getFoundations();
+        List<PlayerDeck> playersCards = table.getPlayers();
+        PlayerDeck player1 = playersCards.get(0);
+        PlayerDeck player2 = playersCards.get(1);
+        Hand hand1 = player1.getHand();
+        Hand hand2 = player1.getHand();
+        Waste waste1 = player1.getWaste();
+        Waste waste2 = player1.getWaste();
+
+
+    }
+
+
 }

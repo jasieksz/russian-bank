@@ -1,98 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.effect.ColorInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="798.0" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
-
-
-    <ImageView fx:id="field1" fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="67.0" onMouseClicked="#changeCard" AnchorPane.leftAnchor="216.0">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field2" fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="175.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field3" fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="283.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field4" fitHeight="99.0" fitWidth="75.0" layoutX="216.0" layoutY="393.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field5" fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="393.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field6" fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="283.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field7" fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="175.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field8" fitHeight="99.0" fitWidth="75.0" layoutX="511.0" layoutY="67.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/White.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field9" fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="283.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field10" fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="393.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field11" fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="393.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field12" fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="283.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field13" fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="175.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field14" fitHeight="99.0" fitWidth="75.0" layoutX="407.0" layoutY="67.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field15" fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="175.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-    <ImageView fx:id="field16" fitHeight="99.0" fitWidth="75.0" layoutX="322.0" layoutY="67.0" onMouseClicked="#changeCard">
-        <image>
-            <Image url="@../../../../../../../../../../resources/Karty/Ecru.jpg" />
-        </image></ImageView>
-
-    <ImageView fx:id="stackA" fitHeight="129.0" fitWidth="90.0" layoutX="14.0" layoutY="427.0" onMouseClicked="#uncoverCardFromStack" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.237052917480469" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="694.0" AnchorPane.topAnchor="426.76294708251953">
-        <Image url="@../../../../../../../../../../resources/Karty/Góra2.jpg" />
-    </ImageView>
-    <ImageView fx:id="binA" fitHeight="124.0" fitWidth="90.0" layoutX="111.0" layoutY="430.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
-        <effect>
-            <ColorInput />
-        </effect>
-    </ImageView>
-    <ImageView fx:id="binB" fitHeight="124.0" fitWidth="90.0" layoutX="597.0" layoutY="14.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
-        <effect>
-            <ColorInput />
-        </effect>
-    </ImageView>
-    <ImageView fx:id="stackB" fitHeight="129.0" fitWidth="90.0" layoutX="694.0" layoutY="14.0" onMouseClicked="#changeCard" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../../../../../../../../../../resources/Karty/Góra1.jpg" />
-    </ImageView>
-   <cursor>
-      <Cursor fx:constant="S_RESIZE" />
-   </cursor>
+<?import javafx.scene.layout.VBox?>
+<!--maxHeight="-Infinity" minHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity"
+      prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}"-->
 
 
+<?import javafx.stage.Screen?>
+<?import javafx.scene.layout.StackPane?>
+<AnchorPane fx:id="rootPane" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+
+
+<!--minHeight="0.0" minWidth="0.0"  prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}"-->
+
+    <fx:define>
+        <Screen fx:factory="getPrimary" fx:id="screen" />
+    </fx:define>
+
+    <children>
+        <StackPane AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <fx:include fx:id="child" source="child.fxml"/>
+        </StackPane>
+    </children>
 </AnchorPane>

@@ -12,7 +12,6 @@ public class House extends ICardSet {
         this.cards = cards;
     }
 
-
     @Override
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
