@@ -216,27 +216,13 @@ public class GameController implements Initializable {
         field20.setId("hand20");
 
         List<ImageView> imageViewList = new ArrayList<>();
-        imageViewList.add(field1);
-        imageViewList.add(field2);
-        imageViewList.add(field3);
-        imageViewList.add(field4);
-        imageViewList.add(field5);
-        imageViewList.add(field6);
-        imageViewList.add(field7);
-        imageViewList.add(field8);
-        imageViewList.add(field9);
-        imageViewList.add(field10);
-        imageViewList.add(field11);
-        imageViewList.add(field12);
-        imageViewList.add(field13);
-        imageViewList.add(field14);
-        imageViewList.add(field15);
-        imageViewList.add(field16);
-        imageViewList.add(field17);
-        imageViewList.add(field18);
-        imageViewList.add(field19);
-        imageViewList.add(field20);
-
+        imageViewList.add(field1); imageViewList.add(field2); imageViewList.add(field3);
+        imageViewList.add(field4);imageViewList.add(field5);imageViewList.add(field6);
+        imageViewList.add(field7);imageViewList.add(field8);imageViewList.add(field9);
+        imageViewList.add(field10);imageViewList.add(field11);imageViewList.add(field12);
+        imageViewList.add(field13);imageViewList.add(field14);imageViewList.add(field15);
+        imageViewList.add(field16);imageViewList.add(field17);imageViewList.add(field18);
+        imageViewList.add(field19);imageViewList.add(field20);
 
         EventHandler<MouseEvent> getPositionToMove = new EventHandler<MouseEvent>() {
 
@@ -377,7 +363,6 @@ public class GameController implements Initializable {
                    field1.setImage(image);
                });
 
-
     }
 
 
@@ -422,10 +407,8 @@ public class GameController implements Initializable {
 
         String result = res + "_"+res2;
         System.out.println(result);
-
         return result;
     }
-
 }
 
 
