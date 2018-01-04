@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +8,7 @@ import java.util.Optional;
 public class Waste extends ICardSet {
 
     public Waste() {
-        cards = Collections.emptyList();
+        cards = new ArrayList<>();
     }
 
     private List<Card> cards;

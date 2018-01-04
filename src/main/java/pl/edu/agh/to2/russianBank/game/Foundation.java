@@ -24,15 +24,25 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     @Override
     public Boolean putCard(Card card) {
-        return tryPutCard(card) && cards.add(card);
+        if (tryPutCard(card) && cards.add(card)){
+            suit = card.getSuit();
+            return true;
+        }
+        return false;
     }
 
     // TODO : add case when stack is empty => put card && set suit
     // TODO : when using Optional, check isPresent !
+    // changed behaviour a bit so that card suit is created on empty pile, look also at putCard
     private Boolean tryPutCard(Card card) {
         Optional<Card> topCard = lookUpTopCard();
-        return (topCard.get().getSuit() == card.getSuit()) &&
-                (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1));
+
+        if (topCard.isPresent()) {
+            return (topCard.get().getSuit() == card.getSuit()) &&
+                    (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1));
+        } else {
+            return (card.getRank().equals(CardRank.ACE));
+        }
     }
 
     private Boolean tryTakeTopCard(){

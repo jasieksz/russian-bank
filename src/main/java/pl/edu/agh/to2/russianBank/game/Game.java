@@ -29,6 +29,11 @@ public class Game {
 
     public void startGame(){
         // TODO : shuffle cards, setup houses, etc. ???
+
+        for (Player player : players) {
+
+        }
+
         return;
     }
 }
