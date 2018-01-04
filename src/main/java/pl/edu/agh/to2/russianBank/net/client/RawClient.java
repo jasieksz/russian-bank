@@ -1,21 +1,28 @@
 package pl.edu.agh.to2.russianBank.net.client;
 
 import pl.edu.agh.to2.russianBank.net.transport.Message;
+import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public interface Client extends AutoCloseable {
-    static CompletableFuture<Client> connect(String serverUri) throws Exception {
+/**
+ * Low level client interface
+ */
+public interface RawClient extends AutoCloseable {
+    static CompletableFuture<RawClient> connect(String serverUri) throws Exception {
         return connect(new URI(serverUri));
     }
 
-    static CompletableFuture<Client> connect(URI serverUri) throws Exception {
-        return ClientImpl.connect(serverUri);
+    static CompletableFuture<RawClient> connect(URI serverUri) throws Exception {
+        return RawClientImpl.connect(serverUri);
     }
 
-    // TODO: This should become private after higher-level API stabilizes
+    void addListener(MessageVisitor visitor);
+
+    void removeListener(MessageVisitor visitor);
+
     CompletableFuture<Void> sendMessage(Message message);
 
     /**

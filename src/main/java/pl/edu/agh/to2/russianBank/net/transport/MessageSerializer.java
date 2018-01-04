@@ -9,7 +9,8 @@ import java.util.Set;
 
 public final class MessageSerializer {
     public static final MessageSerializer GLOBAL = new MessageSerializer()
-            .withType(HelloMessage.class);
+            .withType(HelloMessage.class)
+            .withType(ShutdownMessage.class);
 
     private final ImmutableMap<String, Type> typeMap;
 
