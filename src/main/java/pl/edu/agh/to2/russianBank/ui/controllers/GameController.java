@@ -339,9 +339,13 @@ public class GameController implements Initializable {
         //});
     }
 
-    public void updateCards(GameTable table) {
+    public void setTable(GameTable table) {
 
         this.table = table;
+    }
+
+
+    public void updateCards(Player player, ICardSet previousSlot, ICardSet newSlot) {
         List<House> house = table.getHouses();
         List<Foundation> foundations = table.getFoundations();
         List<PlayerDeck> playersCards = table.getPlayers();
@@ -356,15 +360,14 @@ public class GameController implements Initializable {
         // tylko hand i waste
 
         hand1.takeTopCard().ifPresent
-               (c -> {
-                   String picture = buildPictureName(c.getRank(), c.getSuit());
-                   File file = new File("resources/Karty/"+picture+"jpg");
-                   Image image = new Image(file.toURI().toString());
-                   field1.setImage(image);
-               });
+                (c -> {
+                    String picture = buildPictureName(c.getRank(), c.getSuit());
+                    File file = new File("resources/Karty/"+picture+"jpg");
+                    Image image = new Image(file.toURI().toString());
+                    field1.setImage(image);
+                });
 
     }
-
 
     public String buildPictureName(CardRank r, CardSuit s) {
 

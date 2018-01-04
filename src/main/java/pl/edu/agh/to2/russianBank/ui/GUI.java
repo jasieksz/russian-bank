@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class GUI implements GUIApi {
 
+    GameController controller;
     @Override
     public void startGame(GameTable table) {
 
@@ -39,8 +40,8 @@ public class GUI implements GUIApi {
             stage.setScene(scene);
             stage.setMaximized(true);
             stage.show();
-            GameController c = loader.getController();
-            c.updateCards(table);
+            controller = loader.getController();
+            controller.setTable(table);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,9 +51,13 @@ public class GUI implements GUIApi {
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-
+        controller.updateCards(player, previousSlot,newSlot);
     }
 
+    @Override
+    public void endGame(String message) {
+
+    }
 
 
 }
