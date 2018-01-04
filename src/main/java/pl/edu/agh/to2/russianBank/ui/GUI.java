@@ -36,17 +36,11 @@ public class GUI implements GUIApi {
                 }
             });
 
-
             stage.setScene(scene);
-
             stage.setMaximized(true);
             stage.show();
-            //GameController.updateWidthConstaints(scene.getWidth());
-
             GameController c = loader.getController();
-
             c.updateCards(table);
-
 
         } catch (IOException e) {
             e.printStackTrace();

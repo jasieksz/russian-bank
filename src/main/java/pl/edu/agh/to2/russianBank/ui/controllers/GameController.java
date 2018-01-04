@@ -1,6 +1,5 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
-import javafx.animation.ScaleTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,17 +7,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import pl.edu.agh.to2.russianBank.game.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -87,7 +82,7 @@ public class GameController implements Initializable {
             add(field9); add(field10); add(field11); add(field12); add(field13); add(field14); add(field15); add(field16); add(field17);add(field18);}; cos tu nie dziala, ta metoda add*/
 
 
-       findPicture(CardRank.KING, CardSuit.HEARTS);
+       buildPictureName(CardRank.KING, CardSuit.HEARTS);
     File file1 = new File("resources/Karty/Gora1.jpg");
     Image image1 = new Image(file1.toURI().toString());
     File file2 = new File("resources/Karty/White.jpg");
@@ -238,9 +233,6 @@ public class GameController implements Initializable {
         imageViewList.add(field20);
 
 
-
-
-
         EventHandler<MouseEvent> getPositionToMove = new EventHandler<MouseEvent>() {
 
             @Override
@@ -262,7 +254,6 @@ public class GameController implements Initializable {
                     System.out.println(position2);
 
                 }
-
                 firstChosen = !firstChosen;
             }
         };
@@ -362,7 +353,7 @@ public class GameController implements Initializable {
 
         hand1.takeTopCard().ifPresent
                (c -> {
-                   String picture = findPicture(c.getRank(), c.getSuit());
+                   String picture = buildPictureName(c.getRank(), c.getSuit());
                    File file = new File("resources/Karty/"+picture+"jpg");
                    Image image = new Image(file.toURI().toString());
                    field1.setImage(image);
@@ -372,7 +363,7 @@ public class GameController implements Initializable {
     }
 
 
-    String findPicture(CardRank r, CardSuit s) {
+    public String buildPictureName(CardRank r, CardSuit s) {
 
         String res = "";
         String res2 = "";
