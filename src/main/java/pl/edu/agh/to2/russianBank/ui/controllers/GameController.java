@@ -66,7 +66,6 @@ public class GameController implements Initializable {
     public String type2;
     private GameTable table;
 
-    GameTable table;
 
     @FXML
     public AnchorPane rootPane;
