@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
+import javafx.animation.ScaleTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,13 +8,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -58,7 +64,7 @@ public class GameController implements Initializable {
     public Integer position2;
     public String type1;
     public String type2;
-
+    private GameTable table;
 
     GameTable table;
 
@@ -243,6 +249,7 @@ public class GameController implements Initializable {
                     firstChosenCard = (ImageView) mouseEvent.getSource();
                     field1ID = firstChosenCard.getId();
                     type1 = field1ID.replaceAll("\\d","");
+                    System.out.println(type1);
                     position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
                     System.out.println(position1);
 
@@ -250,9 +257,12 @@ public class GameController implements Initializable {
                 }else {
                     ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
                     field2ID = secondlyChosenCard.getId();
+                    type2 = field2ID.replaceAll("\\d","");
+                    System.out.println(type2);
                     position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
                     System.out.println(position2);
-
+                    Move move = new Move(getProperCard(type1,position1),getProperCard(type2,position2));
+        //            System.out.println(move.getSource() + "  ....  " + move.getTarget());
                 }
                 firstChosen = !firstChosen;
             }
@@ -292,27 +302,36 @@ public class GameController implements Initializable {
         GridPane.setConstraints(field20,26,1);
 
 }
+    public ICardSet getProperCard(String type, Integer position){
+        ICardSet card = null;
+        switch (type){
+            case "foundation":
+                for (Foundation f:table.getFoundations()) {
+                    if(f.getPosition().equals(position)){
+                        card = f;
+                    }
+                }
+                break;
+            case "hause":
+                for (House h:table.getHouses()) {
+                    if(h.getPosition().equals(position)){
+                        card = h;
+                    }
+                }
+                break;
+            case "waste":
+                if(position.equals(2)) card = table.getPlayers().get(0).getWaste();
+                else card = table.getPlayers().get(1).getWaste();
+                break;
+            case "hand":
+                if (position.equals(1)) card = table.getPlayers().get(0).getHand();
+                else card = table.getPlayers().get(1).getHand();
 
-/*
-    @FXML
-    public void getPositionToMove(MouseEvent mouseEvent) throws IOException{
-
-        if(!firstChosen) {
-
-            firstChosenCard = (ImageView) mouseEvent.getSource();
-           /// field1ID = firstChosenCard.getId();
-            position1 = Integer.parseInt(field1ID.replaceAll("[\\D]", ""));
-
-        }else {
-            ImageView secondlyChosenCard = (ImageView)mouseEvent.getSource();
-            field2ID = secondlyChosenCard.getId();
-            position2 = Integer.parseInt(field2ID.replaceAll("[\\D]", ""));
 
         }
+        return card;
+    }
 
-        firstChosen = !firstChosen;
-
-    }*/
 
 /*    @FXML
     public void moveCard(pozycja x, pozycja y){
