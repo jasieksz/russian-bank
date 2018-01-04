@@ -8,20 +8,16 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.edu.agh.to2.russianBank.net.client.Client;
-import pl.edu.agh.to2.russianBank.net.server.Server;
-import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
-import pl.edu.agh.to2.russianBank.ui.RootLayout;
+import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
 
     public static void main(String[] args) {
-        if (Arrays.asList(args).contains("-server")) {
+       /* if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
             try(Client client = Client.connect("ws://localhost:8666/game").get()) {
@@ -29,10 +25,10 @@ public class RussianBank extends Application {
             } catch (Exception e) {
                 LOG.error(e);
             }
-
-//            launch(args);
+*/
+            launch(args);
         }
-    }
+    //}
 
     @Override
     public void start(Stage primaryStage) {
