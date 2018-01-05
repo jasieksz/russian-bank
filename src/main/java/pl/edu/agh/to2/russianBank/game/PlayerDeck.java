@@ -4,7 +4,7 @@ public class PlayerDeck {
     private Hand hand;
     private Waste waste;
 
-    // TODO : observe hand -> when empty : swap waste with hand
+    // TODO : observe hand -> when empty : swap waste with hand if waste also empty => YOU WIN!
     public PlayerDeck(Hand hand, Waste waste) {
         this.hand = hand;
         this.waste = waste;
