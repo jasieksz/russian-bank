@@ -17,6 +17,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
         if(tryTakeTopCard()){
+
             result = Optional.of(cards.remove(cards.size() - 1));
         }
         return result;
@@ -53,7 +54,19 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         return true;
     }
 
+    @Override
     public Integer getPosition() {
         return position;
+    }
+
+    @Override
+    public Optional<Card> readTopCard() {
+        Optional<Card> result = Optional.empty();
+        if(tryTakeTopCard()){
+            //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
+
+            result = Optional.of(cards.get(cards.size() - 1));
+        }
+        return result;
     }
 }

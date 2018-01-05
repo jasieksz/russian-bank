@@ -10,4 +10,6 @@ public abstract class ICardSet {
     public abstract Boolean putCard(Card card);
     public abstract Integer getSize();
     public abstract Boolean isVisible();
+    public abstract Integer getPosition();
+    public abstract Optional<Card> readTopCard();
 }

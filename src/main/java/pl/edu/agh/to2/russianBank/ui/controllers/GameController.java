@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -66,6 +67,7 @@ public class GameController implements Initializable {
     public String type2;
     private GameTable table;
 
+    List<ImageView> imageViewList = new ArrayList<>();
 
     @FXML
     public AnchorPane rootPane;
@@ -234,7 +236,7 @@ public class GameController implements Initializable {
         field19.setId("waste19");
         field20.setId("hand20");
 
-        List<ImageView> imageViewList = new ArrayList<>();
+
         imageViewList.add(field1); imageViewList.add(field2); imageViewList.add(field3);
         imageViewList.add(field4);imageViewList.add(field5);imageViewList.add(field6);
         imageViewList.add(field7);imageViewList.add(field8);imageViewList.add(field9);
@@ -387,15 +389,49 @@ public class GameController implements Initializable {
         //teraz już mamy wszystko -> ustawić to co trzeba, czyli chyba
         // tylko hand i waste
 
-        hand1.takeTopCard().ifPresent
+        Optional<Card> card = previousSlot.readTopCard();
+        card.ifPresent(c -> {
+                            Integer pos1 = previousSlot.getPosition();
+                            String picture = buildPictureName(c.getRank(), c.getSuit());
+                            File file = new File("resources/Karty/"+picture+"jpg");
+                            Image image = new Image(file.toURI().toString());
+                            Integer pos2 = newSlot.getPosition();
+
+            for (ImageView i:imageViewList) {
+
+                position1 = Integer.parseInt(i.getId().replaceAll("[\\D]", ""));
+                if(pos1.equals(position1)){
+
+                    //ściągnij kartę z i
+                }
+                if(pos2.equals(position1)){
+                    //sprawdzam czy to coś w środku, bo jak to co na boku, to trzeba przesunąć
+                    // a nie nadpisywać
+                    if(!(position1 >=3 && position1 <=6) || (position1 >=15 && position1 <=18) )
+                    i.setImage(image);
+                    else {
+                        //TODO
+                        //przesunąć karty
+                    }
+
+                }
+
+            }
+
+                        });
+
+       /* hand1.takeTopCard().ifPresent
                 (c -> {
                     String picture = buildPictureName(c.getRank(), c.getSuit());
                     File file = new File("resources/Karty/"+picture+"jpg");
                     Image image = new Image(file.toURI().toString());
                     field1.setImage(image);
                 });
-
+*/
     }
+
+
+    //brakuje jeszcze funkcji odsłaniającej kartę ze stosika,  hand, impl tylko po naszej stronie
 
     public String buildPictureName(CardRank r, CardSuit s) {
 

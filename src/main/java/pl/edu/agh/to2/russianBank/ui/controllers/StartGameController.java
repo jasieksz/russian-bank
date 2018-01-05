@@ -12,17 +12,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.GUIApi;
+import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.net.client.Client;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class StartGameController implements Initializable {
 
-
+    private static final Logger LOG = LogManager.getLogger();
     @FXML
     public Button okButton;
     @FXML
@@ -39,6 +46,7 @@ public class StartGameController implements Initializable {
         //wywołanie metody z serwera
         String s = nameField.getText();
         System.out.println(s);
+        //RussianBank.setName(s);
 
         try {
             Stage oldStage = (Stage) okButton.getScene().getWindow();
@@ -66,8 +74,32 @@ public class StartGameController implements Initializable {
 
             stage.setMaximized(true);
             stage.show();
-            //GameController.updateWidthConstaints(scene.getWidth());
+        /*    GUIApi gui = new GUIApi() {
+                @Override
+                public void startGame(GameTable table) {
 
+                }
+
+                @Override
+                public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
+
+                }
+
+                @Override
+                public void endGame(String message) {
+                    LOG.info("end game: {}", message);
+                }
+            };
+
+
+            //try (Client client = Client.connect(new URI("ws://localhost:8666/game"));, gui).get()) {
+//               client.hello(s).get();
+              //  client.awaitClose(10, TimeUnit.SECONDS);
+            } catch (Exception e) {
+                LOG.error(e);
+            }
+            //GameController.updateWidthConstaints(scene.getWidth());
+*/
         } catch (IOException e) {
             e.printStackTrace();
         }

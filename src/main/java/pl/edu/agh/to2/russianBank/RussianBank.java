@@ -20,14 +20,31 @@ import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
+    private String name;
 
     public static void main(String[] args) {
         if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
-//            try(Client client = Client.connect("ws://localhost:8666/game").get()) {
-//                client.sendMessage(new HelloMessage("ziomek")).get();
-//                client.awaitClose(1, TimeUnit.MINUTES);
+//                GUIApi gui = new GUIApi() {
+//                @Override
+//                public void startGame(GameTable table) {
+//
+//                }
+//
+//                @Override
+//                public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
+//
+//                }
+//
+//                @Override
+//                public void endGame(String message) {
+//                    LOG.info("end game: {}", message);
+//                }
+//            };
+//            try (Client client = Client.connect(new URI("ws://localhost:8666/game"), gui).get()) {
+//                client.hello(name).get();
+//                client.awaitClose(10, TimeUnit.SECONDS);
 //            } catch (Exception e) {
 //                LOG.error(e);
 //            }
@@ -54,8 +71,14 @@ public class RussianBank extends Application {
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
             primaryStage.show();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
