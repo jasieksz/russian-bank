@@ -7,7 +7,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     private List<Card> cards;
     private Integer position;
-    private CardSuit suit;
+
 
     public Foundation(List<Card> cards) {
         this.cards = cards;
@@ -31,17 +31,24 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     // TODO : add case when stack is empty => put card && set suit
     // TODO : when using Optional, check isPresent !
     private Boolean tryPutCard(Card card) {
-        Optional<Card> topCard = lookUpTopCard();
-        return (topCard.get().getSuit() == card.getSuit()) &&
-                (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1));
+        if(cards.isEmpty() && card.getRank().getRank().equals(1)) return true;
+        return lookUpTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
+    }
+
+    private Boolean isCardCorrect(Card card1, Card card2){ // topcard, new card
+        return (card1.getSuit().getSuitId().equals(card2.getSuit().getSuitId())) &&
+                (card1.getRank().getRank().equals(card2.getRank().getRank() - 1));
     }
 
     private Boolean tryTakeTopCard(){
         return false;
     }
 
-    private Optional<Card> lookUpTopCard(){
-        return Optional.of(cards.get(cards.size() - 1));
+    public Optional<Card> lookUpTopCard(){
+        if (!cards.isEmpty()){
+        return Optional.ofNullable(cards.get(cards.size() - 1));
+        }
+        return Optional.empty();
     }
 
     @Override
