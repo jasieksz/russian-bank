@@ -1,8 +1,12 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -215,6 +219,7 @@ public class GameController implements Initializable {
         stack1_4.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         stack1_4.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
+
         field1.setId("hand1");
         field2.setId("waste2");
         field3.setId("house3");
@@ -316,7 +321,40 @@ public class GameController implements Initializable {
         GridPane.setConstraints(stack1_3,8,3);
         GridPane.setConstraints(stack1_4,7,3);
 
+        initializeButton();
 }
+
+    private void initializeButton() {
+
+        File file6 = new File("resources/Karty/budzik.png");
+        Image image6 = new Image(file6.toURI().toString());
+
+        ImageView field1 = new ImageView(image6);
+        field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(150));
+        field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(120));
+
+        final ToggleButton toggle = new ToggleButton();
+        toggle.setGraphic(field1);
+        toggle.setStyle("-fx-background-color: #00802b");
+        field1.imageProperty().bind(Bindings
+                .when(toggle.selectedProperty())
+                .then(image6)
+                .otherwise(image6)
+        );
+
+        HBox hbBtn = new HBox();
+        hbBtn.setAlignment(Pos.CENTER);
+        hbBtn.getChildren().add(toggle);
+        toggle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+            }
+        });
+        gridPane.add(hbBtn,25,11);
+    }
+
+
     public ICardSet getProperCard(String type, Integer position) {
         ICardSet card = null;
         switch (type){
