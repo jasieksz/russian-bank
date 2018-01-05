@@ -317,7 +317,7 @@ public class GameController implements Initializable {
         GridPane.setConstraints(stack1_4,7,3);
 
 }
-    public ICardSet getProperCard(String type, Integer position){
+    public ICardSet getProperCard(String type, Integer position) {
         ICardSet card = null;
         switch (type){
             case "foundation":
