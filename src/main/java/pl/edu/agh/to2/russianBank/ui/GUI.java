@@ -17,7 +17,8 @@ import java.io.IOException;
 
 public class GUI implements GUIApi {
 
-    GameController controller;
+    private GameController controller;
+
     @Override
     public void startGame(GameTable table) {
 
