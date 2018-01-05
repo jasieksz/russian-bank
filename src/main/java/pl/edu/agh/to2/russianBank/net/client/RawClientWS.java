@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.net.client;
 
+import com.google.gson.JsonParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.Session;
@@ -7,22 +8,26 @@ import org.eclipse.jetty.websocket.api.annotations.*;
 import pl.edu.agh.to2.russianBank.net.JettyUtil;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.net.transport.MessageSerializer;
+import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 @WebSocket
-public class ClientWS {
+public class RawClientWS {
     private static final Logger LOG = LogManager.getLogger();
 
     private final CountDownLatch closeLatch = new CountDownLatch(1);
     private final CompletableFuture<Void> connected;
+    private final Set<MessageVisitor> listeners;
 
     private Session session;
 
-    ClientWS(CompletableFuture<Void> connected) {
+    RawClientWS(CompletableFuture<Void> connected, Set<MessageVisitor> listeners) {
         this.connected = connected;
+        this.listeners = listeners;
     }
 
     @OnWebSocketConnect
@@ -41,6 +46,20 @@ public class ClientWS {
     @OnWebSocketMessage
     public void onMessage(String msgString) {
         LOG.debug("Message: {}", msgString);
+
+        Message message = null;
+
+        try {
+            message = MessageSerializer.GLOBAL.deserialize(msgString);
+        } catch (JsonParseException ex) {
+            LOG.warn("Received invalid payload, error: {}", ex.getMessage());
+        }
+
+        if (message != null) {
+            for (MessageVisitor visitor : listeners) {
+                message.accept(visitor);
+            }
+        }
     }
 
     @OnWebSocketError

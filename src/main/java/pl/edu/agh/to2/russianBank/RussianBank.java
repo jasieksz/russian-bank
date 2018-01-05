@@ -26,7 +26,7 @@ public class RussianBank extends Application {
         if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
-//                GUIApi gui = new GUIApi() {
+//            GUIApi gui = new GUIApi() {
 //                @Override
 //                public void startGame(GameTable table) {
 //
@@ -43,7 +43,7 @@ public class RussianBank extends Application {
 //                }
 //            };
 //            try (Client client = Client.connect(new URI("ws://localhost:8666/game"), gui).get()) {
-//                client.hello(name).get();
+//                client.hello("ziomek").get();
 //                client.awaitClose(10, TimeUnit.SECONDS);
 //            } catch (Exception e) {
 //                LOG.error(e);
@@ -71,8 +71,6 @@ public class RussianBank extends Application {
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
             primaryStage.show();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
