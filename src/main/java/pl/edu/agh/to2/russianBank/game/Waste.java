@@ -1,17 +1,19 @@
 package pl.edu.agh.to2.russianBank.game;
 
-import java.util.Collections;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
 import java.util.Optional;
 
 public class Waste extends ICardSet {
 
     private Integer position;
-    public Waste() {
-        cards = Collections.emptyList();
-    }
+    private ObservableList<Card> cards;
 
-    private List<Card> cards;
+    public Waste() {
+        cards = FXCollections.observableArrayList();
+    }
 
     @Override
     public Optional<Card> takeTopCard() {
@@ -70,5 +72,10 @@ public class Waste extends ICardSet {
             result = Optional.of(cards.get(cards.size() - 1));
         }
         return result;
+    }
+
+    @Override
+    public void addListener(ListChangeListener<Card> listener) {
+        cards.addListener(listener);
     }
 }

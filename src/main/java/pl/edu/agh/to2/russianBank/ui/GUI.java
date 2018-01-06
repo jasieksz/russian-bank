@@ -52,7 +52,6 @@ public class GUI implements GUIApi {
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-        controller.updateCards(player, previousSlot,newSlot);
     }
 
     @Override
