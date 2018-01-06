@@ -219,7 +219,7 @@ public class GameController implements Initializable {
         stack1_4.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         stack1_4.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
 
-
+//zwinąć do mapy
         field1.setId("hand1");
         field2.setId("waste2");
         field3.setId("house3");
