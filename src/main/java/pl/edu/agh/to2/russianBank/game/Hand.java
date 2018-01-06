@@ -1,15 +1,19 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
 import java.util.List;
 import java.util.Optional;
 
 public class Hand extends ICardSet {
 
-    private List<Card> cards;
+    private ObservableList<Card> cards;
     private Integer position;
 
     public Hand(List<Card> cards) {
-        this.cards = cards;
+        this.cards = FXCollections.observableList(cards);
     }
 
     // TODO should we automatically reshuffle if no more cards present?
@@ -43,5 +47,15 @@ public class Hand extends ICardSet {
     @Override
     public Optional<Card> readTopCard() {
         return cards.size()>0 ? Optional.of(cards.get(cards.size()-1)) : Optional.empty();
+    }
+
+    @Override
+    public void handleMouseClicked() {
+        // TODO: 2018-01-06
+    }
+
+    @Override
+    public void addListener(ListChangeListener<Card> listener) {
+        cards.addListener(listener);
     }
 }

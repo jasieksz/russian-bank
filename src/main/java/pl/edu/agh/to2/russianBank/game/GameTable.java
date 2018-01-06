@@ -1,5 +1,7 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.Preconditions;
+
 import java.util.List;
 
 public class GameTable {
@@ -8,6 +10,9 @@ public class GameTable {
     private List<Foundation> foundations;
 
     public GameTable(List<PlayerDeck> playersCard, List<House> houses, List<Foundation> foundations) {
+        Preconditions.checkArgument(foundations.size() == 8);
+        Preconditions.checkArgument(houses.size() == 8);
+        Preconditions.checkArgument(playersCard.size() == 2);
         this.playersCard = playersCard;
         this.houses = houses;
         this.foundations = foundations;
