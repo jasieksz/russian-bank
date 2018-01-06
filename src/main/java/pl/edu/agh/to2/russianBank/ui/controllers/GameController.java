@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pl.edu.agh.to2.russianBank.game.*;
 
@@ -94,31 +95,31 @@ public class GameController implements Initializable {
 
         initializeButton();
 
-//        List<PlayerDeck> playerDecks = new ArrayList<>();
-//        List<House> houses = new ArrayList<>();
-//        List<Foundation> foundations = new ArrayList<>();
-//        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-//        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-//
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//        houses.add(new House(new ArrayList<>()));
-//
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//        foundations.add(new Foundation(new ArrayList<>()));
-//
-//        setTable(new GameTable(playerDecks, houses, foundations));
+        List<PlayerDeck> playerDecks = new ArrayList<>();
+        List<House> houses = new ArrayList<>();
+        List<Foundation> foundations = new ArrayList<>();
+        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+
+        setTable(new GameTable(playerDecks, houses, foundations));
     }
 
     private void addImageViews(int row, int minColumn, List<ImageView> images) {
@@ -173,6 +174,10 @@ public class GameController implements Initializable {
         this.table = table;
         for (int i = 0; i < table.getHouses().size(); i++) {
             House house = table.getHouses().get(i);
+            houses.get(i).forEach(iv -> iv.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                house.handleMouseClicked();
+                event.consume();
+            }));
             final int index = i;
             house.addListener(c -> {
                 List<Card> card = house.getCards();
@@ -192,6 +197,10 @@ public class GameController implements Initializable {
 
         for (int i = 0; i < table.getFoundations().size(); i++) {
             Foundation foundation = table.getFoundations().get(i);
+            foundations.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                foundation.handleMouseClicked();
+                event.consume();
+            });
             final int index = i;
             foundation.addListener(c -> {
                 Optional<Card> card = foundation.takeTopCard();
@@ -232,7 +241,15 @@ public class GameController implements Initializable {
 
     private void addListenersForPlayer(int playerId) {
         Hand hand = table.getPlayers().get(playerId).getHand();
+        hands.get(playerId).addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            hand.handleMouseClicked();
+            event.consume();
+        });
         Waste waste = table.getPlayers().get(playerId).getWaste();
+        wastes.get(playerId).addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            waste.handleMouseClicked();
+            event.consume();
+        });
         waste.addListener(c -> {
             Optional<Card> card = waste.takeTopCard();
             ImageView imageView = wastes.get(playerId);

@@ -79,6 +79,11 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     }
 
     @Override
+    public void handleMouseClicked() {
+        // TODO: 2018-01-06
+    }
+
+    @Override
     public void addListener(ListChangeListener<Card> listener) {
         cards.addListener(listener);
     }

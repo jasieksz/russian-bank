@@ -13,4 +13,5 @@ public abstract class ICardSet {
     public abstract Integer getPosition();
     public abstract Optional<Card> readTopCard();
     public abstract void addListener(ListChangeListener<Card> listener);
+    public abstract void handleMouseClicked();
 }
