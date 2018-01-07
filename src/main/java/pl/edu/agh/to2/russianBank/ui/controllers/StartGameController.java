@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
@@ -25,7 +26,9 @@ public class StartGameController implements Initializable {
     @FXML
     public TextField nameField;
     public javafx.scene.control.Button deleteButton;
+    public GameTable table;
 
+    private GameController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,9 +42,10 @@ public class StartGameController implements Initializable {
         //RussianBank.setName(s);
 
         try {
+            FXMLLoader loader = new FXMLLoader();
             Stage oldStage = (Stage) okButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
+            Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
             Stage stage = new Stage();
 
             stage.setTitle("Garibaldka");
@@ -53,6 +57,8 @@ public class StartGameController implements Initializable {
             stage.setMaximized(true);
             stage.show();
 
+            controller = loader.getController();
+            controller.setTable(table);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -98,29 +98,6 @@ public class GameController implements Initializable {
 
         initializeButton();
 
-        List<PlayerDeck> playerDecks = new ArrayList<>();
-        List<House> houses = new ArrayList<>();
-        List<Foundation> foundations = new ArrayList<>();
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
 
         setTable(new GameTable(playerDecks, houses, foundations));
     }
