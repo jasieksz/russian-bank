@@ -60,7 +60,7 @@ public class Game {
         foundations.add(new Foundation(new ArrayList<>()));
         foundations.add(new Foundation(new ArrayList<>()));
 
-        
+
         return;
     }
 }
