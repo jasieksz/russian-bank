@@ -41,6 +41,8 @@ public class StartGameController implements Initializable {
         System.out.println(s);
         //RussianBank.setName(s);
 
+        //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
+
         try {
             FXMLLoader loader = new FXMLLoader();
             Stage oldStage = (Stage) okButton.getScene().getWindow();
@@ -57,8 +59,8 @@ public class StartGameController implements Initializable {
             stage.setMaximized(true);
             stage.show();
 
-            controller = loader.getController();
-            controller.setTable(table);
+            //controller = loader.getController();
+            //controller.setTable(table);
 
         } catch (IOException e) {
             e.printStackTrace();
