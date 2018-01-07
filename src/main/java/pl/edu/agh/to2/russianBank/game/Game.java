@@ -41,10 +41,10 @@ public class Game {
 
         List<ICardSet> piles = new ArrayList<>();
         for (int i = 0; i<8; i++){
-            piles.add(new House(FXCollections.observableArrayList(), i));
+            piles.add(new House(FXCollections.observableArrayList(), i, moveController));
         }
         for (int i = 8; i<16; i++){
-            piles.add(new Foundation(FXCollections.observableArrayList(), i));
+            piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
         }
         return piles;
     }
