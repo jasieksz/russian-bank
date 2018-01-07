@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.io.File;
 import java.net.URL;
@@ -30,6 +31,8 @@ public class GameController implements Initializable {
     private Map<Integer, ImageView> wastes = new HashMap<>();
     private Map<Integer, List<ImageView>> houses = new HashMap<>();
 
+    private Service service = new Service();
+
     @FXML
     public AnchorPane rootPane;
 
@@ -39,10 +42,10 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        buildPictureName(CardRank.KING, CardSuit.HEARTS);
-        Image image1 = createImage("resources/Karty/Gora1.jpg");
-        Image image2 = getWhiteImage();
-        Image image4 = createImage("resources/Karty/Gora2.jpg");
+        service.buildPictureName(CardRank.KING, CardSuit.HEARTS);
+        Image image1 = service.createImage("resources/Karty/Gora1.jpg");
+        Image image2 = service.getWhiteImage();
+        Image image4 = service.createImage("resources/Karty/Gora2.jpg");
 
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2));
@@ -58,7 +61,7 @@ public class GameController implements Initializable {
             for (int j = 0; j < 9; j++) {
                 houses.get(i).add(createField(null));
             }
-            houses.get(i).get(0).setImage(getWhiteImage());
+            houses.get(i).get(0).setImage(service.getWhiteImage());
         }
 
         houses.values().stream().flatMap(Collection::stream).forEach(imageView -> {
@@ -128,13 +131,10 @@ public class GameController implements Initializable {
         }
     }
 
-    private Image createImage(String pathname) {
-        File file6 = new File(pathname);
-        return new Image(file6.toURI().toString());
-    }
+
 
     private void initializeButton() {
-        Image image6 = createImage("resources/Karty/budzik.png");
+        Image image6 = service.createImage("resources/Karty/budzik.png");
 
         ImageView field1 = new ImageView(image6);
         field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(150));
@@ -183,14 +183,14 @@ public class GameController implements Initializable {
                 List<Card> card = house.getCards();
                 for (int j = 0; j < houses.get(index).size(); j++) {
                     if (j < card.size()) {
-                        houses.get(index).get(j).setImage(getImageForCard(card.get(j)));
+                        houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
                     } else {
                         houses.get(index).get(j).setImage(null);
                     }
                 }
 
                 if (card.isEmpty()) {
-                    houses.get(index).get(0).setImage(getWhiteImage());
+                    houses.get(index).get(0).setImage(service.getWhiteImage());
                 }
             });
         }
@@ -205,7 +205,7 @@ public class GameController implements Initializable {
             foundation.addListener(c -> {
                 Optional<Card> card = foundation.takeTopCard();
                 ImageView imageView = foundations.get(index);
-                imageView.setImage(card.map(this::getImageForCard).orElse(getWhiteImage()));
+                imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
             });
         }
 
@@ -213,31 +213,24 @@ public class GameController implements Initializable {
             addListenersForPlayer(i);
         }
 
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(1000);
-//                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
-//                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-//                System.out.println();
-//
-//                for (int i = 0; i < 7; i++) {
-//                    Thread.sleep(1111);
-//                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
+                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
+                System.out.println();
+
+                for (int i = 0; i < 6; i++) {
+                    Thread.sleep(1111);
+                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
+                }
+                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
-    private Image getImageForCard(Card card) {
-        String picture = buildPictureName(card.getRank(), card.getSuit());
-        return createImage("resources/Karty/" + picture + ".jpg");
-    }
-
-    private Image getWhiteImage() {
-        return createImage("resources/Karty/White.jpg");
-    }
 
     private void addListenersForPlayer(int playerId) {
         Hand hand = table.getPlayers().get(playerId).getHand();
@@ -253,19 +246,15 @@ public class GameController implements Initializable {
         waste.addListener(c -> {
             Optional<Card> card = waste.takeTopCard();
             ImageView imageView = wastes.get(playerId);
-            imageView.setImage(card.map(this::getImageForCard).orElse(getWhiteImage()));
+            imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
         hand.addListener(c -> {
             Optional<Card> card = hand.takeTopCard();
             ImageView imageView = hands.get(playerId);
-            imageView.setImage(card.map(this::getImageForCard).orElse(getWhiteImage()));
+            imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
     }
 
     //brakuje jeszcze funkcji odsłaniającej kartę ze stosika,  hand, impl tylko po naszej stronie
-    public String buildPictureName(CardRank r, CardSuit s) {
-        String result = s.getRank() + "_" + r.getRankName();
-        System.out.println(result);
-        return result;
-    }
+
 }

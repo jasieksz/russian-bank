@@ -29,7 +29,10 @@ public class Game {
     }
 
     public void startGame(){
+
         // TODO : shuffle cards, setup houses, etc. ???
+       // House
+        //gameTable = new GameTable();
         return;
     }
 }
