@@ -77,13 +77,12 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         }
         return result;
     }
-/*
+
     @Override
-    public void handleMouseClicked() {
+    public boolean validateMove() {
         // TODO: 2018-01-06
-
-
-    }*/
+        return true;
+    }
 
     @Override
     public void addListener(ListChangeListener<Card> listener) {

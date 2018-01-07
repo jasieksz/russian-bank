@@ -74,10 +74,11 @@ public class Waste extends ICardSet {
         return result;
     }
 
-   /* @Override
-    public void handleMouseClicked() {
+    @Override
+    public boolean validateMove() {
         // TODO: 2018-01-06
-    }*/
+        return true;
+    }
 
     @Override
     public void addListener(ListChangeListener<Card> listener) {
