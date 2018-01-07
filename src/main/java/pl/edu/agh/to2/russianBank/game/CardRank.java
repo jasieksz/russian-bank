@@ -10,17 +10,28 @@ public enum CardRank {
     CARD_8(8),
     CARD_9(9),
     CARD_10(10),
-    JACK(11),
-    QUEEN(12),
-    KING(13),
-    ACE(1);
+    JACK(11, "J"),
+    QUEEN(12, "Q"),
+    KING(13, "K"),
+    ACE(1, "AS");
 
     public Integer rank;
+    private String rankName;
+
     CardRank(Integer rank) {
+        this(rank, String.valueOf(rank));
+    }
+
+    CardRank(Integer rank, String rankName) {
         this.rank = rank;
+        this.rankName = rankName;
     }
 
     public Integer getRank() {
         return rank;
+    }
+
+    public String getRankName() {
+        return rankName;
     }
 }

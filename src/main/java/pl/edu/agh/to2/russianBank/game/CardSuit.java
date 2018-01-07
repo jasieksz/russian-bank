@@ -1,18 +1,23 @@
 package pl.edu.agh.to2.russianBank.game;
 
 public enum CardSuit {
-    HEARTS(0),
-    CLUBS(1),
-    DIAMONDS(2),
-    SPADES(3);
+    HEARTS(0, "S"),
+    CLUBS(1, "T"),
+    DIAMONDS(2, "K"),
+    SPADES(3, "W");
 
+    private Integer suitId;
+    private String rank;
+
+    CardSuit(Integer suitId, String rank) {
+        this.suitId = suitId;
+        this.rank = rank;
+    }
     public Integer getSuitId() {
         return suitId;
     }
 
-    private Integer suitId;
-
-    CardSuit(Integer suitId) {
-        this.suitId = suitId;
+    public String getRank() {
+        return rank;
     }
 }

@@ -19,7 +19,7 @@ public class GUI implements GUIApi {
 
     private GameController controller;
 
-    @Override
+    /*@Override
     public void startGame(GameTable table) {
 
         try {
@@ -48,11 +48,10 @@ public class GUI implements GUIApi {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-        controller.updateCards(player, previousSlot,newSlot);
     }
 
     @Override
