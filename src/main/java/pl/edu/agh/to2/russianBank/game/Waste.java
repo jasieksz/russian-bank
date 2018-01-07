@@ -24,6 +24,10 @@ public class Waste extends ICardSet {
         return result;
     }
 
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
     private Boolean tryTakeTopCard(){
         return cards.size()>0;
     }

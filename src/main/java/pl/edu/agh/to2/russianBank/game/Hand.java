@@ -23,6 +23,10 @@ public class Hand extends ICardSet {
         return cards.size()>0 ? Optional.of(cards.remove(cards.size()-1)) : Optional.empty();
     }
 
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
     @Override
     public Boolean putCard(Card card) {
         return this.cards.add(card);
