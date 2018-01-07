@@ -9,6 +9,7 @@ public class Game {
     private GameTable gameTable;
     private MoveController moveController;
 
+    // TODO : change constructor, it should create gameTable and moveController itself
     public Game(List<Player> players, GameTable gameTable, MoveController moveController) {
         this.players = players;
         this.gameTable = gameTable;

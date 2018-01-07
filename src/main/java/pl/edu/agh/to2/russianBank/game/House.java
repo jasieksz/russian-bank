@@ -12,7 +12,6 @@ public class House extends ICardSet {
         this.cards = cards;
     }
 
-
     @Override
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
@@ -52,5 +51,21 @@ public class House extends ICardSet {
     @Override
     public Boolean isVisible() {
         return true;
+    }
+
+    @Override
+    public Integer getPosition() {
+        return position;
+    }
+
+    @Override
+    public Optional<Card> readTopCard() {
+        Optional<Card> result = Optional.empty();
+        if(tryTakeTopCard()){
+            //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
+
+            result = Optional.of(cards.get(cards.size() - 1));
+        }
+        return result;
     }
 }

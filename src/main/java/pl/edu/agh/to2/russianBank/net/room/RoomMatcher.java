@@ -50,6 +50,7 @@ public class RoomMatcher {
      * @param room
      */
     public void deleteRoom(Room room) {
+        freeMatches.removeIf(player -> getRoom(player).equals(room));
         if(room.getPlayerA() != null)
             rooms.remove(room.getPlayerA());
         if(room.getPlayerB() != null)
