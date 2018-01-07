@@ -1,15 +1,17 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.ObservableList;
+
 import java.util.List;
 import java.util.Optional;
 
 public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
-    private List<Card> cards;
+    private ObservableList<Card> cards;
     private Integer position;
 
 
-    public Foundation(List<Card> cards) {
+    public Foundation(ObservableList<Card> cards) {
         this.cards = cards;
     }
 

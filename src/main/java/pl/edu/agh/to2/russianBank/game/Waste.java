@@ -1,5 +1,8 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,11 +11,12 @@ import java.util.Optional;
 public class Waste extends ICardSet {
 
     private Integer position;
-    public Waste() {
-        cards = new ArrayList<>();
-    }
+    private ObservableList<Card> cards;
 
-    private List<Card> cards;
+
+    public Waste() {
+        cards = FXCollections.observableArrayList();
+    }
 
     @Override
     public Optional<Card> takeTopCard() {

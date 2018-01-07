@@ -1,14 +1,16 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.ObservableList;
+
 import java.util.List;
 import java.util.Optional;
 
 public class House extends ICardSet {
 
-    private List<Card> cards;
+    private ObservableList<Card> cards;
     private Integer position;
 
-    public House(List<Card> cards) {
+    public House(ObservableList<Card> cards) {
         this.cards = cards;
     }
 
@@ -31,11 +33,14 @@ public class House extends ICardSet {
 
 
     // TODO : optional isPresent!!
-
+    //
     private Boolean tryPutCard(Card card) {
-        Optional<Card> topCard = lookUpTopCard();
-        return (topCard.get().getOppositeSuits().contains(card.getSuit()) &&
-                (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1)));
+        return lookUpTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
+    }
+
+    private boolean isCardCorrect (Card card1, Card card2){ //top, new
+        return (card1.getOppositeSuits().contains(card2.getSuit()) &&
+                (card1.getRank().getRank() == (card2.getRank().getRank() - 1)));
     }
 
     @Override
