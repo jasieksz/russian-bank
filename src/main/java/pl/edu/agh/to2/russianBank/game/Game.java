@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.FXCollections;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ public class Game {
     public Game(List<Player> players) {
         this.players = players;
 
+        this.gameTable = new GameTable(players, new ArrayList<ICardSet>(createPiles()));
+
+        this.moveController = new MoveController(this.getGameTable());
         //GameTable gameTable, MoveController moveController
         //this.gameTable = gameTable;
         //this.moveController = moveController;
@@ -31,6 +35,20 @@ public class Game {
     public MoveController getMoveController() {
         return moveController;
     }
+
+    private List<ICardSet> createPiles(){
+
+
+        List<ICardSet> piles = new ArrayList<>();
+        for (int i = 0; i<8; i++){
+            piles.add(new House(FXCollections.observableArrayList(), i));
+        }
+        for (int i = 8; i<16; i++){
+            piles.add(new Foundation(FXCollections.observableArrayList(), i));
+        }
+        return piles;
+    }
+
 
     public void startGame(){
 

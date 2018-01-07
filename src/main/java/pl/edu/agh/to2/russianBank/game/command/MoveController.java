@@ -2,8 +2,15 @@ package pl.edu.agh.to2.russianBank.game.command;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 
 public class MoveController {
+    public MoveController(GameTable gameTable) {
+        this.gameTable = gameTable;
+    }
+
+    private GameTable gameTable;
+
     private ObservableList<Command> commandStack = FXCollections
             .observableArrayList();
 
