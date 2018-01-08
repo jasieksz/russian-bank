@@ -8,9 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
@@ -51,6 +53,7 @@ public class StartGameController implements Initializable {
             Stage stage = new Stage();
 
             stage.setTitle("Garibaldka");
+            stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
             Scene scene = new Scene(root, 1200, 1200);
 
             stage.setScene(scene);
@@ -66,7 +69,4 @@ public class StartGameController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-
 }
