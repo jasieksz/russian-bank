@@ -1,10 +1,12 @@
 package pl.edu.agh.to2.russianBank.net.client;
 
 import pl.edu.agh.to2.russianBank.GUIApi;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
 import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
 import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
+import pl.edu.agh.to2.russianBank.net.transport.MoveMessage;
 
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
@@ -38,6 +40,10 @@ public class Client implements AutoCloseable {
         return client.sendMessage(new HelloMessage(playerName));
     }
 
+    public CompletableFuture<Void> move(Move move) {
+        return client.sendMessage(new MoveMessage(move));
+    }
+
     /**
      * Waits for client connection to close.
      *
@@ -66,6 +72,11 @@ public class Client implements AutoCloseable {
         @Override
         public void visit(EndGameMessage message) {
             gui.endGame(message.getMessage());
+        }
+
+        @Override
+        public void visit(MoveMessage message) {
+            gui.move(message.getMove());
         }
     }
 }

@@ -1,8 +1,10 @@
 package pl.edu.agh.to2.russianBank.game.command;
 
+import com.google.common.base.MoreObjects;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class Move implements Command {
@@ -31,4 +33,26 @@ public class Move implements Command {
         gameTable.getPiles().get(source).putCard(gameTable.getPiles().get(target).takeTopCard().get());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Move move = (Move) o;
+        return source == move.source &&
+                target == move.target;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(source, target);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("source", source)
+                .add("target", target)
+                .toString();
+    }
 }
