@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
@@ -24,6 +25,10 @@ public class House extends ICardSet {
         this.cards = cards;
     }
 
+    public House(List<Card> cards) {
+        this(FXCollections.observableList(cards));
+    }
+
     @Override
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
@@ -33,7 +38,7 @@ public class House extends ICardSet {
         return result;
     }
 
-    private Boolean tryTakeTopCard() {
+    private boolean tryTakeTopCard() {
         return cards.size() > 0;
     }
 
@@ -47,7 +52,7 @@ public class House extends ICardSet {
 
     // TODO : optional isPresent!!
 
-    private Boolean tryPutCard(Card card) {
+    private boolean tryPutCard(Card card) {
         return lookUpTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
     }
 

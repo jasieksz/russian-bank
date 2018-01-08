@@ -1,9 +1,11 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
@@ -12,11 +14,18 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     private int position;
     private MoveController moveController;
 
-
     public Foundation(ObservableList<Card> cards, int position, MoveController moveController) {
         this.cards = cards;
         this.position = position;
         this.moveController = moveController;
+    }
+
+    public Foundation(ObservableList<Card> cards) {
+        this.cards = cards;
+    }
+
+    public Foundation(List<Card> cards) {
+        this(FXCollections.observableList(cards));
     }
 
     @Override
@@ -36,17 +45,17 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     // TODO : add case when stack is empty => put card && set suit
     // TODO : when using Optional, check isPresent !
     // changed behaviour a bit so that card suit is created on empty pile, look also at putCard
-    private Boolean tryPutCard(Card card) {
+    private boolean tryPutCard(Card card) {
         if (cards.isEmpty() && card.getRank().getRank() == 1) return true;
         return lookUpTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
     }
 
-    private Boolean isCardCorrect(Card card1, Card card2) { // topcard, new card
+    private boolean isCardCorrect(Card card1, Card card2) { // topcard, new card
         return (card1.getSuit().getSuitId() == card2.getSuit().getSuitId() &&
                 (card1.getRank().getRank() == card2.getRank().getRank() - 1));
     }
 
-    private Boolean tryTakeTopCard() {
+    private boolean tryTakeTopCard() {
         return false;
     }
 
