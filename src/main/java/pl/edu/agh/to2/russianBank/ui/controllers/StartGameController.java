@@ -19,8 +19,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StartGameController implements Initializable {
-
     private static final Logger LOG = LogManager.getLogger();
+
     @FXML
     public Button okButton;
     @FXML
@@ -38,7 +38,7 @@ public class StartGameController implements Initializable {
 
         //wywołanie metody z serwera
         String s = nameField.getText();
-        System.out.println(s);
+        LOG.debug(s);
         //RussianBank.setName(s);
 
         //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
