@@ -20,9 +20,7 @@ public class Service {
     }
 
     public String buildPictureName(CardRank r, CardSuit s) {
-        String result = s.getRank() + "_" + r.getRankName();
-        System.out.println(result);
-        return result;
+        return s.getRank() + "_" + r.getRankName();
     }
 
     public Image createImage(String pathname) {

@@ -39,7 +39,7 @@ public class RussianBank extends Application {
             primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 

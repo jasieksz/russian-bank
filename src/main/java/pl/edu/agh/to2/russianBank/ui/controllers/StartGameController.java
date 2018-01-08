@@ -66,7 +66,7 @@ public class StartGameController implements Initializable {
             //controller.setTable(table);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 }
