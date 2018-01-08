@@ -2,13 +2,16 @@ package pl.edu.agh.to2.russianBank.game;
 
 
 import javafx.collections.ListChangeListener;
+import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.Optional;
 
 public abstract class ICardSet {
-
+    private MoveController moveController;
     private ICardSet firstChosenCard;
-    private Boolean firstChosen = false;
+    private boolean firstChosen = false;
+
     public abstract Optional<Card> takeTopCard();
 
     public abstract Boolean putCard(Card card);

@@ -4,4 +4,6 @@ public interface MessageVisitor {
     void visit(HelloMessage message);
 
     void visit(EndGameMessage message);
+
+    void visit(MoveMessage message);
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Waste extends ICardSet {
 
-    private Integer position;
+    private int position;
     private ObservableList<Card> cards;
 
     public Waste() {
@@ -18,55 +18,59 @@ public class Waste extends ICardSet {
     @Override
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
-        if(tryTakeTopCard()){
+        if (tryTakeTopCard()) {
             result = Optional.of(cards.remove(cards.size() - 1));
         }
         return result;
     }
 
-    private Boolean tryTakeTopCard(){
-        return cards.size()>0;
+    private boolean tryTakeTopCard() {
+        return cards.size() > 0;
     }
 
-    private Card lookUpTopCard(){
+    private Card lookUpTopCard() {
         return cards.get(cards.size() - 1);
     }
 
-
-    private Boolean tryPutCard(Card card) {
+    private boolean tryPutCard(Card card) {
         return true;
     }
 
-    private Boolean enemyTryPutCard(Card card) {
+    private boolean enemyTryPutCard(Card card) {
         Card topCard = lookUpTopCard();
-        return (topCard.getSuit().getSuitId().equals(card.getSuit().getSuitId()))
-                && (topCard.getRank().getRank().equals(card.getRank().getRank() - 1)
-                    || topCard.getRank().getRank().equals(card.getRank().getRank() + 1));
+        return (topCard.getSuit().getSuitId() == card.getSuit().getSuitId())
+                && (topCard.getRank().getRank() == card.getRank().getRank() - 1
+                || topCard.getRank().getRank() == card.getRank().getRank() + 1);
     }
 
     @Override
-    public Boolean putCard(Card card) {
+    public boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
     }
+
     @Override
-    public Integer getSize() {
+    public int getSize() {
         return cards.size();
     }
 
     @Override
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return true;
     }
 
     @Override
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
     public Optional<Card> readTopCard() {
         Optional<Card> result = Optional.empty();
-        if(tryTakeTopCard()){
+        if (tryTakeTopCard()) {
             //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
 
             result = Optional.of(cards.get(cards.size() - 1));

@@ -3,6 +3,7 @@ package pl.edu.agh.to2.russianBank.game;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,21 @@ import java.util.Optional;
 public class House extends ICardSet {
 
     private ObservableList<Card> cards;
-    private Integer position;
+    private int position;
+    private MoveController moveController;
+
+    public House(ObservableList<Card> cards, int position, MoveController moveController) {
+        this.cards = cards;
+        this.position = position;
+        this.moveController = moveController;
+    }
+
+    public House(ObservableList<Card> cards) {
+        this.cards = cards;
+    }
 
     public House(List<Card> cards) {
-        this.cards = FXCollections.observableList(cards);
+        this(FXCollections.observableList(cards));
     }
 
     @Override
@@ -26,7 +38,7 @@ public class House extends ICardSet {
         return result;
     }
 
-    private Boolean tryTakeTopCard() {
+    private boolean tryTakeTopCard() {
         return cards.size() > 0;
     }
 
@@ -40,30 +52,32 @@ public class House extends ICardSet {
 
     // TODO : optional isPresent!!
 
-    private Boolean tryPutCard(Card card) {
-        Optional<Card> topCard = lookUpTopCard();
-        return !topCard.isPresent()
-                || (topCard.get().getOppositeSuits().contains(card.getSuit())
-                && (topCard.get().getRank().getRank() == (card.getRank().getRank() - 1)));
+    private boolean tryPutCard(Card card) {
+        return lookUpTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
+    }
+
+    private boolean isCardCorrect(Card card1, Card card2) { //top, new
+        return (card1.getOppositeSuits().contains(card2.getSuit()) &&
+                (card1.getRank().getRank() == (card2.getRank().getRank() - 1)));
     }
 
     @Override
-    public Boolean putCard(Card card) {
+    public boolean putCard(Card card) {
         return cards.add(card);
     }
 
     @Override
-    public Integer getSize() {
+    public int getSize() {
         return cards.size();
     }
 
     @Override
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return true;
     }
 
     @Override
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 

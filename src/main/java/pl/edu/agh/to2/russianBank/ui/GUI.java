@@ -10,6 +10,7 @@ import pl.edu.agh.to2.russianBank.GUIApi;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
@@ -56,6 +57,11 @@ public class GUI implements GUIApi {
 
     @Override
     public void endGame(String message) {
+
+    }
+
+    @Override
+    public void move(Move move) {
 
     }
 

@@ -8,9 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
@@ -19,8 +21,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StartGameController implements Initializable {
-
     private static final Logger LOG = LogManager.getLogger();
+
     @FXML
     public Button okButton;
     @FXML
@@ -38,7 +40,7 @@ public class StartGameController implements Initializable {
 
         //wywołanie metody z serwera
         String s = nameField.getText();
-        System.out.println(s);
+        LOG.debug(s);
         //RussianBank.setName(s);
 
         //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
@@ -51,6 +53,7 @@ public class StartGameController implements Initializable {
             Stage stage = new Stage();
 
             stage.setTitle("Garibaldka");
+            stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
             Scene scene = new Scene(root, 1200, 1200);
 
             stage.setScene(scene);
@@ -63,10 +66,7 @@ public class StartGameController implements Initializable {
             //controller.setTable(table);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
-
-
-
 }

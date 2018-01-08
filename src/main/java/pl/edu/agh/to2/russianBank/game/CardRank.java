@@ -15,19 +15,19 @@ public enum CardRank {
     KING(13, "K"),
     ACE(1, "AS");
 
-    public Integer rank;
+    public int rank;
     private String rankName;
 
-    CardRank(Integer rank) {
+    CardRank(int rank) {
         this(rank, String.valueOf(rank));
     }
 
-    CardRank(Integer rank, String rankName) {
+    CardRank(int rank, String rankName) {
         this.rank = rank;
         this.rankName = rankName;
     }
 
-    public Integer getRank() {
+    public int getRank() {
         return rank;
     }
 

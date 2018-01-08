@@ -9,12 +9,15 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
 
 import java.net.URL;
 import java.util.*;
 
 public class GameController implements Initializable {
+    private static final Logger LOG = LogManager.getLogger();
 
     @FXML
     public GridPane gridPane;
@@ -76,7 +79,7 @@ public class GameController implements Initializable {
 
 
     private void initializeButton() {
-        Image image6 = service.createImage("resources/Karty/budzik.png");
+        Image image6 = service.createImage("karty/budzik.png");
 
         ImageView field1 = new ImageView(image6);
         field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(150));
@@ -94,7 +97,7 @@ public class GameController implements Initializable {
         HBox hbBtn = new HBox();
         hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().add(toggle);
-        toggle.setOnAction(event -> System.out.println("Hello World!"));
+        toggle.setOnAction(event -> LOG.debug("Hello World!"));
         gridPane.add(hbBtn, 25, 11);
     }
 
@@ -109,7 +112,7 @@ public class GameController implements Initializable {
 
     @FXML
     public void uncoverCardFromStack() {
-        System.out.println("Clicked!"); // change functionality
+        LOG.debug("Clicked!"); // change functionality
     }
 
     public void setTable(GameTable table) {
@@ -230,7 +233,6 @@ public class GameController implements Initializable {
                 Thread.sleep(1000);
                 table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
                 table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-                System.out.println();
 
                 for (int i = 0; i < 6; i++) {
                     Thread.sleep(1111);
@@ -238,7 +240,7 @@ public class GameController implements Initializable {
                 }
                 table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error(e);
             }
         }).start();
 

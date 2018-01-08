@@ -1,6 +1,7 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import javafx.scene.image.Image;
+import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.CardRank;
 import pl.edu.agh.to2.russianBank.game.CardSuit;
@@ -11,21 +12,18 @@ public class Service {
 
     public Image getImageForCard(Card card) {
         String picture = buildPictureName(card.getRank(), card.getSuit());
-        return createImage("resources/Karty/" + picture + ".jpg");
+        return createImage("karty/" + picture + ".png");
     }
 
     public Image getWhiteImage() {
-        return createImage("resources/Karty/White.jpg");
+        return createImage("karty/White.png");
     }
 
     public String buildPictureName(CardRank r, CardSuit s) {
-        String result = s.getRank() + "_" + r.getRankName();
-        System.out.println(result);
-        return result;
+        return s.getRank() + "_" + r.getRankName();
     }
 
     public Image createImage(String pathname) {
-        File file6 = new File(pathname);
-        return new Image(file6.toURI().toString());
+        return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 }
