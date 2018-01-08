@@ -43,9 +43,9 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         service.buildPictureName(CardRank.KING, CardSuit.HEARTS);
-        Image image1 = service.createImage("resources/Karty/Gora1.jpg");
+        Image image1 = service.createImage("resources/Karty/Gora1.png");
         Image image2 = service.getWhiteImage();
-        Image image4 = service.createImage("resources/Karty/Gora2.jpg");
+        Image image4 = service.createImage("resources/Karty/Gora2.png");
 
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2));

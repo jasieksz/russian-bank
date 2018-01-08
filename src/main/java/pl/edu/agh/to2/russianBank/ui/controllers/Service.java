@@ -11,11 +11,11 @@ public class Service {
 
     public Image getImageForCard(Card card) {
         String picture = buildPictureName(card.getRank(), card.getSuit());
-        return createImage("resources/Karty/" + picture + ".jpg");
+        return createImage("resources/Karty/" + picture + ".png");
     }
 
     public Image getWhiteImage() {
-        return createImage("resources/Karty/White.jpg");
+        return createImage("resources/Karty/White.png");
     }
 
     public String buildPictureName(CardRank r, CardSuit s) {
