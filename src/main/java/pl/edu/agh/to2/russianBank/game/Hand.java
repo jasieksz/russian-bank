@@ -52,12 +52,6 @@ public class Hand extends ICardSet {
         return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
-  /*  @Override
-    public void handleMouseClicked() {
-        // TODO: 2018-01-06
-
-    }*/
-
     @Override
     public void addListener(ListChangeListener<Card> listener) {
         cards.addListener(listener);
