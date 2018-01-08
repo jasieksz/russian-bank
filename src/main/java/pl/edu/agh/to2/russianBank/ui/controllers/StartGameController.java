@@ -1,7 +1,5 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,32 +8,29 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.edu.agh.to2.russianBank.GUIApi;
 import pl.edu.agh.to2.russianBank.RussianBank;
-import pl.edu.agh.to2.russianBank.game.*;
-import pl.edu.agh.to2.russianBank.net.client.Client;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class StartGameController implements Initializable {
-
     private static final Logger LOG = LogManager.getLogger();
+
     @FXML
     public Button okButton;
     @FXML
     public TextField nameField;
     public javafx.scene.control.Button deleteButton;
+    public GameTable table;
 
+    private GameController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,66 +40,33 @@ public class StartGameController implements Initializable {
 
         //wywołanie metody z serwera
         String s = nameField.getText();
-        System.out.println(s);
+        LOG.debug(s);
         //RussianBank.setName(s);
 
+        //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
+
         try {
+            FXMLLoader loader = new FXMLLoader();
             Stage oldStage = (Stage) okButton.getScene().getWindow();
             oldStage.close();
-            Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
+            Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
             Stage stage = new Stage();
-            //stage.setMaximized(true);
-            //stage.setFullScreen(true);
 
             stage.setTitle("Garibaldka");
+            stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
             Scene scene = new Scene(root, 1200, 1200);
-
-
-
-            scene.widthProperty().addListener(new ChangeListener<Number>() {
-
-                @Override
-                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                    //GameController.updateWidthConstaints(newValue.doubleValue());
-                }
-            });
 
             stage.setScene(scene);
 
 
             stage.setMaximized(true);
             stage.show();
-        /*    GUIApi gui = new GUIApi() {
-                @Override
-                public void startGame(GameTable table) {
 
-                }
+            //controller = loader.getController();
+            //controller.setTable(table);
 
-                @Override
-                public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-
-                }
-
-                @Override
-                public void endGame(String message) {
-                    LOG.info("end game: {}", message);
-                }
-            };
-
-
-            //try (Client client = Client.connect(new URI("ws://localhost:8666/game"));, gui).get()) {
-//               client.hello(s).get();
-              //  client.awaitClose(10, TimeUnit.SECONDS);
-            } catch (Exception e) {
-                LOG.error(e);
-            }
-            //GameController.updateWidthConstaints(scene.getWidth());
-*/
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
-
-
-
 }

@@ -1,7 +1,7 @@
 package pl.edu.agh.to2.russianBank.game;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
 
 public class Card {
@@ -14,10 +14,10 @@ public class Card {
     }
 
     public List<CardSuit> getOppositeSuits() {
-        List ret = new ArrayList<CardSuit>();
-        ret.add(CardSuit.values()[(this.suit.getSuitId() + 1) % CardSuit.values().length]);
-        ret.add(CardSuit.values()[(this.suit.getSuitId() + 3) % CardSuit.values().length]);
-        return ret;
+        return ImmutableList.of(
+                CardSuit.values()[(this.suit.getSuitId() + 1) % CardSuit.values().length],
+                CardSuit.values()[(this.suit.getSuitId() + 3) % CardSuit.values().length]
+        );
     }
 
     public CardSuit getSuit() {
