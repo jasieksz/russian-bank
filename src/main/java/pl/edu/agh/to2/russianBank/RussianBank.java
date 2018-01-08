@@ -11,41 +11,16 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.server.Server;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
-    private String name;
 
     public static void main(String[] args) {
         if (Arrays.asList(args).contains("-server")) {
             Server.main(args);
         } else {
-//            GUIApi gui = new GUIApi() {
-//                @Override
-//                public void startGame(GameTable table) {
-//
-//                }
-//
-//                @Override
-//                public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-//
-//                }
-//
-//                @Override
-//                public void endGame(String message) {
-//                    LOG.info("end game: {}", message);
-//                }
-//            };
-//            try (Client client = Client.connect(new URI("ws://localhost:8666/game"), gui).get()) {
-//                client.hello("ziomek").get();
-//                client.awaitClose(10, TimeUnit.SECONDS);
-//            } catch (Exception e) {
-//                LOG.error(e);
-//            }
-
             launch(args);
         }
     }
@@ -53,17 +28,13 @@ public class RussianBank extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root =
-                    //FXMLLoader.load(RootLayout.class.getResource("RootLayout.fxml"));
-                    FXMLLoader.load(RootLayout.class.getResource("StartGame.fxml"));
+            Parent root = FXMLLoader.load(RootLayout.class.getResource("StartGame.fxml"));
 
             Scene scene = new Scene(root, 800, 600);
-
 
             primaryStage.setTitle("Garibaldka");
             Image image = new Image(RussianBank.class.getResourceAsStream("image.png"));
             primaryStage.getIcons().add(image);
-            //("@../../../../../../../../../../resources/image.png"));
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
             primaryStage.show();
@@ -72,7 +43,4 @@ public class RussianBank extends Application {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
