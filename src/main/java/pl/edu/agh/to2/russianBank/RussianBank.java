@@ -8,15 +8,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.edu.agh.to2.russianBank.net.client.Client;
 import pl.edu.agh.to2.russianBank.net.server.Server;
-import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
 import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class RussianBank extends Application {
     private static final Logger LOG = LogManager.getLogger();
@@ -64,8 +61,7 @@ public class RussianBank extends Application {
 
 
             primaryStage.setTitle("Garibaldka");
-            File file = new File("resources/image.png");
-            Image image = new Image(file.toURI().toString());
+            Image image = new Image(RussianBank.class.getResourceAsStream("image.png"));
             primaryStage.getIcons().add(image);
             //("@../../../../../../../../../../resources/image.png"));
             primaryStage.setScene(scene);
