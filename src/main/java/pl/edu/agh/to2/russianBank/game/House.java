@@ -12,9 +12,9 @@ import java.util.Optional;
 public class House extends ICardSet {
 
     private ObservableList<Card> cards;
-    private Integer position;
+    private int position;
     private MoveController moveController;
-    public House(ObservableList<Card> cards, Integer position, MoveController moveController) {
+    public House(ObservableList<Card> cards, int position, MoveController moveController) {
         this.cards = cards;
         this.position = position;
         this.moveController = moveController;
@@ -55,22 +55,22 @@ public class House extends ICardSet {
     }
 
     @Override
-    public Boolean putCard(Card card) {
+    public boolean putCard(Card card) {
         return cards.add(card);
     }
 
     @Override
-    public Integer getSize() {
+    public int getSize() {
         return cards.size();
     }
 
     @Override
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return true;
     }
 
     @Override
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 

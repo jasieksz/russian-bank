@@ -10,12 +10,12 @@ import java.util.Optional;
 public abstract class ICardSet {
     private MoveController moveController;
     private ICardSet firstChosenCard;
-    private Boolean firstChosen = false;
+    private boolean firstChosen = false;
     public abstract Optional<Card> takeTopCard();
-    public abstract Boolean putCard(Card card);
-    public abstract Integer getSize();
-    public abstract Boolean isVisible();
-    public abstract Integer getPosition();
+    public abstract boolean putCard(Card card);
+    public abstract int getSize();
+    public abstract boolean isVisible();
+    public abstract int getPosition();
     public abstract Optional<Card> readTopCard();
     public abstract void addListener(ListChangeListener<Card> listener);
     public void handleMouseClicked() {

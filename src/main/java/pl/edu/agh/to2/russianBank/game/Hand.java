@@ -10,7 +10,7 @@ import java.util.Optional;
 public class Hand extends ICardSet {
 
     private ObservableList<Card> cards;
-    private Integer position;
+    private int position;
 
     public Hand(List<Card> cards) {
         this.cards = FXCollections.observableList(cards);
@@ -23,28 +23,28 @@ public class Hand extends ICardSet {
         return cards.size()>0 ? Optional.of(cards.remove(cards.size()-1)) : Optional.empty();
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
     @Override
-    public Boolean putCard(Card card) {
+    public boolean putCard(Card card) {
         return this.cards.add(card);
     }
 
 
     @Override
-    public Integer getSize() {
+    public int getSize() {
         return cards.size();
     }
 
     @Override
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return false;
     }
 
     @Override
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 

@@ -6,14 +6,14 @@ public enum CardSuit {
     DIAMONDS(2, "K"),
     SPADES(3, "W");
 
-    private Integer suitId;
+    private int suitId;
     private String rank;
 
-    CardSuit(Integer suitId, String rank) {
+    CardSuit(int suitId, String rank) {
         this.suitId = suitId;
         this.rank = rank;
     }
-    public Integer getSuitId() {
+    public int getSuitId() {
         return suitId;
     }
 

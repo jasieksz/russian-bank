@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Waste extends ICardSet {
 
-    private Integer position;
+    private int position;
     private ObservableList<Card> cards;
 
     public Waste() {
@@ -24,11 +24,11 @@ public class Waste extends ICardSet {
         return result;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
-    private Boolean tryTakeTopCard(){
+    private boolean tryTakeTopCard(){
         return cards.size()>0;
     }
 
@@ -37,33 +37,33 @@ public class Waste extends ICardSet {
     }
 
 
-    private Boolean tryPutCard(Card card) {
+    private boolean tryPutCard(Card card) {
         return true;
     }
 
-    private Boolean enemyTryPutCard(Card card) {
+    private boolean enemyTryPutCard(Card card) {
         Card topCard = lookUpTopCard();
-        return (topCard.getSuit().getSuitId().equals(card.getSuit().getSuitId()))
-                && (topCard.getRank().getRank().equals(card.getRank().getRank() - 1)
-                    || topCard.getRank().getRank().equals(card.getRank().getRank() + 1));
+        return (topCard.getSuit().getSuitId() == card.getSuit().getSuitId())
+                && (topCard.getRank().getRank() == card.getRank().getRank() - 1
+                || topCard.getRank().getRank() == card.getRank().getRank() + 1);
     }
 
     @Override
-    public Boolean putCard(Card card) {
+    public boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
     }
     @Override
-    public Integer getSize() {
+    public int getSize() {
         return cards.size();
     }
 
     @Override
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return true;
     }
 
     @Override
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 
