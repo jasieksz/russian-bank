@@ -1,7 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
 import javafx.collections.FXCollections;
-import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
@@ -57,8 +56,8 @@ public class Game {
         // TODO : shuffle cards, setup houses, etc. ???
 
         for (int i = 4; i < 12; i++) {
-            Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
-            moveController.executeCommand(move);
+//            Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
+//            moveController.executeCommand(move);
         }
 
 

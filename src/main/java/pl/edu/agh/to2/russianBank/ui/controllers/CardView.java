@@ -20,7 +20,10 @@ public class CardView extends ImageView {
         setOnDragDetected(event -> {
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
-            content.putImage(getImage());
+            ImageView imageView = new ImageView(getImage());
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(50);
+            content.putImage(imageView.snapshot(null, null));
             dragboard.setContent(content);
             event.consume();
         });

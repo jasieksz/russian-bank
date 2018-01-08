@@ -139,9 +139,9 @@ public class GameController implements Initializable {
     }
 
     private void initializeBoard() {
-        Image image1 = service.createImage("resources/Karty/Gora1.jpg");
+        Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
-        Image image4 = service.createImage("resources/Karty/Gora2.jpg");
+        Image image4 = service.createImage("karty/Gora2.png");
 
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));

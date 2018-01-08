@@ -8,33 +8,25 @@ import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import java.util.Optional;
 
 public abstract class ICardSet {
-    private MoveController moveController;
+    private MoveController moveController = new MoveController(null);
     private ICardSet firstChosenCard;
     private boolean firstChosen = false;
 
     public abstract Optional<Card> takeTopCard();
 
-    public abstract Boolean putCard(Card card);
+    public abstract boolean putCard(Card card);
 
-    public abstract Integer getSize();
+    public abstract int getSize();
 
-    public abstract Boolean isVisible();
+    public abstract boolean isVisible();
 
-    public abstract Integer getPosition();
+    public abstract int getPosition();
 
     public abstract Optional<Card> readTopCard();
 
     public abstract void addListener(ListChangeListener<Card> listener);
 
-    public abstract boolean validateMove();
-
     public void makeMove(ICardSet source) {
-        if (validateMove()) {
-            source.readTopCard().ifPresent(card -> {
-                if (putCard(card)) {
-                    source.takeTopCard();
-                }
-            });
-        }
+        moveController.executeCommand(new Move(source, this));
     }
 }
