@@ -2,7 +2,6 @@ package pl.edu.agh.to2.russianBank.game.command;
 
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
-import pl.edu.agh.to2.russianBank.game.ICardSet;
 
 import java.util.Optional;
 
@@ -24,11 +23,11 @@ public class Move implements Command {
         return result;
     }
 
-    public void redo (GameTable gameTable) {
+    public void redo(GameTable gameTable) {
         gameTable.getPiles().get(target).putCard(gameTable.getPiles().get(source).takeTopCard().get());
     }
 
-    public void undo (GameTable gameTable) {
+    public void undo(GameTable gameTable) {
         gameTable.getPiles().get(source).putCard(gameTable.getPiles().get(target).takeTopCard().get());
     }
 

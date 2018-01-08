@@ -39,7 +39,7 @@ public class Game {
         return moveController;
     }
 
-    private List<ICardSet> createPiles(){
+    private List<ICardSet> createPiles() {
 
 
         List<ICardSet> piles = new ArrayList<>();
@@ -52,21 +52,21 @@ public class Game {
         piles.add(players.get(1).getPlayerDeck().getHand());
         piles.add(players.get(1).getPlayerDeck().getWaste());
 
-        for (int i = 4; i<12; i++){
+        for (int i = 4; i < 12; i++) {
             piles.add(new House(FXCollections.observableArrayList(), i, moveController));
         }
-        for (int i = 12; i<20; i++){
+        for (int i = 12; i < 20; i++) {
             piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
         }
         return piles;
     }
 
 
-    public void startGame(){
+    public void startGame() {
 
         // TODO : shuffle cards, setup houses, etc. ???
 
-        for (int i = 4; i<12; i++){
+        for (int i = 4; i < 12; i++) {
             Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
             moveController.executeCommand(move);
         }

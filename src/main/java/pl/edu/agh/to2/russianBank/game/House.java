@@ -14,6 +14,7 @@ public class House extends ICardSet {
     private ObservableList<Card> cards;
     private int position;
     private MoveController moveController;
+
     public House(ObservableList<Card> cards, int position, MoveController moveController) {
         this.cards = cards;
         this.position = position;

@@ -13,6 +13,7 @@ public enum CardSuit {
         this.suitId = suitId;
         this.rank = rank;
     }
+
     public int getSuitId() {
         return suitId;
     }

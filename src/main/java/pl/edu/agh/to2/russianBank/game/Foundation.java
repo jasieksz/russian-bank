@@ -39,11 +39,11 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     }
 
     private Boolean tryPutCard(Card card) {
-        if(cards.isEmpty() && card.getRank().getRank() == 1) return true;
+        if (cards.isEmpty() && card.getRank().getRank() == 1) return true;
         return lookUpTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
     }
 
-    private Boolean isCardCorrect(Card card1, Card card2){ // topcard, new card
+    private Boolean isCardCorrect(Card card1, Card card2) { // topcard, new card
         return (card1.getSuit().getSuitId() == card2.getSuit().getSuitId() &&
                 (card1.getRank().getRank() == card2.getRank().getRank() - 1));
     }
@@ -52,9 +52,9 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         return false;
     }
 
-    public Optional<Card> lookUpTopCard(){
-        if (!cards.isEmpty()){
-        return Optional.ofNullable(cards.get(cards.size() - 1));
+    public Optional<Card> lookUpTopCard() {
+        if (!cards.isEmpty()) {
+            return Optional.ofNullable(cards.get(cards.size() - 1));
         }
         return Optional.empty();
     }

@@ -11,16 +11,24 @@ public abstract class ICardSet {
     private MoveController moveController;
     private ICardSet firstChosenCard;
     private boolean firstChosen = false;
+
     public abstract Optional<Card> takeTopCard();
+
     public abstract boolean putCard(Card card);
+
     public abstract int getSize();
+
     public abstract boolean isVisible();
+
     public abstract int getPosition();
+
     public abstract Optional<Card> readTopCard();
+
     public abstract void addListener(ListChangeListener<Card> listener);
+
     public void handleMouseClicked() {
 
-        if(!firstChosen) {
+        if (!firstChosen) {
 
             firstChosenCard = this;
 
@@ -32,7 +40,7 @@ public abstract class ICardSet {
 
             //this.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
 */
-        }else {
+        } else {
             Move move = new Move(firstChosenCard.getPosition(), this.getPosition());
             moveController.executeCommand(move);
             //this.putCard(firstChosenCard.takeTopCard().get());

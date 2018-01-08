@@ -18,24 +18,19 @@ public class Waste extends ICardSet {
     @Override
     public Optional<Card> takeTopCard() {
         Optional<Card> result = Optional.empty();
-        if(tryTakeTopCard()){
+        if (tryTakeTopCard()) {
             result = Optional.of(cards.remove(cards.size() - 1));
         }
         return result;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    private boolean tryTakeTopCard() {
+        return cards.size() > 0;
     }
 
-    private boolean tryTakeTopCard(){
-        return cards.size()>0;
-    }
-
-    private Card lookUpTopCard(){
+    private Card lookUpTopCard() {
         return cards.get(cards.size() - 1);
     }
-
 
     private boolean tryPutCard(Card card) {
         return true;
@@ -52,6 +47,7 @@ public class Waste extends ICardSet {
     public boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
     }
+
     @Override
     public int getSize() {
         return cards.size();
@@ -67,10 +63,14 @@ public class Waste extends ICardSet {
         return position;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     @Override
     public Optional<Card> readTopCard() {
         Optional<Card> result = Optional.empty();
-        if(tryTakeTopCard()){
+        if (tryTakeTopCard()) {
             //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
 
             result = Optional.of(cards.get(cards.size() - 1));

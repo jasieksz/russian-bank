@@ -27,7 +27,7 @@ public class GameTable {
         Preconditions.checkArgument(houses.size() == 8);
         Preconditions.checkArgument(playersCard.size() == 2);
         this.playersCard = new ArrayList<>();
-        for (Player player : players){
+        for (Player player : players) {
             this.playersCard.add(player.getPlayerDeck());
         }
         this.piles = piles;

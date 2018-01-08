@@ -20,18 +20,13 @@ public class Hand extends ICardSet {
     // TODO : PlayerDeck should be responsible for this, it contains both hand & waste @J
     @Override
     public Optional<Card> takeTopCard() { // removes top card
-        return cards.size()>0 ? Optional.of(cards.remove(cards.size()-1)) : Optional.empty();
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
+        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
     }
 
     @Override
     public boolean putCard(Card card) {
         return this.cards.add(card);
     }
-
 
     @Override
     public int getSize() {
@@ -48,9 +43,13 @@ public class Hand extends ICardSet {
         return position;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     @Override
     public Optional<Card> readTopCard() {
-        return cards.size()>0 ? Optional.of(cards.get(cards.size()-1)) : Optional.empty();
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
   /*  @Override
