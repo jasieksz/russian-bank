@@ -5,6 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,9 @@ public class GameController implements Initializable {
     public RowConstraints row1;
     public ColumnConstraints col1;
 
+    @FXML
+    public Label name;
+
     private GameTable table;
 
     private Map<Integer, CardView> foundations = new HashMap<>();
@@ -33,14 +37,26 @@ public class GameController implements Initializable {
 
     private Service service = new Service();
 
+    public void setName(String name ) {
+        this.name.setText(name);
+        this.name.setAlignment(Pos.BOTTOM_CENTER);
+    }
+
     @FXML
     public AnchorPane rootPane;
+
 
     public void initialize() {
     }
 
+   /* public GameController(String name) {
+        System.out.print(name);
+        this.name.setText(name);
+    }
+*/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 
         initializeButton();
 
@@ -76,7 +92,6 @@ public class GameController implements Initializable {
             GridPane.setConstraints(images.get(i), minColumn + i, row);
         }
     }
-
 
     private void initializeButton() {
         Image image6 = service.createImage("karty/budzik.png");
@@ -128,7 +143,7 @@ public class GameController implements Initializable {
                 table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
                 System.out.println();
 
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 3; i++) {
                     Thread.sleep(1111);
                     table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
                 }
@@ -138,6 +153,7 @@ public class GameController implements Initializable {
         }).start();
     }
 
+    //przepisuje wszystko co jest w GameTable na wstępie do widoku
     private void initializeBoard() {
         Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
@@ -161,7 +177,7 @@ public class GameController implements Initializable {
         }
 
         houses.values().stream().flatMap(Collection::stream).forEach(imageView -> {
-            imageView.setPreserveRatio(true);
+            imageView.setPreserveRatio(true);   //czy zachować proporcje przy skalowaniu
             gridPane.getChildren().add(imageView);
         });
 
@@ -194,6 +210,12 @@ public class GameController implements Initializable {
 
     }
 
+    //---------------  LISTENERS  ---------------------------------------------------------------------------------
+
+
+    //do każdej karty z każdego stosiku w GameTable dodajemy listenera, który nasłuchuje zmian w GameTable, i jeśli
+    //wystąpią to przechodzi po listach w widoku (houses, foundations + addListenerForPlayer)
+    // i ustawia obrazki kart odpowiadające kartom w modelu
     private void addListChangeListeners(GameTable table) {
         for (int i = 0; i < table.getHouses().size(); i++) {
             House house = table.getHouses().get(i);
@@ -234,7 +256,7 @@ public class GameController implements Initializable {
                 table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
                 table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
 
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 3; i++) {
                     Thread.sleep(1111);
                     table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
                 }
@@ -246,7 +268,7 @@ public class GameController implements Initializable {
 
     }
 
-
+    //tu ustawiane są listenery dla hand i waste gracza
     private void addListenersForPlayer(int playerId) {
         Hand hand = table.getPlayers().get(playerId).getHand();
         Waste waste = table.getPlayers().get(playerId).getWaste();

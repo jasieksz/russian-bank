@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 public class StartGameController implements Initializable {
     private static final Logger LOG = LogManager.getLogger();
 
+
+    public String name;
     @FXML
     public Button okButton;
     @FXML
@@ -41,15 +43,24 @@ public class StartGameController implements Initializable {
         //wywołanie metody z serwera
         String s = nameField.getText();
         LOG.debug(s);
+        name = s;
         //RussianBank.setName(s);
 
         //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
 
         try {
             FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(RootLayout.class.getResource("Game.fxml"));
+            loader.load();
             Stage oldStage = (Stage) okButton.getScene().getWindow();
             oldStage.close();
-            Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
+
+            GameController controller = loader.getController();
+            controller.setName(s);
+
+            //Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
+            Parent root = loader.getRoot();
+
             Stage stage = new Stage();
 
             stage.setTitle("Garibaldka");
@@ -58,12 +69,13 @@ public class StartGameController implements Initializable {
 
             stage.setScene(scene);
 
-
             stage.setMaximized(true);
-            stage.show();
 
             //controller = loader.getController();
-            //controller.setTable(table);
+            //System.out.print(controller);
+            //controller.setName(s);
+            stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();
