@@ -65,6 +65,9 @@ public class RawClientWS {
     @OnWebSocketError
     public void onError(Throwable ex) {
         LOG.error("WebSocket error", ex);
+        if (!connected.isDone()) {
+            connected.completeExceptionally(ex);
+        }
     }
 
     public boolean awaitClose(int timeout, TimeUnit unit) throws InterruptedException {

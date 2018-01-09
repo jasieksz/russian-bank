@@ -240,7 +240,8 @@ public class GameController implements Initializable {
                 }
                 table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
             } catch (Exception e) {
-                LOG.error(e);
+                // TODO: Description
+                LOG.error("TODO ERROR",e);
             }
         }).start();
 

@@ -1,22 +1,12 @@
 package pl.edu.agh.to2.russianBank.ui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import pl.edu.agh.to2.russianBank.GUIApi;
-import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
-import pl.edu.agh.to2.russianBank.ui.views.RootLayout;
 
-import java.io.IOException;
-
-public class GUI implements GUIApi {
+public class ClientCallbacksImpl implements ClientCallbacks {
 
     private GameController controller;
 

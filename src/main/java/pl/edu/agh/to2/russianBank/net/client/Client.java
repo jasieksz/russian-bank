@@ -1,6 +1,5 @@
 package pl.edu.agh.to2.russianBank.net.client;
 
-import pl.edu.agh.to2.russianBank.GUIApi;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
@@ -18,20 +17,20 @@ import java.util.concurrent.TimeUnit;
 public class Client implements AutoCloseable {
     private final RawClient client;
     private final Visitor visitor = new Visitor();
-    private final GUIApi gui;
+    private final ClientCallbacks clientCallbacks;
 
     /**
-     * @param client low level client instance, this object will take ownership of it
-     * @param gui    GUI callback object
+     * @param client          low level client instance, this object will take ownership of it
+     * @param clientCallbacks GUI callback object
      */
-    public Client(RawClient client, GUIApi gui) {
+    public Client(RawClient client, ClientCallbacks clientCallbacks) {
         this.client = client;
-        this.gui = gui;
+        this.clientCallbacks = clientCallbacks;
 
         this.client.addListener(visitor);
     }
 
-    public static CompletableFuture<Client> connect(URI serverUri, GUIApi gui) throws Exception {
+    public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks gui) throws Exception {
         return RawClientImpl.connect(serverUri)
                 .thenApply((rc) -> new Client(rc, gui));
     }
@@ -71,12 +70,12 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(EndGameMessage message) {
-            gui.endGame(message.getMessage());
+            clientCallbacks.endGame(message.getMessage());
         }
 
         @Override
         public void visit(MoveMessage message) {
-            gui.move(message.getMove());
+            clientCallbacks.move(message.getMove());
         }
     }
 }
