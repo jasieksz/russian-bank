@@ -44,11 +44,11 @@ public class StartGameController implements Initializable {
         try {
             LOG.info("Connecting to game server");
             Client.connect(Constants.SERVER_URI, new ClientCallbacksImpl())
-                    .thenApplyAsync(client -> {
+                    .thenComposeAsync(client -> {
                         LOG.info("Connected, sending hello");
                         return client.hello(playerName);
                     })
-                    .thenAcceptAsync(_v -> {
+                    .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
                         });
