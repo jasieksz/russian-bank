@@ -31,29 +31,25 @@ public class House extends ICardSet {
 
     @Override
     public Optional<Card> takeTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            result = Optional.of(cards.remove(cards.size() - 1));
-        }
-        return result;
+        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
     }
 
     private boolean tryTakeTopCard() {
         return cards.size() > 0;
     }
 
-    private Optional<Card> lookUpTopCard() {
-        return Optional.ofNullable(cards.get(cards.size() - 1));
+    @Override
+    public Optional<Card> readTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }
 
-    // TODO : optional isPresent!!
 
     private boolean tryPutCard(Card card) {
-        return lookUpTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
+        return readTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
     }
 
     private boolean isCardCorrect(Card card1, Card card2) { //top, new
@@ -63,7 +59,7 @@ public class House extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-        return cards.add(card);
+        return tryPutCard(card) && cards.add(card);
     }
 
     @Override
@@ -81,16 +77,6 @@ public class House extends ICardSet {
         return position;
     }
 
-    @Override
-    public Optional<Card> readTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
-
-            result = Optional.of(cards.get(cards.size() - 1));
-        }
-        return result;
-    }
 
     @Override
     public void addListener(ListChangeListener<Card> listener) {

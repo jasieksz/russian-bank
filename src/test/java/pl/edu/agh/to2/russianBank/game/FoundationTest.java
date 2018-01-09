@@ -25,7 +25,7 @@ public class FoundationTest {
     public void lookUpTopCardTest(){
         List<Card> cardList = new ArrayList<>();
         Foundation foundation = new Foundation(cardList);
-        assertTrue(foundation.lookUpTopCard().equals(Optional.empty()));
+        assertTrue(foundation.readTopCard().equals(Optional.empty()));
     }
 
 //    @Test

@@ -30,11 +30,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     @Override
     public Optional<Card> takeTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            result = Optional.of(cards.remove(cards.size() - 1));
-        }
-        return result;
+        return Optional.empty(); // always false - illeagal move
     }
 
     @Override
@@ -42,12 +38,9 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         return tryPutCard(card) && cards.add(card);
     }
 
-    // TODO : add case when stack is empty => put card && set suit
-    // TODO : when using Optional, check isPresent !
-    // changed behaviour a bit so that card suit is created on empty pile, look also at putCard
     private boolean tryPutCard(Card card) {
         if (cards.isEmpty() && card.getRank().getRank() == 1) return true;
-        return lookUpTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
+        return readTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
     }
 
     private boolean isCardCorrect(Card card1, Card card2) { // topcard, new card
@@ -55,16 +48,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
                 (card1.getRank().getRank() == card2.getRank().getRank() - 1));
     }
 
-    private boolean tryTakeTopCard() {
-        return false;
-    }
 
-    public Optional<Card> lookUpTopCard() {
-        if (!cards.isEmpty()) {
-            return Optional.ofNullable(cards.get(cards.size() - 1));
-        }
-        return Optional.empty();
-    }
 
     @Override
     public int getSize() {
@@ -83,13 +67,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     @Override
     public Optional<Card> readTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
-
-            result = Optional.of(cards.get(cards.size() - 1));
-        }
-        return result;
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
     @Override

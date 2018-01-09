@@ -12,8 +12,6 @@ public class Move implements Command {
     private ICardSet source;
     private ICardSet target;
 
-    // TODO : Do we need to know which player is making move?
-
     public Move(ICardSet source, ICardSet target) {
         this.source = source;
         this.target = target;
@@ -27,11 +25,11 @@ public class Move implements Command {
     }
 
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get());
+        target.putCard(source.takeTopCard().get()); // TODO : isPresent() missing warning
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get());
+        source.putCard(target.takeTopCard().get()); // TODO : isPresent() missing warning
     }
 
     @Override
