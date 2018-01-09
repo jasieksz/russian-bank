@@ -131,7 +131,7 @@ public class GameController implements Initializable {
         initializeBoard();
         addListChangeListeners(table);
 
-        new Thread(() -> {
+      /*  new Thread(() -> {
             try {
                 Thread.sleep(1000);
                 table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
@@ -145,7 +145,7 @@ public class GameController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+        }).start();*/
     }
 
     //przepisuje wszystko co jest w GameTable na wstępie do widoku
