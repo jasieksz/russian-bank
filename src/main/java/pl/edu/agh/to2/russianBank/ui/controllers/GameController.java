@@ -4,7 +4,9 @@ import com.google.common.collect.Lists;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -16,6 +18,8 @@ import pl.edu.agh.to2.russianBank.game.*;
 
 import java.net.URL;
 import java.util.*;
+
+import static javafx.geometry.Pos.BOTTOM_CENTER;
 
 public class GameController implements Initializable {
     private static final Logger LOG = LogManager.getLogger();
@@ -39,9 +43,14 @@ public class GameController implements Initializable {
 
     public void setName(String name ) {
         this.name.setText(name);
-        this.name.setAlignment(Pos.BOTTOM_CENTER);
+        this.name.setAlignment(BOTTOM_CENTER);
+        /*this.name.setStyle("-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1; " +
+                "-fx-alignment: BOTTOM; -fx-padding: 5 ");
+    }*/
+        GridPane.setHalignment(this.name, HPos.RIGHT);
+        GridPane.setValignment(this.name, VPos.TOP);
+        GridPane.setConstraints(this.name, 0,3);
     }
-
     @FXML
     public AnchorPane rootPane;
 
@@ -128,6 +137,8 @@ public class GameController implements Initializable {
     public void setTable(GameTable table) {
         this.table = table;
 
+        //System.out.println(table);
+        //System.out.println(table.getHouses().toString());
         initializeBoard();
         addListChangeListeners(table);
 

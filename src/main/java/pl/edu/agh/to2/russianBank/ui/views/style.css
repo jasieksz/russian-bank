@@ -14,3 +14,14 @@
     -fx-text-fill: #311c09;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
 }
+
+.label {
+
+    -fx-font-size: 20pt;
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+   /* -fx-alignment: center;
+    -fx-content-display: center;
+    -fx-label-padding: 5 0 5 5;*/
+
+}

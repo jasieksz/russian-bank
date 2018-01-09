@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.151"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
     <columnConstraints>
         <ColumnConstraints fx:id="col1" halignment="CENTER" hgrow="ALWAYS" percentWidth="10.0" />
         <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="10" />
@@ -52,7 +53,6 @@
     </rowConstraints>
 
     <children>
-        <Label fx:id="name" style="-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1;
-        " text="" />
+        <Label fx:id="name" stylesheets="@style.css" text="" />
     </children>
 </GridPane>
