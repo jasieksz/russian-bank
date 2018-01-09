@@ -30,9 +30,9 @@ public class Client implements AutoCloseable {
         this.client.addListener(listener);
     }
 
-    public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks gui) throws Exception {
+    public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks clientCallbacks) throws Exception {
         return RawClientImpl.connect(serverUri)
-                .thenApply((rc) -> new Client(rc, gui));
+                .thenApply((rc) -> new Client(rc, clientCallbacks));
     }
 
     public CompletableFuture<Void> hello(String playerName) {
