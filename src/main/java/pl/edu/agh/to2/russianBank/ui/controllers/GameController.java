@@ -49,11 +49,6 @@ public class GameController implements Initializable {
     public void initialize() {
     }
 
-   /* public GameController(String name) {
-        System.out.print(name);
-        this.name.setText(name);
-    }
-*/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

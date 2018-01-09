@@ -52,7 +52,7 @@
     </rowConstraints>
 
     <children>
-        <Label fx:id="name" style="-fx-font-size: 20pt; -fx-text-fill: white; -fx-alignment: center-left; -fx-opacity: 1;
-        -fx-alignment: centre, bottom; -fx-position: centre, bottom;" text="" />
+        <Label fx:id="name" style="-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1;
+        " text="" />
     </children>
 </GridPane>

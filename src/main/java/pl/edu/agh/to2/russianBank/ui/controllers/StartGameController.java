@@ -58,7 +58,6 @@ public class StartGameController implements Initializable {
             GameController controller = loader.getController();
             controller.setName(s);
 
-            //Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
             Parent root = loader.getRoot();
 
             Stage stage = new Stage();
@@ -70,10 +69,6 @@ public class StartGameController implements Initializable {
             stage.setScene(scene);
 
             stage.setMaximized(true);
-
-            //controller = loader.getController();
-            //System.out.print(controller);
-            //controller.setName(s);
             stage.show();
 
 
