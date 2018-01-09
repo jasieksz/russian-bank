@@ -7,7 +7,7 @@ import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 
 public interface ClientCallbacks {
-   /* void startGame(GameTable table);*/
+    void startGame(GameTable table);
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 

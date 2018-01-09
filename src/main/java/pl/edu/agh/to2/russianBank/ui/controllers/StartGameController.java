@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.Constants;
@@ -41,9 +42,11 @@ public class StartGameController implements Initializable {
         okButton.setDisable(true);
         statusLbl.setText("Connecting to game server...");
 
+        final ClientCallbacksImpl callbacks = new ClientCallbacksImpl((Stage) okButton.getScene().getWindow());
+
         try {
             LOG.info("Connecting to game server");
-            Client.connect(Constants.SERVER_URI, new ClientCallbacksImpl())
+            Client.connect(Constants.SERVER_URI, callbacks)
                     .thenComposeAsync(client -> {
                         LOG.info("Connected, sending hello");
                         Platform.runLater(() -> {
@@ -60,32 +63,6 @@ public class StartGameController implements Initializable {
             LOG.error("Error creating client instance", e);
             onConnectError();
         }
-
-//        //czekamy na serwer aż da nam gametable, moze dać też Game cały i znak, że zaczynamy grę
-//
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            Stage oldStage = (Stage) okButton.getScene().getWindow();
-//            oldStage.close();
-//            Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
-//            Stage stage = new Stage();
-//
-//            stage.setTitle("Garibaldka");
-//            stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
-//            Scene scene = new Scene(root, 1200, 1200);
-//
-//            stage.setScene(scene);
-//
-//
-//            stage.setMaximized(true);
-//            stage.show();
-//
-//            //controller = loader.getController();
-//            //controller.setTable(table);
-//
-//        } catch (IOException e) {
-//            LOG.error("Error creating game stage", e);
-//        }
     }
 
     public void onConnectError() {

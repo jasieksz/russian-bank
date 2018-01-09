@@ -1,45 +1,61 @@
 package pl.edu.agh.to2.russianBank.ui;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.RussianBank;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
-import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
+import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
+
+import java.io.IOException;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
+    private static final Logger LOG = LogManager.getLogger();
 
-    private GameController controller;
+    private Stage startGameStage;
 
-    /*@Override
+    public ClientCallbacksImpl(Stage startGameStage) {
+        this.startGameStage = startGameStage;
+    }
+
+    @Override
     public void startGame(GameTable table) {
+        // FIXME: RACE CONDITIONS!!!
+        Platform.runLater(() -> {
+            try {
+                startGameStage.close();
+                startGameStage = null;
 
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(RootLayout.class.getResource("Game.fxml"));
-            Stage stage = new Stage();
+                Parent root = FXMLLoader.load(RootLayout.class.getResource("Game.fxml"));
+                Stage stage = new Stage();
 
-            stage.setTitle("Garibaldka");
-            Scene scene = new Scene(root, 1200, 1200);
+                stage.setTitle("Garibaldka");
+                stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
+                Scene scene = new Scene(root, 1200, 1200);
 
-            scene.widthProperty().addListener(new ChangeListener<Number>() {
+                stage.setScene(scene);
 
-                @Override
-                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                    //GameController.updateWidthConstaints(newValue.doubleValue());
-                }
-            });
 
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.show();
-            controller = loader.getController();
-            controller.setTable(table);
+                stage.setMaximized(true);
+                stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                //controller = loader.getController();
+                //controller.setTable(table);
 
-    }*/
+            } catch (IOException e) {
+                LOG.error("Error creating game stage", e);
+            }
+        });
+    }
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
