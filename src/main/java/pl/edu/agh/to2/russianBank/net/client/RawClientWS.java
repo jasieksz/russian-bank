@@ -21,11 +21,11 @@ public class RawClientWS {
 
     private final CountDownLatch closeLatch = new CountDownLatch(1);
     private final CompletableFuture<Void> connected;
-    private final Set<MessageVisitor> listeners;
+    private final Set<RawClientListener> listeners;
 
     private Session session;
 
-    RawClientWS(CompletableFuture<Void> connected, Set<MessageVisitor> listeners) {
+    RawClientWS(CompletableFuture<Void> connected, Set<RawClientListener> listeners) {
         this.connected = connected;
         this.listeners = listeners;
     }
@@ -67,6 +67,10 @@ public class RawClientWS {
         LOG.error("WebSocket error", ex);
         if (!connected.isDone()) {
             connected.completeExceptionally(ex);
+        } else {
+            for (RawClientListener listener : listeners) {
+                listener.onError(ex);
+            }
         }
     }
 

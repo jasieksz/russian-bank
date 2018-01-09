@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Client implements AutoCloseable {
     private final RawClient client;
-    private final Visitor visitor = new Visitor();
+    private final Listener listener = new Listener();
     private final ClientCallbacks clientCallbacks;
 
     /**
@@ -27,7 +27,7 @@ public class Client implements AutoCloseable {
         this.client = client;
         this.clientCallbacks = clientCallbacks;
 
-        this.client.addListener(visitor);
+        this.client.addListener(listener);
     }
 
     public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks gui) throws Exception {
@@ -58,11 +58,11 @@ public class Client implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        client.removeListener(visitor);
+        client.removeListener(listener);
         client.close();
     }
 
-    private class Visitor implements MessageVisitor {
+    private class Listener implements RawClientListener {
         @Override
         public void visit(HelloMessage message) {
             throw new UnsupportedMessageException(message);
@@ -76,6 +76,11 @@ public class Client implements AutoCloseable {
         @Override
         public void visit(MoveMessage message) {
             clientCallbacks.move(message.getMove());
+        }
+
+        @Override
+        public void onError(Throwable ex) {
+            clientCallbacks.networkError(ex);
         }
     }
 }

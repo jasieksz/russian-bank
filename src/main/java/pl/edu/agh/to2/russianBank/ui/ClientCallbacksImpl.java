@@ -1,9 +1,9 @@
 package pl.edu.agh.to2.russianBank.ui;
 
-import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
@@ -53,6 +53,12 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     @Override
     public void move(Move move) {
 
+    }
+
+    @Override
+    public void networkError(Throwable ex) {
+        // TODO:
+        ex.printStackTrace();
     }
 
 

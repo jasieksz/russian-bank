@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
-import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 
 import java.net.URI;
 import java.util.Set;
@@ -17,9 +16,9 @@ public class RawClientImpl implements RawClient {
 
     private final WebSocketClient wsClient;
     private final RawClientWS socket;
-    private final Set<MessageVisitor> listeners;
+    private final Set<RawClientListener> listeners;
 
-    private RawClientImpl(WebSocketClient wsClient, RawClientWS socket, Set<MessageVisitor> listeners) {
+    private RawClientImpl(WebSocketClient wsClient, RawClientWS socket, Set<RawClientListener> listeners) {
         this.wsClient = wsClient;
         this.socket = socket;
         this.listeners = listeners;
@@ -28,7 +27,7 @@ public class RawClientImpl implements RawClient {
     public static CompletableFuture<RawClient> connect(URI serverUri) throws Exception {
         final CompletableFuture<Void> connected = new CompletableFuture<>();
         final WebSocketClient wsClient = new WebSocketClient();
-        final Set<MessageVisitor> listeners = ConcurrentHashMap.newKeySet(1);
+        final Set<RawClientListener> listeners = ConcurrentHashMap.newKeySet(1);
         final RawClientWS socket = new RawClientWS(connected, listeners);
 
         LOG.debug("Starting WebSocket client");
@@ -41,12 +40,12 @@ public class RawClientImpl implements RawClient {
     }
 
     @Override
-    public void addListener(MessageVisitor visitor) {
+    public void addListener(RawClientListener visitor) {
         listeners.add(visitor);
     }
 
     @Override
-    public void removeListener(MessageVisitor visitor) {
+    public void removeListener(RawClientListener visitor) {
         listeners.remove(visitor);
     }
 

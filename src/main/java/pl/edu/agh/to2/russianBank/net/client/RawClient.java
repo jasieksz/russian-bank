@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
  * Low level client interface
  */
 public interface RawClient extends AutoCloseable {
-    void addListener(MessageVisitor visitor);
+    void addListener(RawClientListener visitor);
 
-    void removeListener(MessageVisitor visitor);
+    void removeListener(RawClientListener visitor);
 
     CompletableFuture<Void> sendMessage(Message message);
 

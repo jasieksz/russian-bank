@@ -14,4 +14,6 @@ public interface ClientCallbacks {
     void endGame(String message);
 
     void move(Move move);
+
+    void networkError(Throwable ex);
 }
