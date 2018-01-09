@@ -48,6 +48,11 @@ public class StartGameController implements Initializable {
                         LOG.info("Connected, sending hello");
                         return client.hello(playerName);
                     })
+                    .thenAcceptAsync(_v -> {
+                        Platform.runLater(() -> {
+                            statusLbl.setText("Waiting for other player...");
+                        });
+                    })
                     .exceptionally(e -> {
                         LOG.error("Error connecting to client", e);
                         onConnectError();
