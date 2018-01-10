@@ -80,7 +80,7 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(StartGameMessage message) {
-            //TODO
+            clientCallbacks.startGame(message.getGameState());
         }
 
         @Override
