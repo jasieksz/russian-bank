@@ -26,9 +26,9 @@ public class RoomMatcherTest {
         RoomMatcher rm = new RoomMatcher();
         PlayerConnection player = new PlayerTest(0);
 
-        Room room = rm.assign(player);
+        Room room = rm.assign(player,"murk");
 
-        assertEquals(room.getPlayerA(), player);
+        assertEquals(room.getPlayerAConn(), player);
     }
 
     @Test
@@ -37,13 +37,13 @@ public class RoomMatcherTest {
         int even = 200;
         for(int i = 0; i < even; ++i) {
             PlayerConnection player = new PlayerTest(i);
-            rm.assign(player);
+            rm.assign(player, "murk");
         }
 
         PlayerConnection player = new PlayerTest(even + 1);
-        Room room = rm.assign(player);
+        Room room = rm.assign(player, "murk");
 
-        assertEquals(room.getPlayerA(), player);
+        assertEquals(room.getPlayerAConn(), player);
     }
 
     @Test
@@ -52,22 +52,22 @@ public class RoomMatcherTest {
         int odd = 199;
         for(int i = 0; i < odd; ++i) {
             PlayerConnection player = new PlayerTest(i);
-            rm.assign(player);
+            rm.assign(player, "murk");
         }
 
         PlayerConnection player = new PlayerTest(odd + 1);
-        Room room = rm.assign(player);
+        Room room = rm.assign(player, "murk");
 
-        assertEquals(room.getPlayerB(), player);
+        assertEquals(room.getPlayerBConn(), player);
     }
 
     @Test
     public void testDeleteRoom() {
         RoomMatcher rm = new RoomMatcher();
         PlayerConnection playerA = new PlayerTest(0);
-        rm.assign(playerA);
+        rm.assign(playerA, "murk");
         PlayerConnection playerB = new PlayerTest(1);
-        Room room = rm.assign(playerB);
+        Room room = rm.assign(playerB, "murk");
 
         rm.deleteRoom(room);
 

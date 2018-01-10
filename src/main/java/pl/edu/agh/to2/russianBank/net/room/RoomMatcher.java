@@ -21,14 +21,15 @@ public class RoomMatcher {
      * @param player
      * @return room assigned to a player
      */
-    public Room assign(PlayerConnection player){
+    public Room assign(PlayerConnection player, String playerName) {
         PlayerConnection assignedMatch = freeMatches.poll();
 
-        if(assignedMatch == null)
-            return createNewRoom(player);
+        if (assignedMatch == null)
+            return createNewRoom(player, playerName);
 
         Room room = rooms.get(assignedMatch);
-        room.setPlayerB(player);
+        room.setPlayerB(player, playerName);
+
         rooms.put(player, room);
 
         return room;
@@ -51,15 +52,16 @@ public class RoomMatcher {
      */
     public void deleteRoom(Room room) {
         freeMatches.removeIf(player -> getRoom(player).equals(room));
-        if(room.getPlayerA() != null)
-            rooms.remove(room.getPlayerA());
-        if(room.getPlayerB() != null)
-            rooms.remove(room.getPlayerB());
+        if (room.getPlayerAConn() != null)
+            rooms.remove(room.getPlayerAConn());
+        if (room.getPlayerBConn() != null)
+            rooms.remove(room.getPlayerBConn());
     }
 
-    private Room createNewRoom(PlayerConnection player) {
+    private Room createNewRoom(PlayerConnection player, String playerName) {
         Room room = new Room();
-        room.setPlayerA(player);
+        room.setPlayerA(player, playerName);
+
         rooms.put(player, room);
         freeMatches.add(player);
 

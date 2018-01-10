@@ -6,4 +6,6 @@ public interface MessageVisitor {
     void visit(EndGameMessage message);
 
     void visit(MoveMessage message);
+
+    void visit(StartGameMessage message);
 }

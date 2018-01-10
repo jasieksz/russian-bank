@@ -2,6 +2,8 @@ package pl.edu.agh.to2.russianBank.net.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.edu.agh.to2.russianBank.game.Game;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
 import pl.edu.agh.to2.russianBank.net.transport.*;
@@ -13,7 +15,6 @@ public class GameHandlerImpl implements GameHandler {
     @Override
     public void onConnect(PlayerConnection player) {
         LOG.debug("Incoming player {}", player);
-        roomMatcher.assign(player);
     }
 
     @Override
@@ -39,8 +40,12 @@ public class GameHandlerImpl implements GameHandler {
 
         @Override
         public void visit(HelloMessage message) {
-            // TODO
             LOG.info("Hello {}!", message.getPlayerName());
+            Room room = roomMatcher.assign(player, message.getPlayerName());
+            LOG.info("room assigned for player {}", message.getPlayerName());
+
+            if (room.isFull())
+                room.broadcast(new StartGameMessage( new Game(room.getPlayers()) ));//TODO - generowanie Game Tbale
         }
 
         @Override
@@ -53,6 +58,11 @@ public class GameHandlerImpl implements GameHandler {
         public void visit(MoveMessage message) {
             // TODO
             LOG.info("move {}", message.getMove());
+        }
+
+        @Override
+        public void visit(StartGameMessage message) {
+            //TODO
         }
     }
 }
