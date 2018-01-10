@@ -11,12 +11,16 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.Constants;
-import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.net.client.Client;
 import pl.edu.agh.to2.russianBank.ui.ClientCallbacksImpl;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
 
 public class StartGameController implements Initializable {
     private static final Logger LOG = LogManager.getLogger();
@@ -54,6 +58,15 @@ public class StartGameController implements Initializable {
                     .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
+
+                            try {
+                                sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            GameState gameState = createGameState(playerName);
+                            callbacks.startGame(gameState);
                         });
                     })
                     .exceptionally(e -> {
@@ -72,5 +85,38 @@ public class StartGameController implements Initializable {
             statusLbl.setText("Failed to to connect to game server!");
             okButton.setDisable(false);
         });
+    }
+
+    //----------- function to test GUI ------------
+
+    private GameState createGameState(String myName) {
+        List<PlayerDeck> playerDecks = new ArrayList<>();
+        List<House> houses = new ArrayList<>();
+        List<Foundation> foundations = new ArrayList<>();
+        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+        houses.add(new House(new ArrayList<>()));
+
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+        foundations.add(new Foundation(new ArrayList<>()));
+
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(myName));
+        players.add(new Player("second player"));
+        return new GameState(players, new GameTable(playerDecks, houses, foundations));
     }
 }
