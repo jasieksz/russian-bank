@@ -53,7 +53,6 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 Scene scene = new Scene(root, 1200, 1200);
 
                 stage.setScene(scene);
-
                 stage.setMaximized(true);
                 stage.show();
 
