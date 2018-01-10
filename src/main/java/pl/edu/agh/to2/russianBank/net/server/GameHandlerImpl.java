@@ -45,7 +45,7 @@ public class GameHandlerImpl implements GameHandler {
             LOG.info("room assigned for player {}", message.getPlayerName());
 
             if (room.isFull())
-                room.broadcast(new StartGameMessage( new Game(room.getPlayers()) ));//TODO - generowanie Game Tbale
+                room.broadcast(new StartGameMessage( new Game(room.getPlayers()) ));
         }
 
         @Override
