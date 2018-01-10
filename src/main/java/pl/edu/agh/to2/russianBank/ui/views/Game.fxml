@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.Label?>
 <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false"
           style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
           xmlns:fx="http://javafx.com/fxml/1"
@@ -51,4 +52,10 @@
         <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
         <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
     </rowConstraints>
+
+    <children>
+        <Label fx:id="myName" stylesheets="@style.css" text="" />
+        <Label fx:id="opponentName" stylesheets="@style.css" text="" />
+    </children>
+
 </GridPane>

@@ -1,14 +1,28 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
 public class EndGameMessage extends Message {
-    private String message = "You won";
+    private boolean won;
+    private String cause;
 
-    public String getMessage() {
-        return message;
+    public EndGameMessage(boolean won, String cause) {
+        this.won = won;
+        this.cause = cause;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public boolean isWon() {
+        return won;
+    }
+
+    public void setWon(boolean won) {
+        this.won = won;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 
     @Override
@@ -23,11 +37,11 @@ public class EndGameMessage extends Message {
 
         EndGameMessage that = (EndGameMessage) o;
 
-        return message != null ? message.equals(that.message) : that.message == null;
+        return cause != null ? cause.equals(that.cause) : that.cause == null;
     }
 
     @Override
     public int hashCode() {
-        return message != null ? message.hashCode() : 0;
+        return cause != null ? cause.hashCode() : 0;
     }
 }

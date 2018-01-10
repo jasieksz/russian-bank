@@ -4,7 +4,10 @@ import com.google.common.collect.Lists;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,6 +39,12 @@ public class GameController implements Initializable {
     @FXML
     public AnchorPane rootPane;
 
+    @FXML
+    public Label myName;
+
+    @FXML
+    public Label opponentName;
+
     public void initialize() {
     }
 
@@ -43,32 +52,29 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         initializeButton();
+    }
 
-        List<PlayerDeck> playerDecks = new ArrayList<>();
-        List<House> houses = new ArrayList<>();
-        List<Foundation> foundations = new ArrayList<>();
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+    public void setName(List<Player> players) {
+        String name = players.get(0).getName();
+        String opponentName = players.get(1).getName();
+        this.myName.setText(name);
+        this.myName.setAlignment(Pos.BOTTOM_CENTER);
+        this.myName.setStyle("@style.css"); //it does not work, why?
+        this.myName.setStyle("-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1; " +
+                " -fx-padding: 5 ");
 
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
+        GridPane.setHalignment(this.myName, HPos.RIGHT);
+        GridPane.setValignment(this.myName, VPos.TOP);
+        GridPane.setConstraints(this.myName, 0,3);
 
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
+        this.opponentName.setText(opponentName);
+        this.opponentName.setAlignment(Pos.BOTTOM_CENTER);
+        this.opponentName.setStyle("-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1; " +
+                " -fx-padding: 0 ");
 
-        setTable(new GameTable(playerDecks, houses, foundations));
+        GridPane.setHalignment(this.opponentName, HPos.LEFT);
+        GridPane.setValignment(this.opponentName, VPos.TOP);
+        GridPane.setConstraints(this.opponentName, 25,3, 10, 10);
     }
 
     private void addImageViews(int row, int minColumn, List<CardView> images) {
@@ -76,7 +82,6 @@ public class GameController implements Initializable {
             GridPane.setConstraints(images.get(i), minColumn + i, row);
         }
     }
-
 
     private void initializeButton() {
         Image image6 = service.createImage("karty/budzik.png");
@@ -120,22 +125,6 @@ public class GameController implements Initializable {
 
         initializeBoard();
         addListChangeListeners(table);
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
-                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-                System.out.println();
-
-                for (int i = 0; i < 7; i++) {
-                    Thread.sleep(1111);
-                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     private void initializeBoard() {
