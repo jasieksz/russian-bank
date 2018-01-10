@@ -30,7 +30,9 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleOkAction" prefHeight="25.0" prefWidth="86.0" styleClass="startButton" stylesheets="@style.css" text="OK" />
+            <Button fx:id="okButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                    onAction="#handleOkAction" prefHeight="25.0" prefWidth="86.0" styleClass="startButton"
+                    stylesheets="@style.css" text="OK" />
          </children>
          <VBox.margin>
             <Insets top="20.0" />

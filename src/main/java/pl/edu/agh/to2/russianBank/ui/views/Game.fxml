@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false"
           style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
           xmlns:fx="http://javafx.com/fxml/1"
@@ -56,6 +57,9 @@
     <children>
         <Label fx:id="myName" stylesheets="@style.css" text="" />
         <Label fx:id="opponentName" stylesheets="@style.css" text="" />
+        <Button fx:id="endTurn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                onAction="#handleClickAction" prefHeight="25.0" prefWidth="186.0" styleClass="startButton"
+                stylesheets="@style.css" text="End Turn" />
     </children>
 
 </GridPane>

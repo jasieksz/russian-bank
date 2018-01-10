@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -20,44 +21,47 @@ import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
 
 import java.io.IOException;
 
-                public class ClientCallbacksImpl implements ClientCallbacks {
-                    private static final Logger LOG = LogManager.getLogger();
+import static java.lang.Thread.sleep;
 
-                    private Stage startGameStage;
+public class ClientCallbacksImpl implements ClientCallbacks {
+    private static final Logger LOG = LogManager.getLogger();
 
-                    public ClientCallbacksImpl(Stage startGameStage) {
-                        this.startGameStage = startGameStage;
-                    }
+    private Stage startGameStage;
+    private Stage gameStage;
+    private GameController controller;
 
-                    @Override
-                    public void startGame(GameState gameState) {
+    public ClientCallbacksImpl(Stage startGameStage) {
+        this.startGameStage = startGameStage;
+    }
 
-                        Platform.runLater(() -> {
-                            try {
+    @Override
+    public void startGame(GameState gameState) {
 
-                                startGameStage.close();
-                                startGameStage = null;
+        Platform.runLater(() -> {
+            try {
 
-                                FXMLLoader loader = new FXMLLoader();
-                                loader.setLocation(pl.edu.agh.to2.russianBank.ui.views.RootLayout.class.getResource("Game.fxml"));
-                                loader.load();
-                                Parent root = loader.getRoot();
+                startGameStage.close();
+                startGameStage = null;
 
-                                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(pl.edu.agh.to2.russianBank.ui.views.RootLayout.class.getResource("Game.fxml"));
+                loader.load();
+                Parent root = loader.getRoot();
 
-                                stage.setTitle("Garibaldka");
-                                stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
-                                Scene scene = new Scene(root, 1200, 1200);
+                Stage stage = new Stage();
+                gameStage = stage;
+                stage.setTitle("Garibaldka");
+                stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
+                Scene scene = new Scene(root, 1200, 1200);
 
-                                stage.setScene(scene);
+                stage.setScene(scene);
 
-                                stage.setMaximized(true);
-                                stage.show();
+                stage.setMaximized(true);
+                stage.show();
 
-                                GameController controller = loader.getController();
-                                controller.setTable(gameState.getGameTable());
-                                controller.setName(gameState.getPlayers());
-
+                controller = loader.getController();
+                controller.setTable(gameState.getGameTable());
+                controller.setName(gameState.getPlayers());
 
             } catch (IOException e) {
                 LOG.error("Error creating game stage", e);
@@ -72,6 +76,24 @@ import java.io.IOException;
     @Override
     public void endGame(boolean won, String cause) {
         // TODO message cause to user and end game
+
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Game ended");
+        a.setHeaderText("Game ended");
+        a.setResizable(true);
+        String content="";
+        if(won) {
+            content = "YOU WON!!! \n Congratulations";
+        }
+        else {
+            content = "YOU LOST!!! \n Try again";
+        }
+        content = content.concat("\n"+cause);
+        a.setContentText(content);
+        a.showAndWait();
+
+        gameStage.close();
+        System.exit(0);
     }
 
     @Override

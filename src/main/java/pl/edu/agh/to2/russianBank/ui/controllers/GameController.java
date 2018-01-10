@@ -2,11 +2,14 @@ package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import com.google.common.collect.Lists;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -15,6 +18,7 @@ import javafx.scene.layout.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.net.client.Client;
 
 import java.net.URL;
 import java.util.*;
@@ -45,23 +49,29 @@ public class GameController implements Initializable {
     @FXML
     public Label opponentName;
 
+    @FXML
+    public Button endTurn;
+
+
     public void initialize() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        initializeButton();
+        initializeButtons();
     }
+
+    /**
+     * Function set players names in proper labels in view
+     *
+     * @param players list of players in this instance of game
+     */
 
     public void setName(List<Player> players) {
         String name = players.get(0).getName();
         String opponentName = players.get(1).getName();
         this.myName.setText(name);
         this.myName.setAlignment(Pos.BOTTOM_CENTER);
-        this.myName.setStyle("@style.css"); //it does not work, why?
-        this.myName.setStyle("-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1; " +
-                " -fx-padding: 5 ");
 
         GridPane.setHalignment(this.myName, HPos.RIGHT);
         GridPane.setValignment(this.myName, VPos.TOP);
@@ -69,13 +79,17 @@ public class GameController implements Initializable {
 
         this.opponentName.setText(opponentName);
         this.opponentName.setAlignment(Pos.BOTTOM_CENTER);
-        this.opponentName.setStyle("-fx-font-size: 20pt; -fx-text-fill: white; -fx-opacity: 1; " +
-                " -fx-padding: 0 ");
 
         GridPane.setHalignment(this.opponentName, HPos.LEFT);
         GridPane.setValignment(this.opponentName, VPos.TOP);
         GridPane.setConstraints(this.opponentName, 25,3, 10, 10);
     }
+
+    /**
+     * Function set ImageViews in proper position in stage
+     *
+     * @param images list of CardView e.g. foundations, houses...
+     */
 
     private void addImageViews(int row, int minColumn, List<CardView> images) {
         for (int i = 0; i < images.size(); i++) {
@@ -83,7 +97,7 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initializeButton() {
+    private void initializeButtons() {
         Image image6 = service.createImage("karty/budzik.png");
 
         ImageView field1 = new ImageView(image6);
@@ -104,7 +118,13 @@ public class GameController implements Initializable {
         hbBtn.getChildren().add(toggle);
         toggle.setOnAction(event -> LOG.debug("Hello World!"));
         gridPane.add(hbBtn, 25, 11);
+
+        GridPane.setConstraints(endTurn, 25,9);
     }
+
+    /**
+     * Function creates field of type CardView and set in proper position in gridPane.
+     */
 
     private CardView createField(Image image, ICardSet cardSet) {
         CardView field = new CardView(image, cardSet);
@@ -113,7 +133,6 @@ public class GameController implements Initializable {
         field.setPreserveRatio(true);
         return field;
     }
-
 
     @FXML
     public void uncoverCardFromStack() {
@@ -127,6 +146,10 @@ public class GameController implements Initializable {
         addListChangeListeners(table);
     }
 
+    /**
+     * Function rewrite from variable gameTable (taken after connecting with server)
+     * to proper map (foundations, houses, hands, wastes).
+     */
     private void initializeBoard() {
         Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
@@ -183,6 +206,13 @@ public class GameController implements Initializable {
 
     }
 
+    /**
+     * Function adds listeners to each Card from each pile. Each listener waits for changes and when they occur
+     * it checks all lists in view and sets proper image in position which changes.
+     *
+     * @param table it is state of table received from server
+     */
+
     private void addListChangeListeners(GameTable table) {
         for (int i = 0; i < table.getHouses().size(); i++) {
             House house = table.getHouses().get(i);
@@ -217,25 +247,28 @@ public class GameController implements Initializable {
             addListenersForPlayer(i);
         }
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
-                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-
-                for (int i = 0; i < 6; i++) {
-                    Thread.sleep(1111);
-                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
-                }
-                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
-            } catch (Exception e) {
-                // TODO: Description
-                LOG.error("TODO ERROR",e);
-            }
-        }).start();
-
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(1000);
+//                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
+//                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
+//
+//                for (int i = 0; i < 6; i++) {
+//                    Thread.sleep(1111);
+//                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
+//                }
+//                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
+//            } catch (Exception e) {
+//                // TODO: Description
+//                LOG.error("TODO ERROR",e);
+//            }
+//        }).start();
     }
-
+    /**
+     * Function to add listeners for hand and waste for chosen player.
+     *
+     * @param playerId player id
+     */
 
     private void addListenersForPlayer(int playerId) {
         Hand hand = table.getPlayers().get(playerId).getHand();
@@ -250,6 +283,19 @@ public class GameController implements Initializable {
             ImageView imageView = hands.get(playerId);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
+    }
+
+    public void handleClickAction(ActionEvent actionEvent) {
+        LOG.debug("End turn clicked!");
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("End turn");
+        a.setHeaderText("My Header Text");
+        a.setResizable(true);
+        String version = System.getProperty("java.version");
+        String content = String.format("Java: %s.\n.", version);
+        a.setContentText(content);
+        a.showAndWait();
+
     }
 
     //brakuje jeszcze funkcji odsłaniającej kartę ze stosika,  hand, impl tylko po naszej stronie
