@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
 import pl.edu.agh.to2.russianBank.net.transport.*;
@@ -60,13 +61,13 @@ public class GameHandlerImpl implements GameHandler {
 
         @Override
         public void visit(MoveMessage message) {
-            // TODO
             LOG.info("move {}", message.getMove());
+            roomMatcher.getRoom(player).unicast(player, message);
         }
 
         @Override
         public void visit(StartGameMessage message) {
-            //TODO
+            throw new UnsupportedMessageException(message);
         }
     }
 }

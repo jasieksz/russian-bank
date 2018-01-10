@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
+import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
@@ -28,8 +29,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     }
 
     @Override
-    public void startGame(GameTable table) {
+    public void startGame(Game game) {
         // FIXME: RACE CONDITIONS!!!
+        GameTable table = game.getGameTable();
         Platform.runLater(() -> {
             try {
                 startGameStage.close();
