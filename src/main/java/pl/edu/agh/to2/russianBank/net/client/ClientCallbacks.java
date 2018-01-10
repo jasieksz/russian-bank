@@ -11,7 +11,7 @@ public interface ClientCallbacks {
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 
-    void endGame(String message);
+    void endGame(boolean won, String cause);
 
     void move(Move move);
 

@@ -70,8 +70,8 @@ import java.io.IOException;
     }
 
     @Override
-    public void endGame(String message) {
-
+    public void endGame(boolean won, String cause) {
+        // TODO message cause to user and end game
     }
 
     @Override
