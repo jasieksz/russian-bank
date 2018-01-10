@@ -13,6 +13,8 @@ public class PlayerConnectionImpl implements PlayerConnection {
     private final int id;
     private final WsSession session;
 
+    private String name = null;
+
     public PlayerConnectionImpl(int id, WsSession session) {
         this.id = id;
         this.session = session;
@@ -24,28 +26,26 @@ public class PlayerConnectionImpl implements PlayerConnection {
     }
 
     @Override
+    public String getName() {
+        return name != null ? name : "<unknown " + id + ">";
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
     public CompletableFuture<Void> sendMessage(Message message) {
         final String json = MessageSerializer.GLOBAL.serialize(message);
         return JettyUtil.sendStringByPromise(session.getRemote(), json);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlayerConnectionImpl that = (PlayerConnectionImpl) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("name", name)
                 .toString();
     }
 }

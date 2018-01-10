@@ -4,7 +4,6 @@ import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
 import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
-import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 import pl.edu.agh.to2.russianBank.net.transport.MoveMessage;
 
 import java.net.URI;
@@ -70,7 +69,7 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(EndGameMessage message) {
-            clientCallbacks.endGame(message.getMessage());
+            clientCallbacks.endGame(message.isWon(), message.getCause());
         }
 
         @Override
