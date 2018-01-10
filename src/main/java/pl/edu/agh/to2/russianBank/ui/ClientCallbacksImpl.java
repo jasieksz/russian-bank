@@ -20,43 +20,43 @@ import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
 
 import java.io.IOException;
 
-                public class ClientCallbacksImpl implements ClientCallbacks {
-                    private static final Logger LOG = LogManager.getLogger();
+public class ClientCallbacksImpl implements ClientCallbacks {
+    private static final Logger LOG = LogManager.getLogger();
 
-                    private Stage startGameStage;
+    private Stage startGameStage;
 
-                    public ClientCallbacksImpl(Stage startGameStage) {
-                        this.startGameStage = startGameStage;
-                    }
+    public ClientCallbacksImpl(Stage startGameStage) {
+        this.startGameStage = startGameStage;
+    }
 
-                    @Override
-                    public void startGame(GameState gameState) {
+    @Override
+    public void startGame(GameState gameState) {
 
-                        Platform.runLater(() -> {
-                            try {
+        Platform.runLater(() -> {
+            try {
 
-                                startGameStage.close();
-                                startGameStage = null;
+                startGameStage.close();
+                startGameStage = null;
 
-                                FXMLLoader loader = new FXMLLoader();
-                                loader.setLocation(pl.edu.agh.to2.russianBank.ui.views.RootLayout.class.getResource("Game.fxml"));
-                                loader.load();
-                                Parent root = loader.getRoot();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(pl.edu.agh.to2.russianBank.ui.views.RootLayout.class.getResource("Game.fxml"));
+                loader.load();
+                Parent root = loader.getRoot();
 
-                                Stage stage = new Stage();
+                Stage stage = new Stage();
 
-                                stage.setTitle("Garibaldka");
-                                stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
-                                Scene scene = new Scene(root, 1200, 1200);
+                stage.setTitle("Garibaldka");
+                stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
+                Scene scene = new Scene(root, 1200, 1200);
 
-                                stage.setScene(scene);
+                stage.setScene(scene);
 
-                                stage.setMaximized(true);
-                                stage.show();
+                stage.setMaximized(true);
+                stage.show();
 
-                                GameController controller = loader.getController();
-                                controller.setTable(gameState.getGameTable());
-                                controller.setName(gameState.getPlayers());
+                GameController controller = loader.getController();
+                controller.setTable(gameState.getGameTable());
+                controller.setName(gameState.getPlayers());
 
 
             } catch (IOException e) {

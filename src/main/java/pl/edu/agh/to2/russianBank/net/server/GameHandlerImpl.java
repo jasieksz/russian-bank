@@ -3,6 +3,7 @@ package pl.edu.agh.to2.russianBank.net.server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.Game;
+import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.room.Room;
@@ -45,8 +46,11 @@ public class GameHandlerImpl implements GameHandler {
             Room room = roomMatcher.assign(player, message.getPlayerName());
             LOG.info("room assigned for player {}", message.getPlayerName());
 
-            if (room.isFull())
-                room.broadcast(new StartGameMessage( new Game(room.getPlayers()) ));
+            if (room.isFull()) {
+                Game game = new Game(room.getPlayers());
+
+                room.broadcast(new StartGameMessage(new GameState(room.getPlayers(), game.getGameTable())));
+            }
         }
 
         @Override
