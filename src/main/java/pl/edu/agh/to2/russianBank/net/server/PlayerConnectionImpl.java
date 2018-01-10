@@ -13,6 +13,8 @@ public class PlayerConnectionImpl implements PlayerConnection {
     private final int id;
     private final WsSession session;
 
+    private String name = null;
+
     public PlayerConnectionImpl(int id, WsSession session) {
         this.id = id;
         this.session = session;
@@ -21,6 +23,16 @@ public class PlayerConnectionImpl implements PlayerConnection {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return name != null ? name : "<unknown " + id + ">";
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -39,6 +51,7 @@ public class PlayerConnectionImpl implements PlayerConnection {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(id);
     }
 
@@ -46,6 +59,7 @@ public class PlayerConnectionImpl implements PlayerConnection {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("name", name)
                 .toString();
     }
 }

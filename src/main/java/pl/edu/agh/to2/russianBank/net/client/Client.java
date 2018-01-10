@@ -2,6 +2,9 @@ package pl.edu.agh.to2.russianBank.net.client;
 
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
+import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
+import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
+import pl.edu.agh.to2.russianBank.net.transport.MoveMessage;
 import pl.edu.agh.to2.russianBank.net.transport.*;
 
 import java.net.URI;
@@ -27,9 +30,9 @@ public class Client implements AutoCloseable {
         this.client.addListener(listener);
     }
 
-    public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks gui) throws Exception {
+    public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks clientCallbacks) throws Exception {
         return RawClientImpl.connect(serverUri)
-                .thenApply((rc) -> new Client(rc, gui));
+                .thenApply((rc) -> new Client(rc, clientCallbacks));
     }
 
     public CompletableFuture<Void> hello(String playerName) {
@@ -67,7 +70,7 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(EndGameMessage message) {
-            clientCallbacks.endGame(message.getMessage());
+            clientCallbacks.endGame(message.isWon(), message.getCause());
         }
 
         @Override

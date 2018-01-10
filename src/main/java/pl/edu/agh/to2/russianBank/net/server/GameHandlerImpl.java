@@ -21,7 +21,7 @@ public class GameHandlerImpl implements GameHandler {
     public void onClose(PlayerConnection player) {
         LOG.debug("Closing player {}", player);
         Room room = roomMatcher.getRoom(player);
-        room.unicast(player, new EndGameMessage());
+        room.unicast(player, new EndGameMessage(true, "Player has disconnected"));
         roomMatcher.deleteRoom(room);
     }
 
@@ -50,8 +50,12 @@ public class GameHandlerImpl implements GameHandler {
 
         @Override
         public void visit(EndGameMessage message) {
-            // TODO
-            LOG.info("I won!");
+            LOG.debug("Player {} ends game {}, because: {}",
+                    player.getName(),
+                    (message.isWon() ? "winning" : "losing"),
+                    message.getCause());
+            Room room = roomMatcher.getRoom(player);
+            room.unicast(player, new EndGameMessage(!message.isWon(), message.getCause()));
         }
 
         @Override

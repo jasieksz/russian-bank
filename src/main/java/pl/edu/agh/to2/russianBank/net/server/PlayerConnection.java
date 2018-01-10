@@ -17,6 +17,16 @@ public interface PlayerConnection {
     int getId();
 
     /**
+     * Get player name if set, otherwise return some sub string including player id.
+     */
+    String getName();
+
+    /**
+     * Set player name.
+     */
+    void setName(String name);
+
+    /**
      * Send message to player.
      *
      * @param message
