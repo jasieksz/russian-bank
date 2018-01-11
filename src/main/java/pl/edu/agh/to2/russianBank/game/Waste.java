@@ -11,15 +11,11 @@ public class Waste extends ICardSet {
     private int position;
     private ObservableList<Card> cards;
 
+    // TODO : add moveCOntroller
     public Waste() {
         cards = FXCollections.observableArrayList();
     }
 
-    @Override
-    public Optional<Card> takeTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
-
-    }
 
     private boolean tryTakeTopCard() {
         return cards.size() > 0;
@@ -29,9 +25,6 @@ public class Waste extends ICardSet {
         return true;
     }
 
-    private boolean enemyPutCard(Card card) {
-        return readTopCard().map(topCard -> isEnemyPutCardCorrect(topCard, card)).orElse(true); // TODO : Is it correct? - assuming that enemy can place card on my waste if it's empty.
-    }
 
     private boolean isEnemyPutCardCorrect(Card topCard, Card card) {
         return (topCard.getSuit().getSuitId() == card.getSuit().getSuitId())
@@ -40,8 +33,26 @@ public class Waste extends ICardSet {
     }
 
     @Override
+    public Optional<Card> takeTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
+
+    }
+
+    @Override
+    public Optional<Card> readTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
+    }
+
+    @Override
     public boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
+    }
+
+    @Override
+    public boolean enemyPutCard(Card card) {
+        return (readTopCard()
+                .map(topCard -> isEnemyPutCardCorrect(topCard, card))
+                .orElse(true) && cards.add(card));
     }
 
     @Override
@@ -63,10 +74,6 @@ public class Waste extends ICardSet {
         this.position = position;
     }
 
-    @Override
-    public Optional<Card> readTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
-    }
 
     @Override
     public void addListener(ListChangeListener<Card> listener) {

@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import pl.edu.agh.to2.russianBank.game.Card;
@@ -16,14 +17,15 @@ public class CardView extends ImageView {
 
     private ICardSet cardSet;
 
+    private static ICardSet target;
+
     public CardView(Image image, ICardSet cardSet) {
         super(image);
         this.cardSet = cardSet;
 
         setOnDragDetected(event -> {
 
-            /*if(cardSet.getPosition()==0 && Service.getInstance().getStackTaken() {
-
+            /*if(cardSet.getPosition()==0 && cardSet.readTopCard()==) {
             }*/
 
 
@@ -37,16 +39,28 @@ public class CardView extends ImageView {
             event.consume();
         });
 
-        setOnMouseEntered(event -> setCursor(Cursor.OPEN_HAND));
+        addEventFilter(DragEvent.DRAG_ENTERED, e -> {
+            target = cardSet;
+        });
 
-        setOnDragExited(event -> {
+        addEventFilter(DragEvent.DRAG_DONE, event -> {
             if (event.getGestureSource() instanceof CardView) {
-                if(cardSet.getPosition()==0){
-                    this.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+                ICardSet t = target;
+                if (t != null) {
+                    t.makeMove(cardSet);
                 }
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 cardSet.makeMove(sourceCardView.cardSet);
 
+                //if(!cardSet.makeMove(sourceCardView.cardSet))
+                //wyświetlić alert
+                /*Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Wrong move");
+                a.setHeaderText("Wrong move");
+                a.setResizable(true);
+                String content = "this move is incorrect";
+                a.setContentText(content);
+                a.showAndWait();*/
             }
             event.consume();
         });
