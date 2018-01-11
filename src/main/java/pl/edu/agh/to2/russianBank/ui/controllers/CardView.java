@@ -48,6 +48,8 @@ public class CardView extends ImageView {
                     this.setImage(Service.getInstance().createImage("karty/Gora1.png"));
                 }
                 CardView sourceCardView = (CardView) event.getGestureSource();
+                // TODO : makeMove returns now boolean, if false alert player about illegal move
+                // also illegal move ==> end of player's turn @Game
                 cardSet.makeMove(sourceCardView.cardSet);
 
                 //if(!cardSet.makeMove(sourceCardView.cardSet))

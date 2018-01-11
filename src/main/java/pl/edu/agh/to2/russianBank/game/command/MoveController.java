@@ -3,6 +3,7 @@ package pl.edu.agh.to2.russianBank.game.command;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 public class MoveController {
     private GameTable gameTable;
@@ -15,12 +16,13 @@ public class MoveController {
         this.gameTable = gameTable;
     }
 
-    // TODO : We should use this as mechanism to notify about illegal move @J
-    public void executeCommand(Command command) {
-        if (command.execute(gameTable).isPresent()) {
+    public boolean executeCommand(Command command) {
+        if (command.execute(gameTable)) {
             commandStack.add(command);
             unmadeCommandStack.clear();
+            return true;
         }
+        return false;
     }
 
     public void redo() {
