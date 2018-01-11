@@ -95,20 +95,25 @@ public class StartGameController implements Initializable {
         List<House> houses = new ArrayList<>();
         List<Foundation> foundations = new ArrayList<>();
 
-
         Hand hand = new Hand(new ArrayList<>());
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.QUEEN));
         hand.setPosition(2);
-        playerDecks.add(new PlayerDeck(hand, new Waste()));
 
+        Waste waste = new Waste();
+        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
+        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_3));
+        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_3));
+        hand.setPosition(3);
+        playerDecks.add(new PlayerDeck(hand, new Waste()));
         playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
 
-        House house = new House(new ArrayList<>());
+        /*House house = new House(new ArrayList<>());
         house.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
         System.out.println("POZYCJA"+house.getPosition());
-        houses.add(house);
+        houses.add(house);*/
+        houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
