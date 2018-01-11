@@ -40,10 +40,12 @@ public class Service {
     }
 
     public String buildPictureName(CardRank r, CardSuit s) {
+
         return s.getRank() + "_" + r.getRankName();
     }
 
     public Image createImage(String pathname) {
+
         return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 }
