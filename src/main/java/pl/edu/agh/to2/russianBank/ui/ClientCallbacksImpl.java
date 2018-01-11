@@ -61,7 +61,8 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
 
-                /*sleep(2000);
+                /* to set GUI
+                sleep(2000);
 
                 GameTable table = controller.getTable();
                 move(new Move(table.getHouses().get(7),table.getHouses().get(5)));*/

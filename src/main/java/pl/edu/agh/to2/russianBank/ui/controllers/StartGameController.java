@@ -60,14 +60,14 @@ public class StartGameController implements Initializable {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
 
-                            /*try {
+                            try {
                                 sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
 
                             GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState);*/
+                            callbacks.startGame(gameState);
                         });
                     })
                     .exceptionally(e -> {
@@ -94,8 +94,21 @@ public class StartGameController implements Initializable {
         List<PlayerDeck> playerDecks = new ArrayList<>();
         List<House> houses = new ArrayList<>();
         List<Foundation> foundations = new ArrayList<>();
+
+        Hand hand = new Hand(new ArrayList<>());
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.QUEEN));
+        playerDecks.add(new PlayerDeck(hand, new Waste()));
+
+        /*Hand hand = new Hand(new ArrayList<>());
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.QUEEN));
+        playerDecks.add(new PlayerDeck(hand, new Waste()));
+        */
         playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
+
 
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));

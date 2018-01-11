@@ -24,7 +24,9 @@ public class Hand extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-        return false; //TODO : Is it correct? - you cannot add card to hand @J
+        cards.add(card);
+        return true;
+        //return false; //TODO : Is it correct? - you cannot add card to hand @J
     }
 
     @Override
