@@ -95,7 +95,6 @@ public class StartGameController implements Initializable {
         List<House> houses = new ArrayList<>();
         List<Foundation> foundations = new ArrayList<>();
 
-
         Hand hand = new Hand(new ArrayList<>());
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
@@ -107,8 +106,10 @@ public class StartGameController implements Initializable {
 
         House house = new House(new ArrayList<>());
         house.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
+        house.setPosition(11);
         System.out.println("POZYCJA"+house.getPosition());
         houses.add(house);
+
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));

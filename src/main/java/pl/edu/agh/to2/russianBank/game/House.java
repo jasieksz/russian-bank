@@ -75,6 +75,11 @@ public class House extends ICardSet {
         return true;
     }
 
+
+    public void setPosition(int p) {
+         position = p;
+    }
+
     @Override
     public int getPosition() {
         return position;

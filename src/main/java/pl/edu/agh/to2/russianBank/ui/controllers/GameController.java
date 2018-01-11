@@ -242,7 +242,6 @@ public class GameController implements Initializable {
                         houses.get(index).get(j).setImage(null);
                     }
                 }
-
                 if (card.isEmpty()) {
                     houses.get(index).get(0).setImage(service.getWhiteImage());
                 }
