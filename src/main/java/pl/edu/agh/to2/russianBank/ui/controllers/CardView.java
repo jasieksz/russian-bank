@@ -22,9 +22,9 @@ public class CardView extends ImageView {
 
         setOnDragDetected(event -> {
 
-            if(cardSet.getPosition()==0 && Service.getInstance().getStackTaken() {
+            /*if(cardSet.getPosition()==0 && Service.getInstance().getStackTaken() {
 
-            }
+            }*/
 
 
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
