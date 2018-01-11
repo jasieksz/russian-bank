@@ -29,19 +29,7 @@ public class House extends ICardSet {
         this(FXCollections.observableList(cards));
     }
 
-    @Override
-    public Optional<Card> takeTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
-    }
 
-    private boolean tryTakeTopCard() {
-        return cards.size() > 0;
-    }
-
-    @Override
-    public Optional<Card> readTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
-    }
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
@@ -58,8 +46,23 @@ public class House extends ICardSet {
     }
 
     @Override
+    public Optional<Card> takeTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
+    }
+
+    @Override
+    public Optional<Card> readTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
+    }
+
+    @Override
     public boolean putCard(Card card) {
         return tryPutCard(card) && cards.add(card);
+    }
+
+    @Override
+    public boolean enemyPutCard(Card card) {
+        return putCard(card);
     }
 
     @Override

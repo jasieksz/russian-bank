@@ -1,6 +1,9 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 
+import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -21,10 +24,8 @@ public class CardView extends ImageView {
 
         setOnDragDetected(event -> {
 
-            if (cardSet.getPosition() == 0 && Service.getInstance().getStackTaken()) {
-
-            }
-
+            /*if(cardSet.getPosition()==0 && cardSet.readTopCard()==) {
+            }*/
 
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
@@ -50,6 +51,15 @@ public class CardView extends ImageView {
                     t.makeMove(cardSet);
                 }
 
+                //if(!cardSet.makeMove(sourceCardView.cardSet))
+                //wyświetlić alert
+                /*Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Wrong move");
+                a.setHeaderText("Wrong move");
+                a.setResizable(true);
+                String content = "this move is incorrect";
+                a.setContentText(content);
+                a.showAndWait();*/
             }
             event.consume();
         });

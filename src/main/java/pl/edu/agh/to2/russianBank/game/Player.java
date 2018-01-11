@@ -19,6 +19,7 @@ public class Player {
         }
         Collections.shuffle(tmp);
         this.playerDeck = new PlayerDeck(new Hand(tmp), new Waste());
+        // TODO : add moveController to Hand and Waste
     }
 
 

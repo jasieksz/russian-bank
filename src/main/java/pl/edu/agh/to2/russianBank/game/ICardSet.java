@@ -16,6 +16,8 @@ public abstract class ICardSet {
 
     public abstract boolean putCard(Card card);
 
+    public abstract boolean enemyPutCard(Card card);
+
     public abstract int getSize();
 
     public abstract boolean isVisible();
@@ -28,5 +30,5 @@ public abstract class ICardSet {
 
     public void makeMove(ICardSet source) {
         moveController.executeCommand(new Move(source, this));
-    }
+    } // TODO : We should use this as mechanism to notify about illegal move @J
 }
