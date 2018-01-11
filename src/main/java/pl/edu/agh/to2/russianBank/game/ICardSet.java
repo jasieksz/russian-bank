@@ -28,7 +28,7 @@ public abstract class ICardSet {
 
     public abstract void addListener(ListChangeListener<Card> listener);
 
-    public void makeMove(ICardSet source) {
-        moveController.executeCommand(new Move(source, this));
-    } // TODO : We should use this as mechanism to notify about illegal move @J
+    public boolean makeMove(ICardSet source) {
+        return moveController.executeCommand(new Move(source, this));
+    }
 }
