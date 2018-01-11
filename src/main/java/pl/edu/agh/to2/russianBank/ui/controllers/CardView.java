@@ -1,9 +1,6 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 
-import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -44,9 +41,6 @@ public class CardView extends ImageView {
         addEventFilter(DragEvent.DRAG_DONE, event -> {
             if (event.getGestureSource() instanceof CardView) {
                 ICardSet t = target;
-                if(cardSet.getPosition()==0){
-                    this.setImage(Service.getInstance().createImage("karty/Gora1.png"));
-                }
                 if (t != null) {
                     t.makeMove(cardSet);
                 }
