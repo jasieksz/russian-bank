@@ -17,30 +17,41 @@ public class Move implements Command {
         this.target = target;
     }
 
+    /* TODO : We should use this as mechanism to notify about illegal move
+       Maybe change return type to bool (putCard returns bool) @J
+    */
     @Override
     public Optional<Card> execute(GameTable gameTable) {
-        Optional<Card> result = Optional.empty();
+        Optional<Card> result = source.takeTopCard();
         int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
-        // TODO : implement put() for each case in corresponding CardSets
-        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
-            // MY HAND -> MY WASTE
-        }
-        else if ((sourcePos == 0 && targetPos == 3) || (sourcePos == 2 && targetPos == 1)) {
-            // MY HAND -> ENEMY WASTE
-        }
-        else if ((sourcePos == 1 && targetPos == 3) || (sourcePos == 3 && targetPos == 1)){
-            // MY WASTE -> ENEMY WASTE
-        }
-        else if ((sourcePos > 3 && sourcePos < 20) && (targetPos == 1 || targetPos == 3)){
-            // HOUSE -> WASTE (assuming it's always enemy waste)
-        } else {
-            // put correct with target
-            // HOUSE -> HOUSE , WASTE -> HOUSE, HOUSE -> FOUNDATION
-            result = source.takeTopCard();
+
+        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
+            result.ifPresent(card -> target.putCard(card));
+        } else if (targetPos == 1 || targetPos == 3) { // OTHER -> WASTE
+            result.ifPresent(card -> target.enemyPutCard(card));
+        } else { // OTHER -> OTHER
             result.ifPresent(card -> target.putCard(card));
         }
+
         return result;
+
+//        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
+//            // MY HAND -> MY WASTE
+//            result.ifPresent(card -> target.putCard(card));
+//        }
+//        else if ((sourcePos == 0 && targetPos == 3) || (sourcePos == 2 && targetPos == 1)  // MY HAND -> ENEMY WASTE
+//                || (sourcePos == 1 && targetPos == 3) || (sourcePos == 3 && targetPos == 1)) { // MY WASTE -> ENEMY WASTE
+//
+//            result.ifPresent(card -> target.enemyPutCard(card));
+//        }
+//        else if ((sourcePos > 3 && sourcePos < 20) && (targetPos == 1 || targetPos == 3)){
+//            // HOUSE -> WASTE (assuming it's always enemy waste)
+//        } else {
+//            // put correct with target
+//            // HOUSE -> HOUSE , WASTE -> HOUSE, HOUSE -> FOUNDATION
+//            result.ifPresent(card -> target.putCard(card));
+//        }
     }
 
     public void redo(GameTable gameTable) {

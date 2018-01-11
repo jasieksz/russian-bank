@@ -28,15 +28,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         this(FXCollections.observableList(cards));
     }
 
-    @Override
-    public Optional<Card> takeTopCard() {
-        return Optional.empty(); // always false - illeagal move
-    }
 
-    @Override
-    public boolean putCard(Card card) {
-        return tryPutCard(card) && cards.add(card);
-    }
 
     private boolean tryPutCard(Card card) {
         if (cards.isEmpty() && card.getRank().getRank() == 1) return true; // putting ACE
@@ -48,7 +40,25 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
                 (card1.getRank().getRank() == card2.getRank().getRank() - 1));
     }
 
+    @Override
+    public Optional<Card> takeTopCard() {
+        return Optional.empty(); // always false - illeagal move
+    }
 
+    @Override
+    public Optional<Card> readTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
+    }
+
+    @Override
+    public boolean putCard(Card card) {
+        return tryPutCard(card) && cards.add(card);
+    }
+
+    @Override
+    public boolean enemyPutCard(Card card) {
+        return putCard(card);
+    }
 
     @Override
     public int getSize() {
@@ -65,10 +75,6 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         return position;
     }
 
-    @Override
-    public Optional<Card> readTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
-    }
 
     @Override
     public void addListener(ListChangeListener<Card> listener) {

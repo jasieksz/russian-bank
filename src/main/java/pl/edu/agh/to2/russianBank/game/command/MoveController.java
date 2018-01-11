@@ -15,6 +15,7 @@ public class MoveController {
         this.gameTable = gameTable;
     }
 
+    // TODO : We should use this as mechanism to notify about illegal move @J
     public void executeCommand(Command command) {
         if (command.execute(gameTable).isPresent()) {
             commandStack.add(command);
