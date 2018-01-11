@@ -41,6 +41,7 @@ public class Game {
         piles.add(players.get(1).getPlayerDeck().getHand());
         piles.add(players.get(1).getPlayerDeck().getWaste());
 
+        // TODO : move 4 top cards from each Hand into Houses
         for (int i = 4; i < 12; i++) {
             piles.add(new House(FXCollections.observableArrayList(), i, moveController));
         }
@@ -52,9 +53,6 @@ public class Game {
 
 
     public void startGame() {
-
-        // TODO : shuffle cards, setup houses, etc. ???
-
         for (int i = 4; i < 12; i++) {
 //            Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
 //            moveController.executeCommand(move);

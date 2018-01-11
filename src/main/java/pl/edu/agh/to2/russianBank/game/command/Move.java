@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -17,25 +18,37 @@ public class Move implements Command {
         this.target = target;
     }
 
-    /* TODO : We should use this as mechanism to notify about illegal move
-       Maybe change return type to bool (putCard returns bool) @J
-
-       Other solution (better ?) if all putCard() returned false then, do putCard on source
-       and notify player!
-
-    */
     @Override
-    public Optional<Card> execute(GameTable gameTable) {
-        Optional<Card> result = source.takeTopCard();
+    public boolean execute(GameTable gameTable) {
         int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
-
+        boolean result = false;
         if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
-            result.ifPresent(card -> target.putCard(card));
+            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
         } else if (targetPos == 1 || targetPos == 3) { // OTHER -> WASTE
-            result.ifPresent(card -> target.enemyPutCard(card));
+            result = source.readTopCard().map(c -> target.enemyPutCard(c)).orElse(false);
         } else { // OTHER -> OTHER
-            result.ifPresent(card -> target.putCard(card));
+            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
+        }
+
+        if (result){
+            source.takeTopCard();
+            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController
+        }
+
+        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0){
+            int wastePos = gameTable.getPlayers().stream()
+                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
+                    .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
+            if (gameTable.getPlayers().stream()
+                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
+                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)){
+                // TODO : send message YOU WON!!!!
+            } else {
+                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
+                // TODO : swap locally
+            }
+
         }
 
         return result;
