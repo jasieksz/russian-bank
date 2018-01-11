@@ -1,20 +1,19 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 
-import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
-
-import java.util.Optional;
 
 public class CardView extends ImageView {
 
     private ICardSet cardSet;
+
+    private static ICardSet target;
 
     public CardView(Image image, ICardSet cardSet) {
         super(image);
@@ -22,7 +21,7 @@ public class CardView extends ImageView {
 
         setOnDragDetected(event -> {
 
-            if(cardSet.getPosition()==0 && Service.getInstance().getStackTaken() {
+            if (cardSet.getPosition() == 0 && Service.getInstance().getStackTaken()) {
 
             }
 
@@ -37,15 +36,19 @@ public class CardView extends ImageView {
             event.consume();
         });
 
-        setOnMouseEntered(event -> setCursor(Cursor.OPEN_HAND));
+        addEventFilter(DragEvent.DRAG_ENTERED, e -> {
+            target = cardSet;
+        });
 
-        setOnDragExited(event -> {
+        addEventFilter(DragEvent.DRAG_DONE, event -> {
             if (event.getGestureSource() instanceof CardView) {
+                ICardSet t = target;
                 if(cardSet.getPosition()==0){
                     this.setImage(Service.getInstance().createImage("karty/Gora1.png"));
                 }
-                CardView sourceCardView = (CardView) event.getGestureSource();
-                cardSet.makeMove(sourceCardView.cardSet);
+                if (t != null) {
+                    t.makeMove(cardSet);
+                }
 
             }
             event.consume();
