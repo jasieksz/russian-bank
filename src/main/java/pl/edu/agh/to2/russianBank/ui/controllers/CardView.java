@@ -7,7 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+
+import java.util.Optional;
 
 public class CardView extends ImageView {
 
@@ -18,7 +21,9 @@ public class CardView extends ImageView {
         this.cardSet = cardSet;
 
         setOnDragDetected(event -> {
-            //if(cardSet.getPosition()==0) when hand
+            if(cardSet.getPosition()==0)
+                Service.getInstance().setStackTaken(true);
+
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
             ImageView imageView = new ImageView(getImage());
@@ -33,8 +38,12 @@ public class CardView extends ImageView {
 
         setOnDragExited(event -> {
             if (event.getGestureSource() instanceof CardView) {
+                if(cardSet.getPosition()==0){
+                    this.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+                }
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 cardSet.makeMove(sourceCardView.cardSet);
+
             }
             event.consume();
         });

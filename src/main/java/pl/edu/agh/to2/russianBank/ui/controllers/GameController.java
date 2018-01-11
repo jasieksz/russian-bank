@@ -142,7 +142,6 @@ public class GameController implements Initializable {
     @FXML
     public void uncoverCardFromStack() {
         LOG.debug("Clicked!");
-       //hands.put(0, createField(, table.getPlayers().get(0).getHand()));
         Optional<Card> card = table.getPlayers().get(0).getHand().readTopCard();
         card.ifPresent(c -> {
             hands.get(0).setImage(service.getImageForCard(c));
@@ -315,7 +314,5 @@ public class GameController implements Initializable {
         stageToClose.close();
         System.exit(0);
     }
-
-    //brakuje jeszcze funkcji odsłaniającej kartę ze stosika,  hand, impl tylko po naszej stronie
 
 }

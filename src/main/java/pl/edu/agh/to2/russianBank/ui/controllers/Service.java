@@ -11,6 +11,15 @@ import java.io.File;
 
 public class Service {
     private Client client;
+    private Boolean isStackTaken = false;
+
+    public void setStackTaken(Boolean stackTaken) {
+        isStackTaken = stackTaken;
+    }
+
+    public Boolean getStackTaken() {
+        return isStackTaken;
+    }
 
     private static Service instance;
     private Service() {}
