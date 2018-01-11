@@ -11,6 +11,7 @@ public class Waste extends ICardSet {
     private int position;
     private ObservableList<Card> cards;
 
+    // TODO : add moveCOntroller
     public Waste() {
         cards = FXCollections.observableArrayList();
     }

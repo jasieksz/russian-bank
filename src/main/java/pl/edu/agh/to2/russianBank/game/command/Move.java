@@ -19,6 +19,10 @@ public class Move implements Command {
 
     /* TODO : We should use this as mechanism to notify about illegal move
        Maybe change return type to bool (putCard returns bool) @J
+
+       Other solution (better ?) if all putCard() returned false then, do putCard on source
+       and notify player!
+
     */
     @Override
     public Optional<Card> execute(GameTable gameTable) {

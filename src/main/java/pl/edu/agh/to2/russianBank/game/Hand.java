@@ -12,11 +12,12 @@ public class Hand extends ICardSet {
     private ObservableList<Card> cards;
     private int position;
 
+    // TODO : add moveCOntroller
     public Hand(List<Card> cards) {
         this.cards = FXCollections.observableList(cards);
     }
 
-    //TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
+    // TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
     @Override
     public Optional<Card> takeTopCard() { // removes top card
         return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();

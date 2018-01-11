@@ -59,15 +59,16 @@ public class StartGameController implements Initializable {
                     .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
-
-                           /* try {
+//
+                            try {
                                 sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
 
                             GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState);*/
+                            callbacks.startGame(gameState);
+                           //
                         });
                     })
                     .exceptionally(e -> {
