@@ -15,6 +15,7 @@ public class Hand extends ICardSet {
     // TODO : add moveCOntroller
     public Hand(List<Card> cards) {
         this.cards = FXCollections.observableList(cards);
+        //this.setPosition(0);
     }
 
     // TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
