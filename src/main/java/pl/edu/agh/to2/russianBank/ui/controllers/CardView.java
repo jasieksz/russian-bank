@@ -42,7 +42,7 @@ public class CardView extends ImageView {
 
 
         setOnDragExited(event -> {
-        //    setOnDragDropped(event -> {
+        //    setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof CardView) {
                 if(cardSet.getPosition()==2){
                     this.setImage(Service.getInstance().createImage("karty/Gora1.png"));

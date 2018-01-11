@@ -263,7 +263,7 @@ public class GameController implements Initializable {
             addListenersForPlayer(i);
         }
 //
-       /* new Thread(() -> {
+        new Thread(() -> {
             try {
                 Thread.sleep(1000);
                 table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
@@ -279,7 +279,7 @@ public class GameController implements Initializable {
                 // TODO: Description
                 LOG.error("TODO ERROR",e);
             }
-        }).start();*/ //
+        }).start();
     }
     /**
      * Function to add listeners for hand and waste for chosen player.

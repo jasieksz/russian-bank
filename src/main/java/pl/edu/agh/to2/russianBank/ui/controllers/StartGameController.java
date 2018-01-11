@@ -107,7 +107,7 @@ public class StartGameController implements Initializable {
 
         House house = new House(new ArrayList<>());
         house.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
-
+        System.out.println("POZYCJA"+house.getPosition());
         houses.add(house);
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
