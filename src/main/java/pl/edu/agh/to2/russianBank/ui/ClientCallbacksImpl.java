@@ -69,17 +69,19 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
+        //what we should do here??? how to change model? change model and as a result
+        // listeners will change view??? how we can change model (GameTable/Game) here?
+        //controller.setTable(...); ?
     }
 
     @Override
     public void endGame(boolean won, String cause) {
-        // TODO message cause to user and end game
 
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("Game ended");
         a.setHeaderText("Game ended");
         a.setResizable(true);
-        String content="";
+        String content;
         if(won) {
             content = "YOU WON!!! \n Congratulations";
         }
@@ -96,14 +98,23 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void move(Move move) {
-
+        //what we should do here???
     }
 
     @Override
     public void networkError(Throwable ex) {
-        // TODO:
+
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle("Network error");
+        a.setHeaderText("Network error");
+        a.setResizable(true);
+        String content="There is problem with network \n try later...";
+        a.setContentText(content);
+        a.showAndWait();
+
+        gameStage.close();
+        System.exit(0);
         ex.printStackTrace();
     }
-
 
 }

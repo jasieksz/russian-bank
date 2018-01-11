@@ -12,6 +12,16 @@ import java.io.File;
 public class Service {
     private Client client;
 
+    private static Service instance;
+    private Service() {}
+
+    public static Service getInstance() {
+        if (instance == null) {
+            instance = new Service();
+        }
+        return instance;
+    }
+
     public void setClient(Client client) {
         this.client = client;
     }

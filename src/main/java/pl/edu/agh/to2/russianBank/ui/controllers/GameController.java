@@ -15,6 +15,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
@@ -38,7 +39,7 @@ public class GameController implements Initializable {
     private Map<Integer, CardView> wastes = new HashMap<>();
     private Map<Integer, List<CardView>> houses = new HashMap<>();
 
-    private Service service = new Service();
+    private Service service = Service.getInstance();
 
     @FXML
     public AnchorPane rootPane;
@@ -73,16 +74,16 @@ public class GameController implements Initializable {
         this.myName.setText(name);
         this.myName.setAlignment(Pos.BOTTOM_CENTER);
 
-        GridPane.setHalignment(this.myName, HPos.RIGHT);
+        GridPane.setHalignment(this.myName, HPos.CENTER);
         GridPane.setValignment(this.myName, VPos.TOP);
-        GridPane.setConstraints(this.myName, 0,3);
+        GridPane.setConstraints(this.myName, 0,9,2,2);
 
         this.opponentName.setText(opponentName);
         this.opponentName.setAlignment(Pos.BOTTOM_CENTER);
 
-        GridPane.setHalignment(this.opponentName, HPos.LEFT);
-        GridPane.setValignment(this.opponentName, VPos.TOP);
-        GridPane.setConstraints(this.opponentName, 25,3, 10, 10);
+        GridPane.setHalignment(this.opponentName, HPos.CENTER);
+        GridPane.setValignment(this.opponentName, VPos.BOTTOM);
+        GridPane.setConstraints(this.opponentName, 25,3,2,2);
     }
 
     /**
@@ -247,22 +248,22 @@ public class GameController implements Initializable {
             addListenersForPlayer(i);
         }
 
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(1000);
-//                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
-//                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-//
-//                for (int i = 0; i < 6; i++) {
-//                    Thread.sleep(1111);
-//                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
-//                }
-//                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
-//            } catch (Exception e) {
-//                // TODO: Description
-//                LOG.error("TODO ERROR",e);
-//            }
-//        }).start();
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
+                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
+
+                for (int i = 0; i < 6; i++) {
+                    Thread.sleep(1111);
+                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
+                }
+                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
+            } catch (Exception e) {
+                // TODO: Description
+                LOG.error("TODO ERROR",e);
+            }
+        }).start();
     }
     /**
      * Function to add listeners for hand and waste for chosen player.
@@ -285,17 +286,19 @@ public class GameController implements Initializable {
         });
     }
 
-    public void handleClickAction(ActionEvent actionEvent) {
+    public void handleClickAction(ActionEvent actionEvent) throws Exception {
         LOG.debug("End turn clicked!");
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("End turn");
-        a.setHeaderText("My Header Text");
+        a.setHeaderText("End turn");
         a.setResizable(true);
-        String version = System.getProperty("java.version");
-        String content = String.format("Java: %s.\n.", version);
+        String content = "Try again...";
         a.setContentText(content);
         a.showAndWait();
-
+        Service.getInstance().getClient().close();
+        Stage stageToClose = (Stage)endTurn.getScene().getWindow();
+        stageToClose.close();
+        System.exit(0);
     }
 
     //brakuje jeszcze funkcji odsłaniającej kartę ze stosika,  hand, impl tylko po naszej stronie
