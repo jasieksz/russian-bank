@@ -12,11 +12,12 @@ public class Hand extends ICardSet {
     private ObservableList<Card> cards;
     private int position;
 
+    // TODO : add moveCOntroller
     public Hand(List<Card> cards) {
         this.cards = FXCollections.observableList(cards);
     }
 
-    //TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
+    // TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
     @Override
     public Optional<Card> takeTopCard() { // removes top card
         return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
@@ -24,9 +25,12 @@ public class Hand extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-        cards.add(card);
-        return true;
-        //return false; //TODO : Is it correct? - you cannot add card to hand @J
+        return false;
+    }
+
+    @Override
+    public boolean enemyPutCard(Card card) {
+        return putCard(card);
     }
 
     @Override
