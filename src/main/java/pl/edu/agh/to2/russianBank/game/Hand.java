@@ -16,8 +16,7 @@ public class Hand extends ICardSet {
         this.cards = FXCollections.observableList(cards);
     }
 
-    // TODO should we automatically reshuffle if no more cards present?
-    // TODO : PlayerDeck should be responsible for this, it contains both hand & waste @J
+    //TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
     @Override
     public Optional<Card> takeTopCard() { // removes top card
         return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
@@ -25,7 +24,7 @@ public class Hand extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-        return this.cards.add(card);
+        return false; //TODO : Is it correct? - you cannot add card to hand @J
     }
 
     @Override

@@ -12,8 +12,6 @@ public class Move implements Command {
     private ICardSet source;
     private ICardSet target;
 
-    // TODO : Do we need to know which player is making move?
-
     public Move(ICardSet source, ICardSet target) {
         this.source = source;
         this.target = target;
@@ -21,17 +19,36 @@ public class Move implements Command {
 
     @Override
     public Optional<Card> execute(GameTable gameTable) {
-        Optional<Card> result = source.takeTopCard();
-        result.ifPresent(card -> target.putCard(card));
+        Optional<Card> result = Optional.empty();
+        int sourcePos = source.getPosition();
+        int targetPos = target.getPosition();
+        // TODO : implement put() for each case in corresponding CardSets
+        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
+            // MY HAND -> MY WASTE
+        }
+        else if ((sourcePos == 0 && targetPos == 3) || (sourcePos == 2 && targetPos == 1)) {
+            // MY HAND -> ENEMY WASTE
+        }
+        else if ((sourcePos == 1 && targetPos == 3) || (sourcePos == 3 && targetPos == 1)){
+            // MY WASTE -> ENEMY WASTE
+        }
+        else if ((sourcePos > 3 && sourcePos < 20) && (targetPos == 1 || targetPos == 3)){
+            // HOUSE -> WASTE (assuming it's always enemy waste)
+        } else {
+            // put correct with target
+            // HOUSE -> HOUSE , WASTE -> HOUSE, HOUSE -> FOUNDATION
+            result = source.takeTopCard();
+            result.ifPresent(card -> target.putCard(card));
+        }
         return result;
     }
 
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get());
+        target.putCard(source.takeTopCard().get()); // TODO : isPresent() missing warning
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get());
+        source.putCard(target.takeTopCard().get()); // TODO : isPresent() missing warning
     }
 
     @Override

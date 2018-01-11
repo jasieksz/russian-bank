@@ -17,27 +17,23 @@ public class Waste extends ICardSet {
 
     @Override
     public Optional<Card> takeTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            result = Optional.of(cards.remove(cards.size() - 1));
-        }
-        return result;
+        return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
+
     }
 
     private boolean tryTakeTopCard() {
         return cards.size() > 0;
     }
 
-    private Card lookUpTopCard() {
-        return cards.get(cards.size() - 1);
-    }
-
     private boolean tryPutCard(Card card) {
         return true;
     }
 
-    private boolean enemyTryPutCard(Card card) {
-        Card topCard = lookUpTopCard();
+    private boolean enemyPutCard(Card card) {
+        return readTopCard().map(topCard -> isEnemyPutCardCorrect(topCard, card)).orElse(true); // TODO : Is it correct? - assuming that enemy can place card on my waste if it's empty.
+    }
+
+    private boolean isEnemyPutCardCorrect(Card topCard, Card card) {
         return (topCard.getSuit().getSuitId() == card.getSuit().getSuitId())
                 && (topCard.getRank().getRank() == card.getRank().getRank() - 1
                 || topCard.getRank().getRank() == card.getRank().getRank() + 1);
@@ -69,13 +65,7 @@ public class Waste extends ICardSet {
 
     @Override
     public Optional<Card> readTopCard() {
-        Optional<Card> result = Optional.empty();
-        if (tryTakeTopCard()) {
-            //czy aby na pewno ściągać tę kartę tutaj? czy tylko dowiedzieć się jaka to karta (GUI)
-
-            result = Optional.of(cards.get(cards.size() - 1));
-        }
-        return result;
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
     @Override
