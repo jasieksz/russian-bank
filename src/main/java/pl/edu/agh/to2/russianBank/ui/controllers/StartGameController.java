@@ -53,20 +53,21 @@ public class StartGameController implements Initializable {
             Client.connect(Constants.SERVER_URI, callbacks)
                     .thenComposeAsync(client -> {
                         LOG.info("Connected, sending hello");
+                        Service.getInstance().setClient(client);        //ok?
                         return client.hello(playerName);
                     })
                     .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
 
-                            try {
-                                sleep(2000);
+                           /* try {
+                                sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
 
                             GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState);
+                            callbacks.startGame(gameState);*/
                         });
                     })
                     .exceptionally(e -> {
@@ -82,7 +83,7 @@ public class StartGameController implements Initializable {
 
     public void onConnectError() {
         Platform.runLater(() -> {
-            statusLbl.setText("Failed to to connect to game server!");
+            statusLbl.setText("Failed to connect to game server!");
             okButton.setDisable(false);
         });
     }

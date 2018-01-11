@@ -1,24 +1,26 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
 import pl.edu.agh.to2.russianBank.game.Game;
+import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 
 /**
  * Created by Marek on 09.01.2018.
  */
 public class StartGameMessage extends Message {
-    private Game game;
+    private GameState gameState;
 
-    public StartGameMessage(Game game) {
-        this.game = game;
+    public StartGameMessage(GameState gameState) {
+        this.gameState = gameState;
     }
 
-    public Game getGame() {
-        return game;
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public GameState getGameState() {
+
+        return gameState;
     }
 
     @Override
@@ -28,18 +30,18 @@ public class StartGameMessage extends Message {
 
         StartGameMessage that = (StartGameMessage) o;
 
-        return game != null ? game.equals(that.game) : that.game == null;
+        return gameState != null ? gameState.equals(that.gameState) : that.gameState == null;
     }
 
     @Override
     public int hashCode() {
-        return game != null ? game.hashCode() : 0;
+        return gameState != null ? gameState.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "StartGameMessage{" +
-                "game=" + game +
+                "gameState=" + gameState +
                 '}';
     }
 

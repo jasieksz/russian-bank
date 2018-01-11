@@ -5,10 +5,30 @@ import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.CardRank;
 import pl.edu.agh.to2.russianBank.game.CardSuit;
+import pl.edu.agh.to2.russianBank.net.client.Client;
 
 import java.io.File;
 
 public class Service {
+    private Client client;
+
+    private static Service instance;
+    private Service() {}
+
+    public static Service getInstance() {
+        if (instance == null) {
+            instance = new Service();
+        }
+        return instance;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Client getClient() {
+        return client;
+    }
 
     public Image getImageForCard(Card card) {
         String picture = buildPictureName(card.getRank(), card.getSuit());
