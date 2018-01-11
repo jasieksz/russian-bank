@@ -26,7 +26,9 @@ public class Hand extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-        return false;
+        //return false;
+        cards.add(card);
+        return true;
     }
 
     @Override
