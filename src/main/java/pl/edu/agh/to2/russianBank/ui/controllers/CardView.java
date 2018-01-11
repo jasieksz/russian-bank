@@ -22,10 +22,8 @@ public class CardView extends ImageView {
 
         setOnDragDetected(event -> {
 
-            if(cardSet.getPosition()==0 && Service.getInstance().getStackTaken() {
-
-            }
-
+            /*if(cardSet.getPosition()==0 && (Service.getInstance().getStackTaken()!=false) {
+            }*/
 
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
