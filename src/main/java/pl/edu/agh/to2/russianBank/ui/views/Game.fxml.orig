@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<<<<<<< HEAD
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false"
+          style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.141"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+=======
+<GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="false" style="-fx-background-color: #00802b;" xmlns="http://javafx.com/javafx/8.0.151"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.russianBank.ui.controllers.GameController">
+>>>>>>> 2ebeaf1fccc9c490a97eb78d12e392ff2dcedff5
+    <columnConstraints>
+        <ColumnConstraints fx:id="col1" halignment="CENTER" hgrow="ALWAYS" percentWidth="10.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="10" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="9.5" />
+        <ColumnConstraints percentWidth="1.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="9.5" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="2.0" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="10.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="10.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
+        <RowConstraints fx:id="row1" percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="2.5" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="2.5" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="15.0" vgrow="ALWAYS" />
+        <RowConstraints percentHeight="1.0" vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <children>
+<<<<<<< HEAD
+        <Label fx:id="myName" stylesheets="@style.css" text="" />
+        <Label fx:id="opponentName" stylesheets="@style.css" text="" />
+        <Button fx:id="endTurn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                onAction="#handleClickAction" prefHeight="25.0" prefWidth="186.0" styleClass="startButton"
+                stylesheets="@style.css" text="End Turn" />
+    </children>
+
+=======
+        <Label fx:id="name" stylesheets="@style.css" text="" />
+    </children>
+>>>>>>> 2ebeaf1fccc9c490a97eb78d12e392ff2dcedff5
+</GridPane>

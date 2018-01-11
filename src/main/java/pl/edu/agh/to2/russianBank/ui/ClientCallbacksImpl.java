@@ -61,16 +61,16 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
 
-                sleep(2000);
-                System.out.println("Koniec spania");
+                /*sleep(2000);
+
                 GameTable table = controller.getTable();
-                move(new Move(table.getHouses().get(7),table.getHouses().get(5)));
+                move(new Move(table.getHouses().get(7),table.getHouses().get(5)));*/
 
             } catch (IOException e) {
                 LOG.error("Error creating game stage", e);
-            } catch (InterruptedException e) {
+            } /*catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         });
     }
 
@@ -106,7 +106,6 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     @Override
     public void move(Move move) {
         move.execute(controller.getTable());
-        //what we should do here???
     }
 
     @Override
