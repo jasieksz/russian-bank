@@ -141,7 +141,12 @@ public class GameController implements Initializable {
 
     @FXML
     public void uncoverCardFromStack() {
-        LOG.debug("Clicked!"); // change functionality
+        LOG.debug("Clicked!");
+       //hands.put(0, createField(, table.getPlayers().get(0).getHand()));
+        Optional<Card> card = table.getPlayers().get(0).getHand().readTopCard();
+        card.ifPresent(c -> {
+            hands.get(0).setImage(service.getImageForCard(c));
+        });
     }
 
     public void setTable(GameTable table) {
@@ -167,6 +172,11 @@ public class GameController implements Initializable {
             wastes.put(i, createField(image2, table.getPlayers().get(i).getWaste()));
         }
         hands.put(0, createField(image1, table.getPlayers().get(0).getHand()));
+        hands.get(0).setOnMouseClicked(event ->
+            {
+                uncoverCardFromStack();
+            });
+
         hands.put(1, createField(image4, table.getPlayers().get(1).getHand()));
 
         for (int i = 0; i < 8; i++) {
