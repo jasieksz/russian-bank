@@ -56,7 +56,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     }
 
     private boolean tryTakeTopCard() {
-        return false;
+        return true;
     }
 
     public Optional<Card> lookUpTopCard() {
