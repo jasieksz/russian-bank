@@ -146,6 +146,8 @@ public class GameController implements Initializable {
         card.ifPresent(c -> {
             hands.get(0).setImage(service.getImageForCard(c));
         });
+
+        Service.getInstance().setStackTaken(true);
     }
 
     public void setTable(GameTable table) {
