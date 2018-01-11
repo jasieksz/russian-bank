@@ -34,6 +34,10 @@ public class GameController implements Initializable {
 
     private GameTable table;
 
+    public GameTable getTable() {
+        return table;
+    }
+
     private Map<Integer, CardView> foundations = new HashMap<>();
     private Map<Integer, CardView> hands = new HashMap<>();
     private Map<Integer, CardView> wastes = new HashMap<>();
