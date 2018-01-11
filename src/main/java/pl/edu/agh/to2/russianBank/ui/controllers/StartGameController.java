@@ -66,8 +66,8 @@ public class StartGameController implements Initializable {
                                 e.printStackTrace();
                             }
 
-                            /*GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState);*/
+                            GameState gameState = createGameState(playerName);
+                            callbacks.startGame(gameState);
                         });
                     })
                     .exceptionally(e -> {

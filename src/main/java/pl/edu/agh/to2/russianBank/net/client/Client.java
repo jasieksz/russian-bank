@@ -43,6 +43,10 @@ public class Client implements AutoCloseable {
         return client.sendMessage(new MoveMessage(move));
     }
 
+    public CompletableFuture<Void> swapHandWaste(int handPos, int wastePos) {
+        return client.sendMessage(new SwapMessage(handPos, wastePos));
+    }
+
     /**
      * Waits for client connection to close.
      *
