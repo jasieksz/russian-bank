@@ -8,8 +8,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
-public class HouseTest {
-
+public class HandTest {
     private Card card1 = new Card(CardSuit.HEARTS, CardRank.ACE);
     private Card card2 = new Card(CardSuit.HEARTS, CardRank.CARD_2);
     private Card card3 = new Card(CardSuit.HEARTS, CardRank.KING);
@@ -20,40 +19,23 @@ public class HouseTest {
         List<Card> cardList = new ArrayList<>();
         cardList.add(card1);
         cardList.add(card2);
-        House house = new House(cardList);
-        assertTrue(house.takeTopCard().equals(Optional.of(card2)));
+        Hand hand = new Hand(cardList);
+        assertTrue(hand.takeTopCard().equals(Optional.of(card2)));
     }
 
     @Test
     public void readEmptyTopCardTest(){
         List<Card> cardList = new ArrayList<>();
-        House house = new House(cardList);
-        assertTrue(house.readTopCard().equals(Optional.empty()));
-    }
-
-    @Test
-    public void readTopCardTest(){
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(card1);
-        cardList.add(card2);
-        House house = new House(cardList);
-        assertTrue(house.readTopCard().get().equals(card2));
+        Hand hand = new Hand(cardList);
+        assertTrue(hand.readTopCard().equals(Optional.empty()));
     }
 
     @Test
     public void putCardTest(){
         List<Card> cardList = new ArrayList<>();
         cardList.add(card3);
-        House house = new House(cardList);
-        assertTrue(house.putCard(card4));
-    }
-
-    @Test
-    public void putCard2Test(){
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(card3);
-        House house = new House(cardList);
-        assertTrue(!house.putCard(card2));
+        Hand hand = new Hand(cardList);
+        assertTrue(!hand.putCard(card4));
     }
 
 }
