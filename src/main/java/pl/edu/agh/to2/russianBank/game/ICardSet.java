@@ -34,6 +34,7 @@ public abstract class ICardSet {
 
     public abstract void addListener(ListChangeListener<Card> listener);
 
+    //TODO : add moveController as arguemnt, GUI must take it from Game object
     public boolean makeMove(ICardSet source) {
         return moveController.executeCommand(new Move(source, this));
     }

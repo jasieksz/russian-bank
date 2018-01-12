@@ -51,7 +51,9 @@ public class CardView extends ImageView {
                 }
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 // TODO : makeMove returns now boolean, if false alert player about illegal move
-                // also illegal move ==> end of player's turn @Game
+                // if true Service.getInstance().getClient().move(new Move(source, target)); cos w tym stylu
+                // if false koniec tury
+                // if true & sourec=Hand & target=Waste ==> wysłanie move na serwer i koniec tury
                 cardSet.makeMove(sourceCardView.cardSet);
 
                 //if(!cardSet.makeMove(sourceCardView.cardSet))

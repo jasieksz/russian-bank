@@ -15,7 +15,6 @@ public class Game {
         this.players = players;
         this.gameTable = new GameTable(players, new ArrayList<ICardSet>(createPiles()));
         this.moveController = new MoveController(this.getGameTable());
-        startGame();
     }
 
     public List<Player> getPlayers() {
@@ -55,17 +54,6 @@ public class Game {
             piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
         }
         return piles;
-    }
-
-
-    public void startGame() {
-        for (int i = 4; i < 12; i++) {
-//            Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
-//            moveController.executeCommand(move);
-        }
-
-
-        return;
     }
 }
 
