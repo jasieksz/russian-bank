@@ -41,9 +41,11 @@ public class Game {
         piles.add(players.get(1).getPlayerDeck().getHand());
         piles.add(players.get(1).getPlayerDeck().getWaste());
 
-        // TODO : move 4 top cards from each Hand into Houses
         for (int i = 4; i < 12; i++) {
-            piles.add(new House(FXCollections.observableArrayList(), i));
+            House newHouse = new House(FXCollections.observableArrayList(), i);
+            Card startCard = players.get(i%2).getPlayerDeck().getHand().takeTopCard().get();
+            newHouse.putCard(startCard);
+            piles.add(newHouse);
         }
         for (int i = 12; i < 20; i++) {
             piles.add(new Foundation(FXCollections.observableArrayList(), i));
