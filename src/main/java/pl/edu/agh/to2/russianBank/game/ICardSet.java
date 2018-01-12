@@ -20,7 +20,8 @@ public abstract class ICardSet {
 
     public abstract boolean enemyPutCard(Card card);
 
-
+    public ICardSet() {
+    }
 
     public List<Card> getCards() {return new ArrayList<>();}
     public abstract int getSize();
