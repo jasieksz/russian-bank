@@ -60,14 +60,14 @@ public class StartGameController implements Initializable {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
 
-                            try {
+                            /*try {
                                 sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
 
                             GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState);
+                            callbacks.startGame(gameState);*/
                         });
                     })
                     .exceptionally(e -> {
@@ -91,46 +91,6 @@ public class StartGameController implements Initializable {
     //----------- function to test GUI ------------
 
     private GameState createGameState(String myName) {
-        /*List<PlayerDeck> playerDecks = new ArrayList<>();
-        List<House> houses = new ArrayList<>();
-        List<Foundation> foundations = new ArrayList<>();
-
-        Hand hand = new Hand(new ArrayList<>());
-        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
-        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
-        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.ACE));
-        hand.setPosition(2);
-
-        Waste waste = new Waste();
-        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
-        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_3));
-        waste.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_3));
-        hand.setPosition(3);
-        playerDecks.add(new PlayerDeck(hand, new Waste()));
-        playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
-
-        *//*House house = new House(new ArrayList<>());
-        house.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
-        System.out.println("POZYCJA"+house.getPosition());
-        houses.add(house);*//*
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-        houses.add(new House(new ArrayList<>()));
-
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-        foundations.add(new Foundation(new ArrayList<>()));
-*/
         List<Player> players = new ArrayList<>();
         players.add(new Player(myName));
         players.add(new Player("second player"));
