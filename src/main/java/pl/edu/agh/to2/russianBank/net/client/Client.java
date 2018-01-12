@@ -2,9 +2,6 @@ package pl.edu.agh.to2.russianBank.net.client;
 
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
-import pl.edu.agh.to2.russianBank.net.transport.EndGameMessage;
-import pl.edu.agh.to2.russianBank.net.transport.HelloMessage;
-import pl.edu.agh.to2.russianBank.net.transport.MoveMessage;
 import pl.edu.agh.to2.russianBank.net.transport.*;
 
 import java.net.URI;
@@ -30,19 +27,46 @@ public class Client implements AutoCloseable {
         this.client.addListener(listener);
     }
 
+    /**
+     * Creates server connection.
+     *
+     * @param serverUri       server websocket endpoint URI
+     * @param clientCallbacks object which responds to server messages
+     * @return a promise with connection object
+     * @throws Exception
+     */
     public static CompletableFuture<Client> connect(URI serverUri, ClientCallbacks clientCallbacks) throws Exception {
         return RawClientImpl.connect(serverUri)
                 .thenApply((rc) -> new Client(rc, clientCallbacks));
     }
 
+    /**
+     * Send hello message to server.
+     *
+     * @param playerName player name
+     * @return a future which completed when message is sent (exits client machine).
+     */
     public CompletableFuture<Void> hello(String playerName) {
         return client.sendMessage(new HelloMessage(playerName));
     }
 
+    /**
+     * Send move message to server.
+     *
+     * @param move move information
+     * @return a future which completed when message is sent (exits client machine).
+     */
     public CompletableFuture<Void> move(Move move) {
         return client.sendMessage(new MoveMessage(move));
     }
 
+    /**
+     * Send swap message to server.
+     *
+     * @param handPos
+     * @param wastePos
+     * @return a future which completed when message is sent (exits client machine).
+     */
     public CompletableFuture<Void> swapHandWaste(int handPos, int wastePos) {
         return client.sendMessage(new SwapMessage(handPos, wastePos));
     }
@@ -60,6 +84,11 @@ public class Client implements AutoCloseable {
         return client.awaitClose(timeout, unit);
     }
 
+    /**
+     * Close server connection.
+     *
+     * @throws Exception
+     */
     @Override
     public void close() throws Exception {
         client.removeListener(listener);

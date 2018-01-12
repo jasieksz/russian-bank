@@ -33,7 +33,7 @@ public class Move implements Command {
 
         if (result){
             source.takeTopCard();
-            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController
+            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController & this returns a promise which has to be handled
         }
 
         if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0){
@@ -45,7 +45,7 @@ public class Move implements Command {
                     .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)){
                 // TODO : send message YOU WON!!!!
             } else {
-                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
+                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos); // TODO: this returns a promise which has to be handled
                 // TODO : swap locally
             }
 

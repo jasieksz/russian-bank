@@ -6,6 +6,9 @@ import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 
+/**
+ * Callback interface for incoming messages.
+ */
 public interface ClientCallbacks {
     void startGame(GameState gameState);
 
@@ -15,7 +18,12 @@ public interface ClientCallbacks {
 
     void move(Move move);
 
-    void networkError(Throwable ex);
-
     void swap(int handPosition, int wastePosition);
+
+    /**
+     * General network error occurred, probably fatal.
+     *
+     * @param ex exception describing error details.
+     */
+    void networkError(Throwable ex);
 }
