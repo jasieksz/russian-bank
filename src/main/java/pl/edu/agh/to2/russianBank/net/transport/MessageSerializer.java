@@ -1,11 +1,13 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Streams;
 import com.google.gson.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.*;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -30,7 +32,14 @@ public final class MessageSerializer {
 
     private final ImmutableMap<String, Type> typeMap;
 
-    private final Gson innerGson;
+    private final Gson innerGson = new GsonBuilder()
+            .registerTypeAdapter(ObservableList.class, new ObservableListAdapter())
+            .create();
+
+    private final Gson icardSetGson = new GsonBuilder()
+            .registerTypeHierarchyAdapter(ICardSet.class, new ICardSetTypeAdapter())
+            .create();
+
 
     private final Gson gson = new GsonBuilder()
             .registerTypeHierarchyAdapter(Message.class, new MessageTypeAdapter())
@@ -41,12 +50,10 @@ public final class MessageSerializer {
      */
     public MessageSerializer() {
         typeMap = ImmutableMap.of();
-        innerGson = createInnerGson();
     }
 
     private MessageSerializer(MessageSerializer other, ImmutableMap<String, Type> typeMap) {
         this.typeMap = typeMap;
-        this.innerGson = other.innerGson;
     }
 
     /**
@@ -108,17 +115,11 @@ public final class MessageSerializer {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
     }
 
-    private static Gson createInnerGson() {
-        return new GsonBuilder()
-                .registerTypeAdapter(ObservableList.class, new ObservableListAdapter())
-                .create();
-    }
-
     private class MessageTypeAdapter implements JsonSerializer<Message>, JsonDeserializer<Message> {
         @Override
         public JsonElement serialize(Message src, Type typeOfSrc, JsonSerializationContext context) {
             final JsonObject object = new JsonObject();
-            object.add(getTypeName(src), innerGson.toJsonTree(src, typeOfSrc));
+            object.add(getTypeName(src), icardSetGson.toJsonTree(src, typeOfSrc));
             return object;
         }
 
@@ -132,7 +133,7 @@ public final class MessageSerializer {
             if (!typeMap.containsKey(typeName))
                 throw new JsonParseException("Malformed message, unknown message type `" + typeName + "`.");
             final JsonElement data = object.get(typeName);
-            return innerGson.fromJson(data, typeMap.get(typeName));
+            return icardSetGson.fromJson(data, typeMap.get(typeName));
         }
     }
 
@@ -144,6 +145,35 @@ public final class MessageSerializer {
                     .map(jsonElement -> context.deserialize(jsonElement, Object.class))
                     .collect(Collectors.toList());
             return FXCollections.observableList(array);
+        }
+    }
+
+    private class ICardSetTypeAdapter implements JsonSerializer<ICardSet>, JsonDeserializer<ICardSet> {
+        private final ImmutableBiMap<String, Type> typeMap = new ImmutableBiMap.Builder<String, Type>()
+                .put("fo", Foundation.class)
+                .put("ha", Hand.class)
+                .put("ho", House.class)
+                .put("wa", Waste.class)
+                .build();
+
+        @Override
+        public JsonElement serialize(ICardSet src, Type typeOfSrc, JsonSerializationContext context) {
+            final JsonObject object = new JsonObject();
+            object.add(typeMap.inverse().get(typeOfSrc), innerGson.toJsonTree(src, typeOfSrc));
+            return object;
+        }
+
+        @Override
+        public ICardSet deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject object = json.getAsJsonObject();
+            final Set<String> rootProps = object.keySet();
+            if (rootProps.size() != 1)
+                throw new JsonParseException("Malformed message, expected root object to contain exactly one property.");
+            final String typeName = rootProps.iterator().next();
+            if (!typeMap.containsKey(typeName))
+                throw new JsonParseException("Malformed message, unknown message type `" + typeName + "`.");
+            final JsonElement data = object.get(typeName);
+            return innerGson.fromJson(data, typeMap.get(typeName));
         }
     }
 }

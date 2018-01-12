@@ -12,6 +12,10 @@ public class Hand extends ICardSet {
     private ObservableList<Card> cards;
     private int position;
 
+    public Hand() {
+        this.cards = FXCollections.observableArrayList();
+    }
+
     // TODO : add moveCOntroller
     public Hand(List<Card> cards) {
         this.cards = FXCollections.observableList(cards);
