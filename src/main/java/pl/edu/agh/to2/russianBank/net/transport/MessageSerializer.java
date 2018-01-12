@@ -18,6 +18,7 @@ public final class MessageSerializer {
      */
     public static final MessageSerializer GLOBAL = new MessageSerializer()
             .withType(HelloMessage.class)
+            .withType(StartGameMessage.class)
             .withType(EndGameMessage.class)
             .withType(MoveMessage.class)
             .withType(SwapMessage.class);
