@@ -14,16 +14,14 @@ public class House extends ICardSet {
 
     private ObservableList<Card> cards;
     private int position;
-    private MoveController moveController;
 
     public House() {
         this.cards = FXCollections.observableArrayList();
     }
 
-    public House(ObservableList<Card> cards, int position, MoveController moveController) {
+    public House(ObservableList<Card> cards, int position) {
         this.cards = cards;
         this.position = position;
-        this.moveController = moveController;
     }
 
     public House(ObservableList<Card> cards) {
@@ -32,22 +30,6 @@ public class House extends ICardSet {
 
     public House(List<Card> cards) {
         this(FXCollections.observableList(cards));
-    }
-
-
-
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
-    }
-
-
-    private boolean tryPutCard(Card card) {
-        return readTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
-    }
-
-    private boolean isCardCorrect(Card card1, Card card2) { //top, new
-        return (card1.getOppositeSuits().contains(card2.getSuit()) &&
-                (card1.getRank().getRank() == (card2.getRank().getRank() + 1)));
     }
 
     @Override
@@ -71,6 +53,11 @@ public class House extends ICardSet {
     }
 
     @Override
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
+    }
+
+    @Override
     public int getSize() {
         return cards.size();
     }
@@ -80,19 +67,22 @@ public class House extends ICardSet {
         return true;
     }
 
-
-    public void setPosition(int p) {
-         position = p;
-    }
-
     @Override
     public int getPosition() {
         return position;
     }
 
-
     @Override
     public void addListener(ListChangeListener<Card> listener) {
         cards.addListener(listener);
+    }
+
+    private boolean tryPutCard(Card card) {
+        return readTopCard().map(c -> isCardCorrect(c, card)).orElse(true);
+    }
+
+    private boolean isCardCorrect(Card card1, Card card2) { //top, new
+        return (card1.getOppositeSuits().contains(card2.getSuit()) &&
+                (card1.getRank().getRank() == (card2.getRank().getRank() + 1)));
     }
 }

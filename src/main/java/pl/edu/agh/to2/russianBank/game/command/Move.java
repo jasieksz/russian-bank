@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.Waste;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class Move implements Command {
     @Override
     public boolean execute(GameTable gameTable) {
 
-        int sourcePos = source.getPosition(); // TODO : check if this throws NullPointer
+        int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
 
         boolean result = false;
@@ -35,33 +36,26 @@ public class Move implements Command {
 
         if (result) {
             source.takeTopCard();
-            Service.getInstance().getClient().move(new Move(source, target)); //TODO : test if this is correct, if not move to MoveController new Move(source, target)
         }
 
+        // TODO : can we move this entire if outside of Move to GUI? @J
         if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
-            int wastePos = gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
-            if (gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)) {
-                // TODO : send message YOU WON!!!!
+            if (checkEmptyHand(gameTable, sourcePos)){
+                //TODO : You WON
             } else {
-                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
-                // TODO : swap locally
-            }
-
+                Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos+1);
+            };
         }
 
         return result;
     }
 
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get()); // TODO : isPresent() missing warning
+        target.putCard(source.takeTopCard().get());
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get()); // TODO : isPresent() missing warning
+        source.putCard(target.takeTopCard().get());
     }
 
     @Override
@@ -85,5 +79,20 @@ public class Move implements Command {
                 .add("source", source)
                 .add("target", target)
                 .toString();
+    }
+
+    private boolean checkEmptyHand(GameTable gameTable, int sourcePos){
+            Waste waste = gameTable.getPlayers().stream()
+                    .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                    .map(pD -> pD.getWaste()).findFirst().get();
+
+            if (gameTable.getPlayers().stream()
+                    .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                    .allMatch(pD -> pD.getWaste().getSize() == 0)) {
+                return true;
+            } else {
+                gameTable.swapPiles(source, waste);
+                return false;
+            }
     }
 }

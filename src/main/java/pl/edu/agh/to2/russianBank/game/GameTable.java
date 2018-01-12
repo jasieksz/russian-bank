@@ -51,4 +51,13 @@ public class GameTable {
     public List<ICardSet> getFoundations() {
         return piles.subList(12,20);
     }
+
+    public boolean swapPiles(ICardSet hand, ICardSet waste){
+        if (hand.getSize() == 0){
+            hand.getCards().addAll(waste.getCards());
+            waste.getCards().clear();
+            return true;
+        }
+        return false;
+    }
 }

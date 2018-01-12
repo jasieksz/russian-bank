@@ -9,7 +9,9 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import pl.edu.agh.to2.russianBank.game.Card;
+import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.Optional;
 
@@ -47,14 +49,15 @@ public class CardView extends ImageView {
             if (event.getGestureSource() instanceof CardView) {
                 ICardSet t = target;
                 if (t != null) {
-                    t.makeMove(cardSet);
+                    t.makeMove(cardSet, new MoveController(new GameTable())); // TODO : CHANGE THIS! @Game
                 }
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 // TODO : makeMove returns now boolean, if false alert player about illegal move
+                // TODO : makeMove also needs moveController as 2nd arguemnt, moveController instance is in Game
                 // if true Service.getInstance().getClient().move(new Move(source, target)); cos w tym stylu
                 // if false koniec tury
                 // if true & sourec=Hand & target=Waste ==> wysłanie move na serwer i koniec tury
-                cardSet.makeMove(sourceCardView.cardSet);
+                cardSet.makeMove(sourceCardView.cardSet, new MoveController(new GameTable()));
 
                 //if(!cardSet.makeMove(sourceCardView.cardSet))
                 //wyświetlić alert

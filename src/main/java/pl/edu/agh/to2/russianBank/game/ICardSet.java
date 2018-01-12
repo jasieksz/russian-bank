@@ -10,32 +10,29 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ICardSet {
-    private MoveController moveController;
-    private ICardSet firstChosenCard;
-    private boolean firstChosen = false;
+
+    public ICardSet() {
+    }
 
     public abstract Optional<Card> takeTopCard();
+
+    public abstract Optional<Card> readTopCard();
 
     public abstract boolean putCard(Card card);
 
     public abstract boolean enemyPutCard(Card card);
 
-    public ICardSet() {
-    }
+    public abstract List<Card> getCards();
 
-    public List<Card> getCards() {return new ArrayList<>();}
+    public abstract int getPosition();
+
     public abstract int getSize();
 
     public abstract boolean isVisible();
 
-    public abstract int getPosition();
-
-    public abstract Optional<Card> readTopCard();
-
     public abstract void addListener(ListChangeListener<Card> listener);
 
-    //TODO : add moveController as arguemnt, GUI must take it from Game object
-    public boolean makeMove(ICardSet source) {
+    public boolean makeMove(ICardSet source, MoveController moveController) {
         return moveController.executeCommand(new Move(source, this));
     }
 }
