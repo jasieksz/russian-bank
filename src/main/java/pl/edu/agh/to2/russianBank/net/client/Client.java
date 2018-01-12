@@ -44,7 +44,7 @@ public class Client implements AutoCloseable {
      * Send hello message to server.
      *
      * @param playerName player name
-     * @return a future which completed when message is sent (exits client machine).
+     * @return a future which completes when message is sent (exits client machine).
      */
     public CompletableFuture<Void> hello(String playerName) {
         return client.sendMessage(new HelloMessage(playerName));
@@ -54,7 +54,7 @@ public class Client implements AutoCloseable {
      * Send move message to server.
      *
      * @param move move information
-     * @return a future which completed when message is sent (exits client machine).
+     * @return a future which completes when message is sent (exits client machine).
      */
     public CompletableFuture<Void> move(Move move) {
         return client.sendMessage(new MoveMessage(move));
@@ -65,7 +65,7 @@ public class Client implements AutoCloseable {
      *
      * @param handPos
      * @param wastePos
-     * @return a future which completed when message is sent (exits client machine).
+     * @return a future which completes when message is sent (exits client machine).
      */
     public CompletableFuture<Void> swapHandWaste(int handPos, int wastePos) {
         return client.sendMessage(new SwapMessage(handPos, wastePos));
