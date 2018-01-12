@@ -26,14 +26,7 @@ public class Hand extends ICardSet {
 
     @Override
     public boolean putCard(Card card) {
-<<<<<<< HEAD
-        cards.add(card); //to delete
-        //return false;
-=======
-        //return false;
-        cards.add(card);
->>>>>>> 9369e4a7ed91cef687d699d338080f1e2402615e
-        return true;
+        return false;
     }
 
     @Override
