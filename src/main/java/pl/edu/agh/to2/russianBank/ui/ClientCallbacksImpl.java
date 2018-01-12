@@ -10,17 +10,15 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
-import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.game.GameState;
+import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
-import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static java.lang.Thread.sleep;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
     private static final Logger LOG = LogManager.getLogger();
@@ -34,7 +32,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     }
 
     @Override
-    public void startGame(GameState gameState) {
+    public void startGame(GameState gameState, MoveController moveController) {
 
         Platform.runLater(() -> {
             try {
@@ -58,6 +56,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 stage.show();
 
                 controller = loader.getController();
+                controller.setMoveController(moveController);
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
 

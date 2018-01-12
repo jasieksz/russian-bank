@@ -5,12 +5,13 @@ import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 /**
  * Callback interface for incoming messages.
  */
 public interface ClientCallbacks {
-    void startGame(GameState gameState);
+    void startGame(GameState gameState, MoveController moveController);
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 

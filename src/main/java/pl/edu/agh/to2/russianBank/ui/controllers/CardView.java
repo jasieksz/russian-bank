@@ -1,63 +1,42 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 
-import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import pl.edu.agh.to2.russianBank.game.Card;
-import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
-
-import java.util.Optional;
 
 public class CardView extends ImageView {
 
     private ICardSet cardSet;
 
-    private static ICardSet target;
-
-    public CardView(Image image, ICardSet cardSet) {
+    public CardView(Image image, ICardSet cardSet, MoveController moveController) {
         super(image);
         this.cardSet = cardSet;
 
         setOnDragDetected(event -> {
-
-            /*if(cardSet.getPosition()==0 && cardSet.readTopCard()==) {
-            }*/
-
-
             Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
             ImageView imageView = new ImageView(getImage());
             imageView.setFitHeight(100);
-            imageView.setFitWidth(50);
+            imageView.setFitWidth(65);
             content.putImage(imageView.snapshot(null, null));
             dragboard.setContent(content);
             event.consume();
         });
 
-        addEventFilter(DragEvent.DRAG_ENTERED, e -> {
-            target = cardSet;
-        });
+        setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
 
-        addEventFilter(DragEvent.DRAG_DONE, event -> {
-            if (event.getGestureSource() instanceof CardView) {
-                ICardSet t = target;
-                if (t != null) {
-                    t.makeMove(cardSet, new MoveController(new GameTable())); // TODO : CHANGE THIS! @Game
-                }
+        setOnDragDropped(event -> {
+            if (event.getGestureSource() instanceof CardView && event.getGestureTarget() instanceof CardView) {
                 CardView sourceCardView = (CardView) event.getGestureSource();
+                CardView targetCardView = (CardView) event.getGestureTarget();
                 // TODO : makeMove returns now boolean, if false alert player about illegal move
-                // TODO : makeMove also needs moveController as 2nd arguemnt, moveController instance is in Game
-                // if true Service.getInstance().getClient().move(new Move(source, target)); cos w tym stylu
-                // if false koniec tury
-                // if true & sourec=Hand & target=Waste ==> wysłanie move na serwer i koniec tury
-                cardSet.makeMove(sourceCardView.cardSet, new MoveController(new GameTable()));
+                // also illegal move ==> end of player's turn @Game
+                targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
 
                 //if(!cardSet.makeMove(sourceCardView.cardSet))
                 //wyświetlić alert

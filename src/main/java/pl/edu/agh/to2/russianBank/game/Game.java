@@ -42,8 +42,6 @@ public class Game {
 
         for (int i = 4; i < 12; i++) {
             House newHouse = new House(FXCollections.observableArrayList(), i);
-            Card startCard = players.get(i%2).getPlayerDeck().getHand().takeTopCard().get();
-            newHouse.putCard(startCard);
             piles.add(newHouse);
         }
         for (int i = 12; i < 20; i++) {

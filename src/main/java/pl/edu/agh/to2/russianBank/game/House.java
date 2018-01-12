@@ -3,8 +3,6 @@ package pl.edu.agh.to2.russianBank.game;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import pl.edu.agh.to2.russianBank.game.command.Move;
-import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
 import java.util.List;

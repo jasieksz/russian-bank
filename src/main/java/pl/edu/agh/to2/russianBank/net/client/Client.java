@@ -113,7 +113,7 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(StartGameMessage message) {
-            clientCallbacks.startGame(message.getGameState());
+            clientCallbacks.startGame(message.getGameState(), message.getMoveController());
         }
 
         @Override
