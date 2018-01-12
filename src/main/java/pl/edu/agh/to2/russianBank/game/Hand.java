@@ -3,6 +3,7 @@ package pl.edu.agh.to2.russianBank.game;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,12 @@ public class Hand extends ICardSet {
 
     private ObservableList<Card> cards;
     private int position;
+
+    public void setMoveController(MoveController moveController) {
+        this.moveController = moveController;
+    }
+
+    private MoveController moveController;
 
     public Hand() {
         this.cards = FXCollections.observableArrayList();

@@ -21,6 +21,10 @@ public class GameTable {
         this.foundations = foundations;
     }
 
+    public GameTable(){
+
+    }
+
     public GameTable(List<Player> players, List<ICardSet> piles) {
        /* Preconditions.checkArgument(foundations.size() == 8);
         Preconditions.checkArgument(houses.size() == 8);

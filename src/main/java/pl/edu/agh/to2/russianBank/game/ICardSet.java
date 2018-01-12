@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ICardSet {
-    private MoveController moveController = new MoveController(null);
+    private MoveController moveController;
     private ICardSet firstChosenCard;
     private boolean firstChosen = false;
 

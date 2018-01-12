@@ -33,22 +33,26 @@ public class Game {
     private List<ICardSet> createPiles() {
         List<ICardSet> piles = new ArrayList<>();
         players.get(0).getPlayerDeck().getHand().setPosition(0);
+        players.get(0).getPlayerDeck().getHand().setMoveController(moveController);
         players.get(0).getPlayerDeck().getWaste().setPosition(1);
+        players.get(0).getPlayerDeck().getWaste().setMoveController(moveController);
         players.get(1).getPlayerDeck().getHand().setPosition(2);
+        players.get(1).getPlayerDeck().getHand().setMoveController(moveController);
         players.get(1).getPlayerDeck().getWaste().setPosition(3);
+        players.get(1).getPlayerDeck().getWaste().setMoveController(moveController);
         piles.add(players.get(0).getPlayerDeck().getHand());
         piles.add(players.get(0).getPlayerDeck().getWaste());
         piles.add(players.get(1).getPlayerDeck().getHand());
         piles.add(players.get(1).getPlayerDeck().getWaste());
 
         for (int i = 4; i < 12; i++) {
-            House newHouse = new House(FXCollections.observableArrayList(), i);
+            House newHouse = new House(FXCollections.observableArrayList(), i, moveController);
             Card startCard = players.get(i%2).getPlayerDeck().getHand().takeTopCard().get();
             newHouse.putCard(startCard);
             piles.add(newHouse);
         }
         for (int i = 12; i < 20; i++) {
-            piles.add(new Foundation(FXCollections.observableArrayList(), i));
+            piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
         }
         return piles;
     }

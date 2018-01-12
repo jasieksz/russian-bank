@@ -3,6 +3,7 @@ package pl.edu.agh.to2.russianBank.game;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.List;
@@ -12,14 +13,16 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     private ObservableList<Card> cards;
     private int position;
+    private MoveController moveController;
 
     public Foundation() {
         this.cards = FXCollections.observableArrayList();
     }
 
-    public Foundation(ObservableList<Card> cards, int position) {
+    public Foundation(ObservableList<Card> cards, int position, MoveController moveController) {
         this.cards = cards;
         this.position = position;
+        this.moveController = moveController;
     }
 
     public Foundation(ObservableList<Card> cards) {

@@ -39,20 +39,20 @@ public class Move implements Command {
         }
 
         // Check if Hand is empty after move
-        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
-            int wastePos = gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
-            if (gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)) {
-                // TODO : send message YOU WON!!!!
-            } else {
-                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
-                // TODO : swap locally
-            }
-
-        }
+//        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
+//            int wastePos = gameTable.getPlayers().stream()
+//                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
+//                    .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
+//            if (gameTable.getPlayers().stream()
+//                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
+//                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)) {
+//                // TODO : send message YOU WON!!!!
+//            } else {
+//                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
+//                // TODO : swap locally
+//            }
+//
+//        }
 
         return result;
 //        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
