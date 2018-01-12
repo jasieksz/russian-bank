@@ -1,14 +1,12 @@
 package pl.edu.agh.to2.russianBank.game.command;
 
 import com.google.common.base.MoreObjects;
-import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Waste;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Move implements Command {
     private ICardSet source;
@@ -41,7 +39,7 @@ public class Move implements Command {
         // TODO : can we move this entire if outside of Move to GUI? @J
         if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
             if (checkEmptyHand(gameTable, sourcePos)){
-                //TODO : You WON
+                // Service.getInstance().getClient().endGame(true, 'winning condition');
             } else {
                 Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos+1);
             };
@@ -82,11 +80,11 @@ public class Move implements Command {
     }
 
     private boolean checkEmptyHand(GameTable gameTable, int sourcePos){
-            Waste waste = gameTable.getPlayers().stream()
+            Waste waste = gameTable.getPlayersCard().stream()
                     .filter(pD -> pD.getHand().getPosition() == sourcePos)
                     .map(pD -> pD.getWaste()).findFirst().get();
 
-            if (gameTable.getPlayers().stream()
+            if (gameTable.getPlayersCard().stream()
                     .filter(pD -> pD.getHand().getPosition() == sourcePos)
                     .allMatch(pD -> pD.getWaste().getSize() == 0)) {
                 return true;
