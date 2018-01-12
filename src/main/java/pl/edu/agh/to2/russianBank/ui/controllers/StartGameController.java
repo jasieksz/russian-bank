@@ -91,14 +91,14 @@ public class StartGameController implements Initializable {
     //----------- function to test GUI ------------
 
     private GameState createGameState(String myName) {
-        List<PlayerDeck> playerDecks = new ArrayList<>();
+        /*List<PlayerDeck> playerDecks = new ArrayList<>();
         List<House> houses = new ArrayList<>();
         List<Foundation> foundations = new ArrayList<>();
 
         Hand hand = new Hand(new ArrayList<>());
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
         hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.JACK));
-        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.QUEEN));
+        hand.putCard(new Card(CardSuit.DIAMONDS, CardRank.ACE));
         hand.setPosition(2);
 
         Waste waste = new Waste();
@@ -109,10 +109,10 @@ public class StartGameController implements Initializable {
         playerDecks.add(new PlayerDeck(hand, new Waste()));
         playerDecks.add(new PlayerDeck(new Hand(new ArrayList<>()), new Waste()));
 
-        /*House house = new House(new ArrayList<>());
+        *//*House house = new House(new ArrayList<>());
         house.putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_2));
         System.out.println("POZYCJA"+house.getPosition());
-        houses.add(house);*/
+        houses.add(house);*//*
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
         houses.add(new House(new ArrayList<>()));
@@ -130,10 +130,13 @@ public class StartGameController implements Initializable {
         foundations.add(new Foundation(new ArrayList<>()));
         foundations.add(new Foundation(new ArrayList<>()));
         foundations.add(new Foundation(new ArrayList<>()));
-
+*/
         List<Player> players = new ArrayList<>();
         players.add(new Player(myName));
         players.add(new Player("second player"));
-        return new GameState(players, new GameTable(playerDecks, houses, foundations));
+        Game game = new Game(players);
+        GameTable table = game.getGameTable();
+
+        return new GameState(players, table);
     }
 }

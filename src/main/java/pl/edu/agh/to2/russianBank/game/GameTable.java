@@ -22,9 +22,9 @@ public class GameTable {
     }
 
     public GameTable(List<Player> players, List<ICardSet> piles) {
-        Preconditions.checkArgument(foundations.size() == 8);
+       /* Preconditions.checkArgument(foundations.size() == 8);
         Preconditions.checkArgument(houses.size() == 8);
-        Preconditions.checkArgument(playersCard.size() == 2);
+        Preconditions.checkArgument(playersCard.size() == 2);*/
         this.playersCard = new ArrayList<>();
         for (Player player : players) {
             this.playersCard.add(player.getPlayerDeck());
@@ -40,11 +40,11 @@ public class GameTable {
         return playersCard;
     }
 
-    public List<House> getHouses() {
-        return houses;
+    public List<ICardSet> getHouses() {
+        return piles.subList(4,12); //tu trzba to zmienic
     }
 
-    public List<Foundation> getFoundations() {
-        return foundations;
+    public List<ICardSet> getFoundations() {
+        return piles.subList(12,20);
     }
 }

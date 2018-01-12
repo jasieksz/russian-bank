@@ -166,6 +166,10 @@ public class GameController implements Initializable {
         Image image2 = service.getWhiteImage();
         Image image4 = service.createImage("karty/Gora2.png");
 
+        //zamiast table.getFoundations()
+        //zrób table.piles.get(12)
+
+        List<ICardSet> test = table.getFoundations();
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
@@ -231,7 +235,7 @@ public class GameController implements Initializable {
 
     private void addListChangeListeners(GameTable table) {
         for (int i = 0; i < table.getHouses().size(); i++) {
-            House house = table.getHouses().get(i);
+            ICardSet house = table.getHouses().get(i);
             final int index = i;
             house.addListener(c -> {
                 List<Card> card = house.getCards();
@@ -250,7 +254,7 @@ public class GameController implements Initializable {
         }
 
         for (int i = 0; i < table.getFoundations().size(); i++) {
-            Foundation foundation = table.getFoundations().get(i);
+            ICardSet foundation = table.getFoundations().get(i);
             final int index = i;
             foundation.addListener(c -> {
                 Optional<Card> card = foundation.takeTopCard();

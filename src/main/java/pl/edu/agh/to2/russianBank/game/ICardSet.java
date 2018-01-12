@@ -5,6 +5,8 @@ import javafx.collections.ListChangeListener;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class ICardSet {
@@ -18,6 +20,9 @@ public abstract class ICardSet {
 
     public abstract boolean enemyPutCard(Card card);
 
+
+
+    public List<Card> getCards() {return new ArrayList<>();}
     public abstract int getSize();
 
     public abstract boolean isVisible();
