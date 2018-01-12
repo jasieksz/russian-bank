@@ -165,9 +165,7 @@ public class GameController implements Initializable {
         Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
         Image image4 = service.createImage("karty/Gora2.png");
-
-        //zamiast table.getFoundations()
-        //zrób table.piles.get(12)
+      
 
         List<ICardSet> test = table.getFoundations();
         for (int i = 0; i < 8; i++) {
