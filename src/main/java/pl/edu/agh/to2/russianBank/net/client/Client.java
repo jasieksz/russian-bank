@@ -88,6 +88,11 @@ public class Client implements AutoCloseable {
         }
 
         @Override
+        public void visit(SwapMessage message) {
+            clientCallbacks.swap(message.getHandPosition(), message.getWastePosition());
+        }
+
+        @Override
         public void onError(Throwable ex) {
             clientCallbacks.networkError(ex);
         }

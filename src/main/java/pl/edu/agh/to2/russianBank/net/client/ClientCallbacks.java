@@ -16,4 +16,6 @@ public interface ClientCallbacks {
     void move(Move move);
 
     void networkError(Throwable ex);
+
+    void swap(int handPosition, int wastePosition);
 }

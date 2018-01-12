@@ -125,4 +125,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
         ex.printStackTrace();
     }
 
+    @Override
+    public void swap(int handPosition, int wastePosition) {
+        //TODO Sznan Jajd
+    }
+
 }

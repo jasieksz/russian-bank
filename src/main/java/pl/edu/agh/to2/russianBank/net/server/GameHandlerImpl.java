@@ -73,5 +73,11 @@ public class GameHandlerImpl implements GameHandler {
         public void visit(StartGameMessage message) {
             throw new UnsupportedMessageException(message);
         }
+
+        @Override
+        public void visit(SwapMessage message) {
+            LOG.info("swap");
+            roomMatcher.getRoom(player).unicast(player, message);
+        }
     }
 }
