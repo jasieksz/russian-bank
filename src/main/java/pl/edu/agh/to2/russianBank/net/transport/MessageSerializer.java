@@ -2,10 +2,15 @@ package pl.edu.agh.to2.russianBank.net.transport;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Streams;
 import com.google.gson.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * (De)serializes message from/to JSON.
@@ -36,7 +41,7 @@ public final class MessageSerializer {
      */
     public MessageSerializer() {
         typeMap = ImmutableMap.of();
-        innerGson = new Gson();
+        innerGson = createInnerGson();
     }
 
     private MessageSerializer(MessageSerializer other, ImmutableMap<String, Type> typeMap) {
@@ -103,6 +108,12 @@ public final class MessageSerializer {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
     }
 
+    private static Gson createInnerGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(ObservableList.class, new ObservableListAdapter())
+                .create();
+    }
+
     private class MessageTypeAdapter implements JsonSerializer<Message>, JsonDeserializer<Message> {
         @Override
         public JsonElement serialize(Message src, Type typeOfSrc, JsonSerializationContext context) {
@@ -122,6 +133,17 @@ public final class MessageSerializer {
                 throw new JsonParseException("Malformed message, unknown message type `" + typeName + "`.");
             final JsonElement data = object.get(typeName);
             return innerGson.fromJson(data, typeMap.get(typeName));
+        }
+    }
+
+    private static class ObservableListAdapter implements JsonDeserializer<ObservableList> {
+        @Override
+        public ObservableList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            final JsonArray jsonArray = json.getAsJsonArray();
+            final List<Object> array = Streams.stream(jsonArray)
+                    .map(jsonElement -> context.deserialize(jsonElement, Object.class))
+                    .collect(Collectors.toList());
+            return FXCollections.observableList(array);
         }
     }
 }
