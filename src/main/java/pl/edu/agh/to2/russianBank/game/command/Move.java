@@ -20,8 +20,10 @@ public class Move implements Command {
 
     @Override
     public boolean execute(GameTable gameTable) {
-        int sourcePos = source.getPosition();
+
+        int sourcePos = source.getPosition(); // TODO : check if this throws NullPointer
         int targetPos = target.getPosition();
+
         boolean result = false;
         if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
@@ -31,28 +33,28 @@ public class Move implements Command {
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
         }
 
-        if (result){
+        if (result) {
             source.takeTopCard();
-            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController & this returns a promise which has to be handled
+            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController new Move(source, target)
         }
 
-        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0){
+        // Check if Hand is empty after move
+        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
             int wastePos = gameTable.getPlayers().stream()
                     .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
                     .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
             if (gameTable.getPlayers().stream()
                     .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)){
+                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)) {
                 // TODO : send message YOU WON!!!!
             } else {
-                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos); // TODO: this returns a promise which has to be handled
+                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
                 // TODO : swap locally
             }
 
         }
 
         return result;
-
 //        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
 //            // MY HAND -> MY WASTE
 //            result.ifPresent(card -> target.putCard(card));

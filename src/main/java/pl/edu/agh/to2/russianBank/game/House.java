@@ -13,12 +13,10 @@ public class House extends ICardSet {
 
     private ObservableList<Card> cards;
     private int position;
-    private MoveController moveController;
 
-    public House(ObservableList<Card> cards, int position, MoveController moveController) {
+    public House(ObservableList<Card> cards, int position) {
         this.cards = cards;
         this.position = position;
-        this.moveController = moveController;
     }
 
     public House(ObservableList<Card> cards) {
@@ -42,7 +40,7 @@ public class House extends ICardSet {
 
     private boolean isCardCorrect(Card card1, Card card2) { //top, new
         return (card1.getOppositeSuits().contains(card2.getSuit()) &&
-                (card1.getRank().getRank() == (card2.getRank().getRank() - 1)));
+                (card1.getRank().getRank() == (card2.getRank().getRank() + 1)));
     }
 
     @Override

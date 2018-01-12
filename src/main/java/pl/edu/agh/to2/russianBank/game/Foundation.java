@@ -12,12 +12,10 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     private ObservableList<Card> cards;
     private int position;
-    private MoveController moveController;
 
-    public Foundation(ObservableList<Card> cards, int position, MoveController moveController) {
+    public Foundation(ObservableList<Card> cards, int position) {
         this.cards = cards;
         this.position = position;
-        this.moveController = moveController;
     }
 
     public Foundation(ObservableList<Card> cards) {

@@ -43,10 +43,10 @@ public class Game {
 
         // TODO : move 4 top cards from each Hand into Houses
         for (int i = 4; i < 12; i++) {
-            piles.add(new House(FXCollections.observableArrayList(), i, moveController));
+            piles.add(new House(FXCollections.observableArrayList(), i));
         }
         for (int i = 12; i < 20; i++) {
-            piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
+            piles.add(new Foundation(FXCollections.observableArrayList(), i));
         }
         return piles;
     }
