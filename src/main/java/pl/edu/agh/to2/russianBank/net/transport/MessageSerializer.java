@@ -7,7 +7,15 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+/**
+ * (De)serializes message from/to JSON.
+ *
+ * Requires registering message classes for proper working, see {@link #withType(Class)}.
+ */
 public final class MessageSerializer {
+    /**
+     * Serializer instance knowing all standard message types.
+     */
     public static final MessageSerializer GLOBAL = new MessageSerializer()
             .withType(HelloMessage.class)
             .withType(EndGameMessage.class)
@@ -22,6 +30,9 @@ public final class MessageSerializer {
             .registerTypeHierarchyAdapter(Message.class, new MessageTypeAdapter())
             .create();
 
+    /**
+     * Constructs message serializer without any knowledge on message classes.
+     */
     public MessageSerializer() {
         typeMap = ImmutableMap.of();
         innerGson = new Gson();
@@ -32,6 +43,12 @@ public final class MessageSerializer {
         this.innerGson = other.innerGson;
     }
 
+    /**
+     * Creates new message serializer and adds new message class to it.
+     *
+     * @param messageClass a class, inheriting from {@link Message}.
+     * @return new message serializer instance.
+     */
     public MessageSerializer withType(Class<? extends Message> messageClass) {
         final ImmutableMap<String, Type> newTypeMap = new ImmutableMap.Builder<String, Type>()
                 .putAll(typeMap)
@@ -40,23 +57,44 @@ public final class MessageSerializer {
         return new MessageSerializer(this, newTypeMap);
     }
 
+    /**
+     * Serialize message to JSON.
+     *
+     * @throws IllegalArgumentException when message is not serializable.
+     */
     public String serialize(Message message) {
         return gson.toJson(message);
     }
 
+    /**
+     * Deserializes message from JSON.
+     *
+     * @throws JsonParseException when JSON string is malformed.
+     */
     public Message deserialize(String text) throws JsonParseException {
         return gson.fromJson(text, Message.class);
     }
 
+    /**
+     * Returns message type name (used in JSON format) for given message object.
+     */
     public static String getTypeName(Message message) {
         return getTypeName(message.getClass());
     }
 
+    /**
+     * Returns message type name (used in JSON format) for given message class.
+     */
     public static String getTypeName(Class<? extends Message> messageClass) {
         String name = messageClass.getSimpleName();
         return getTypeName(name);
     }
 
+    /**
+     * Processes Java class name for message class to message type name.
+     *
+     * Currently it strips {@code Message} suffix and converts to camelCase, but this behaviour is not guaranteed.
+     */
     public static String getTypeName(String className) {
         if (className.endsWith("Message")) {
             className = className.substring(0, className.length() - "Message".length());
