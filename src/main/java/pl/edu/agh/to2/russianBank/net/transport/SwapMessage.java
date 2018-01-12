@@ -1,5 +1,9 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
+import com.google.common.base.MoreObjects;
+
+import java.util.Objects;
+
 public class SwapMessage extends Message {
     // TODO : Implement this @Game
     private int handPosition;
@@ -35,25 +39,22 @@ public class SwapMessage extends Message {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SwapMessage that = (SwapMessage) o;
-
-        if (handPosition != that.handPosition) return false;
-        return wastePosition == that.wastePosition;
+        return handPosition == that.handPosition &&
+                wastePosition == that.wastePosition;
     }
 
     @Override
     public int hashCode() {
-        int result = handPosition;
-        result = 31 * result + wastePosition;
-        return result;
+
+        return Objects.hash(handPosition, wastePosition);
     }
 
     @Override
     public String toString() {
-        return "SwapMessage{" +
-                "handPosition=" + handPosition +
-                ", wastePosition=" + wastePosition +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("handPosition", handPosition)
+                .add("wastePosition", wastePosition)
+                .toString();
     }
 }
