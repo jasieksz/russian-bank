@@ -14,11 +14,12 @@ import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
-import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
 
 import java.io.IOException;
+
+import static java.lang.Thread.sleep;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
     private static final Logger LOG = LogManager.getLogger();
@@ -126,7 +127,14 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void swap(int handPosition, int wastePosition) {
-        //TODO Sznan Jajd
+        Hand hand = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getHand())
+                .filter(h -> h.getPosition() == handPosition).findFirst().get();
+        Waste waste = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getWaste())
+                .filter(h -> h.getPosition() == wastePosition).findFirst().get();
+
+        controller.getTable().swapPiles(hand, waste);
     }
 
 }

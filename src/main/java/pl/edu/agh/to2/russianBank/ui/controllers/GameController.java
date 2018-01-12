@@ -144,7 +144,7 @@ public class GameController implements Initializable {
     @FXML
     public void uncoverCardFromStack() {
         LOG.debug("Clicked!");
-        Optional<Card> card = table.getPlayers().get(0).getHand().readTopCard();
+        Optional<Card> card = table.getPlayersCard().get(0).getHand().readTopCard();
         card.ifPresent(c -> {
             hands.get(0).setImage(service.getImageForCard(c));
         });
@@ -178,14 +178,14 @@ public class GameController implements Initializable {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
         for (int i = 0; i < 2; i++) {
-            wastes.put(i, createField(image2, table.getPlayers().get(i).getWaste()));
+            wastes.put(i, createField(image2, table.getPlayersCard().get(i).getWaste()));
         }
         hands.put(0, createField(image1, table.getPlayers().get(0).getHand()));
         hands.get(0).setOnMouseClicked(event -> {
             uncoverCardFromStack();
         });
 
-        hands.put(1, createField(image4, table.getPlayers().get(1).getHand()));
+        hands.put(1, createField(image4, table.getPlayersCard().get(1).getHand()));
 
         for (int i = 0; i < 8; i++) {
             houses.put(i, new ArrayList<>());
@@ -267,7 +267,7 @@ public class GameController implements Initializable {
             });
         }
 
-        for (int i = 0; i < table.getPlayers().size(); i++) {
+        for (int i = 0; i < table.getPlayersCard().size(); i++) {
             addListenersForPlayer(i);
         }
     }
@@ -279,8 +279,8 @@ public class GameController implements Initializable {
      */
 
     private void addListenersForPlayer(int playerId) {
-        Hand hand = table.getPlayers().get(playerId).getHand();
-        Waste waste = table.getPlayers().get(playerId).getWaste();
+        Hand hand = table.getPlayersCard().get(playerId).getHand();
+        Waste waste = table.getPlayersCard().get(playerId).getWaste();
         waste.addListener(c -> {
             Optional<Card> card = waste.readTopCard();
             ImageView imageView = wastes.get(playerId);
