@@ -240,20 +240,8 @@ public class GameController implements Initializable {
         for (int i = 0; i < table.getHouses().size(); i++) {
             ICardSet house = table.getHouses().get(i);
             final int index = i;
-            house.addListener(c -> {
-                List<Card> card = house.getCards();
-                for (int j = 0; j < houses.get(index).size(); j++) {
-                    if (j < card.size()) {
-                        houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
-                    } else {
-                        houses.get(index).get(j).setImage(null);
-                    }
-                }
-
-                if (card.isEmpty()) {
-                    houses.get(index).get(0).setImage(service.getWhiteImage());
-                }
-            });
+            house.addListener(c -> refreshHouse(index, house));
+            refreshHouse(index, house);
         }
 
         for (int i = 0; i < table.getFoundations().size(); i++) {
@@ -270,6 +258,22 @@ public class GameController implements Initializable {
         for (int i = 0; i < table.getPlayersCard().size(); i++) {
             addListenersForPlayer(i);
         }
+    }
+
+    private void refreshHouse(int index, ICardSet house) {
+        List<Card> card = house.getCards();
+        for (int j = 0; j < houses.get(index).size(); j++) {
+            if (j < card.size()) {
+                houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
+            } else {
+                houses.get(index).get(j).setImage(null);
+            }
+        }
+
+        if (card.isEmpty()) {
+            houses.get(index).get(0).setImage(service.getWhiteImage());
+        }
+
     }
 
     /**
