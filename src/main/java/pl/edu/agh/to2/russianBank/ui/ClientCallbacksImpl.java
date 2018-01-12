@@ -10,16 +10,13 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
-import pl.edu.agh.to2.russianBank.game.GameState;
-import pl.edu.agh.to2.russianBank.game.ICardSet;
-import pl.edu.agh.to2.russianBank.game.Player;
+import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
 
 import java.io.IOException;
-
-import static java.lang.Thread.sleep;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
     private static final Logger LOG = LogManager.getLogger();

@@ -180,7 +180,7 @@ public class GameController implements Initializable {
         for (int i = 0; i < 2; i++) {
             wastes.put(i, createField(image2, table.getPlayersCard().get(i).getWaste()));
         }
-        hands.put(0, createField(image1, table.getPlayers().get(0).getHand()));
+        hands.put(0, createField(image1, table.getPlayersCard().get(0).getHand()));
         hands.get(0).setOnMouseClicked(event -> {
             uncoverCardFromStack();
         });
