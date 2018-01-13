@@ -40,13 +40,13 @@ public class RawClientImpl implements RawClient {
     }
 
     @Override
-    public void addListener(RawClientListener visitor) {
-        listeners.add(visitor);
+    public void addListener(RawClientListener listener) {
+        listeners.add(listener);
     }
 
     @Override
-    public void removeListener(RawClientListener visitor) {
-        listeners.remove(visitor);
+    public void removeListener(RawClientListener listener) {
+        listeners.remove(listener);
     }
 
     @Override

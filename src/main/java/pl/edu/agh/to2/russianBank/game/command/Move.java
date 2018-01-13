@@ -1,13 +1,12 @@
 package pl.edu.agh.to2.russianBank.game.command;
 
 import com.google.common.base.MoreObjects;
-import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.Waste;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Move implements Command {
     private ICardSet source;
@@ -20,8 +19,10 @@ public class Move implements Command {
 
     @Override
     public boolean execute(GameTable gameTable) {
+
         int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
+
         boolean result = false;
         if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
@@ -31,52 +32,28 @@ public class Move implements Command {
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
         }
 
-        if (result){
+        if (result) {
             source.takeTopCard();
-            Service.getInstance().getClient().move(this); //TODO : test if this is correct, if not move to MoveController
         }
 
-        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0){
-            int wastePos = gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .map(playerDeck -> playerDeck.getWaste().getPosition()).findFirst().get();
-            if (gameTable.getPlayers().stream()
-                    .filter(playerDeck -> playerDeck.getHand().getPosition() == sourcePos)
-                    .allMatch(playerDeck -> playerDeck.getWaste().getSize() == 0)){
-                // TODO : send message YOU WON!!!!
+        // TODO : can we move this entire if outside of Move to GUI? @J
+        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
+            if (checkEmptyHand(gameTable, sourcePos)){
+                // Service.getInstance().getClient().endGame(true, 'winning condition');
             } else {
-                Service.getInstance().getClient().swapHandWaste(sourcePos, wastePos);
-                // TODO : swap locally
-            }
-
+                Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos+1);
+            };
         }
 
         return result;
-
-//        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
-//            // MY HAND -> MY WASTE
-//            result.ifPresent(card -> target.putCard(card));
-//        }
-//        else if ((sourcePos == 0 && targetPos == 3) || (sourcePos == 2 && targetPos == 1)  // MY HAND -> ENEMY WASTE
-//                || (sourcePos == 1 && targetPos == 3) || (sourcePos == 3 && targetPos == 1)) { // MY WASTE -> ENEMY WASTE
-//
-//            result.ifPresent(card -> target.enemyPutCard(card));
-//        }
-//        else if ((sourcePos > 3 && sourcePos < 20) && (targetPos == 1 || targetPos == 3)){
-//            // HOUSE -> WASTE (assuming it's always enemy waste)
-//        } else {
-//            // put correct with target
-//            // HOUSE -> HOUSE , WASTE -> HOUSE, HOUSE -> FOUNDATION
-//            result.ifPresent(card -> target.putCard(card));
-//        }
     }
 
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get()); // TODO : isPresent() missing warning
+        target.putCard(source.takeTopCard().get());
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get()); // TODO : isPresent() missing warning
+        source.putCard(target.takeTopCard().get());
     }
 
     @Override
@@ -100,5 +77,20 @@ public class Move implements Command {
                 .add("source", source)
                 .add("target", target)
                 .toString();
+    }
+
+    private boolean checkEmptyHand(GameTable gameTable, int sourcePos){
+            Waste waste = gameTable.getPlayersCard().stream()
+                    .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                    .map(pD -> pD.getWaste()).findFirst().get();
+
+            if (gameTable.getPlayersCard().stream()
+                    .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                    .allMatch(pD -> pD.getWaste().getSize() == 0)) {
+                return true;
+            } else {
+                gameTable.swapPiles(source, waste);
+                return false;
+            }
     }
 }

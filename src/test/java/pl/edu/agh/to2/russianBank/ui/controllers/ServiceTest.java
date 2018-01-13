@@ -10,7 +10,7 @@ public class ServiceTest {
 
     @Test
     public void buildPictureName() {
-        Service Service = new Service();
+        Service Service = pl.edu.agh.to2.russianBank.ui.controllers.Service.getInstance();
         assertEquals(Service.buildPictureName(CardRank.KING, CardSuit.HEARTS),"S_K");
 
         assertEquals(Service.buildPictureName(CardRank.ACE, CardSuit.CLUBS),"T_AS");

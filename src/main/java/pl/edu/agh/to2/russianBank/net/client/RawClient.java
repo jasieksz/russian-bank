@@ -1,9 +1,7 @@
 package pl.edu.agh.to2.russianBank.net.client;
 
 import pl.edu.agh.to2.russianBank.net.transport.Message;
-import pl.edu.agh.to2.russianBank.net.transport.MessageVisitor;
 
-import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -11,10 +9,22 @@ import java.util.concurrent.TimeUnit;
  * Low level client interface
  */
 public interface RawClient extends AutoCloseable {
-    void addListener(RawClientListener visitor);
+    /**
+     * Add incoming event listener.
+     */
+    void addListener(RawClientListener listener);
 
-    void removeListener(RawClientListener visitor);
+    /**
+     * Remove incoming event listener.
+     */
+    void removeListener(RawClientListener listener);
 
+    /**
+     * Send message to server.
+     *
+     * @param message message object
+     * @return a future which completes when message is sent (exits client machine).
+     */
     CompletableFuture<Void> sendMessage(Message message);
 
     /**

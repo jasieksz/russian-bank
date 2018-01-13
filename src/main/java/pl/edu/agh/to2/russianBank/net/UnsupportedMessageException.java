@@ -3,6 +3,9 @@ package pl.edu.agh.to2.russianBank.net;
 import pl.edu.agh.to2.russianBank.net.transport.Message;
 import pl.edu.agh.to2.russianBank.net.transport.MessageSerializer;
 
+/**
+ * Thrown when this endpoint does not support given message types.
+ */
 public class UnsupportedMessageException extends RuntimeException {
     public UnsupportedMessageException(Message message) {
         super(formatMessage(message));

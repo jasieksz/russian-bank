@@ -1,17 +1,18 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
-import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameState;
-import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 /**
  * Created by Marek on 09.01.2018.
  */
 public class StartGameMessage extends Message {
     private GameState gameState;
+    private MoveController moveController;
 
-    public StartGameMessage(GameState gameState) {
+    public StartGameMessage(GameState gameState, MoveController moveController) {
         this.gameState = gameState;
+        this.moveController = moveController;
     }
 
     public void setGameState(GameState gameState) {
@@ -21,6 +22,10 @@ public class StartGameMessage extends Message {
     public GameState getGameState() {
 
         return gameState;
+    }
+
+    public MoveController getMoveController() {
+        return moveController;
     }
 
     @Override

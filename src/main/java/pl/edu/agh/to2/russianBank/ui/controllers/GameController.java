@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
-import pl.edu.agh.to2.russianBank.net.client.Client;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.net.URL;
 import java.util.*;
@@ -33,6 +33,8 @@ public class GameController implements Initializable {
     public ColumnConstraints col1;
 
     private GameTable table;
+
+    private MoveController moveController;
 
     public GameTable getTable() {
         return table;
@@ -80,14 +82,14 @@ public class GameController implements Initializable {
 
         GridPane.setHalignment(this.myName, HPos.CENTER);
         GridPane.setValignment(this.myName, VPos.TOP);
-        GridPane.setConstraints(this.myName, 0,9,2,2);
+        GridPane.setConstraints(this.myName, 0, 9, 2, 2);
 
         this.opponentName.setText(opponentName);
         this.opponentName.setAlignment(Pos.BOTTOM_CENTER);
 
         GridPane.setHalignment(this.opponentName, HPos.CENTER);
         GridPane.setValignment(this.opponentName, VPos.BOTTOM);
-        GridPane.setConstraints(this.opponentName, 25,3,2,2);
+        GridPane.setConstraints(this.opponentName, 25, 3, 2, 2);
     }
 
     /**
@@ -124,7 +126,7 @@ public class GameController implements Initializable {
         toggle.setOnAction(event -> LOG.debug("Hello World!"));
         gridPane.add(hbBtn, 25, 11);
 
-        GridPane.setConstraints(endTurn, 25,9);
+        GridPane.setConstraints(endTurn, 25, 9);
     }
 
     /**
@@ -132,7 +134,7 @@ public class GameController implements Initializable {
      */
 
     private CardView createField(Image image, ICardSet cardSet) {
-        CardView field = new CardView(image, cardSet);
+        CardView field = new CardView(image, cardSet, moveController);
         field.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
         field.setPreserveRatio(true);
@@ -142,12 +144,16 @@ public class GameController implements Initializable {
     @FXML
     public void uncoverCardFromStack() {
         LOG.debug("Clicked!");
-        Optional<Card> card = table.getPlayers().get(0).getHand().readTopCard();
+        Optional<Card> card = table.getPlayersCard().get(0).getHand().readTopCard();
         card.ifPresent(c -> {
             hands.get(0).setImage(service.getImageForCard(c));
         });
 
         Service.getInstance().setStackTaken(true);
+    }
+
+    public void setMoveController(MoveController moveController) {
+        this.moveController = moveController;
     }
 
     public void setTable(GameTable table) {
@@ -165,22 +171,21 @@ public class GameController implements Initializable {
         Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
         Image image4 = service.createImage("karty/Gora2.png");
-      
+
 
         List<ICardSet> test = table.getFoundations();
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
         for (int i = 0; i < 2; i++) {
-            wastes.put(i, createField(image2, table.getPlayers().get(i).getWaste()));
+            wastes.put(i, createField(image2, table.getPlayersCard().get(i).getWaste()));
         }
-        hands.put(0, createField(image1, table.getPlayers().get(0).getHand()));
-        hands.get(0).setOnMouseClicked(event ->
-            {
-                uncoverCardFromStack();
-            });
+        hands.put(0, createField(image1, table.getPlayersCard().get(0).getHand()));
+        hands.get(0).setOnMouseClicked(event -> {
+            uncoverCardFromStack();
+        });
 
-        hands.put(1, createField(image4, table.getPlayers().get(1).getHand()));
+        hands.put(1, createField(image4, table.getPlayersCard().get(1).getHand()));
 
         for (int i = 0; i < 8; i++) {
             houses.put(i, new ArrayList<>());
@@ -235,54 +240,42 @@ public class GameController implements Initializable {
         for (int i = 0; i < table.getHouses().size(); i++) {
             ICardSet house = table.getHouses().get(i);
             final int index = i;
-            house.addListener(c -> {
-                List<Card> card = house.getCards();
-                for (int j = 0; j < houses.get(index).size(); j++) {
-                    if (j < card.size()) {
-                        houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
-                    } else {
-                        houses.get(index).get(j).setImage(null);
-                    }
-                }
-
-                if (card.isEmpty()) {
-                    houses.get(index).get(0).setImage(service.getWhiteImage());
-                }
-            });
+            house.addListener(c -> refreshHouse(index, house));
+            refreshHouse(index, house);
         }
 
         for (int i = 0; i < table.getFoundations().size(); i++) {
             ICardSet foundation = table.getFoundations().get(i);
             final int index = i;
+
             foundation.addListener(c -> {
-                Optional<Card> card = foundation.takeTopCard();
+                Optional<Card> card = foundation.readTopCard();
                 ImageView imageView = foundations.get(index);
                 imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
             });
         }
 
-        for (int i = 0; i < table.getPlayers().size(); i++) {
+        for (int i = 0; i < table.getPlayersCard().size(); i++) {
             addListenersForPlayer(i);
         }
-//
-        /*new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.DIAMONDS, CardRank.KING));
-                table.getHouses().get(7).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_7));
-                table.getPlayers().get(0).getHand().putCard(new Card(CardSuit.HEARTS, CardRank.ACE));
-
-                for (int i = 0; i < 3; i++) {
-                    Thread.sleep(1111);
-                    table.getHouses().get(3).putCard(new Card(CardSuit.CLUBS, CardRank.CARD_9));
-                }
-                table.getHouses().get(3).putCard(new Card(CardSuit.DIAMONDS, CardRank.CARD_8));
-            } catch (Exception e) {
-                // TODO: Description
-                LOG.error("TODO ERROR",e);
-            }
-        }).start();*/
     }
+
+    private void refreshHouse(int index, ICardSet house) {
+        List<Card> card = house.getCards();
+        for (int j = 0; j < houses.get(index).size(); j++) {
+            if (j < card.size()) {
+                houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
+            } else {
+                houses.get(index).get(j).setImage(null);
+            }
+        }
+
+        if (card.isEmpty()) {
+            houses.get(index).get(0).setImage(service.getWhiteImage());
+        }
+
+    }
+
     /**
      * Function to add listeners for hand and waste for chosen player.
      *
@@ -290,15 +283,15 @@ public class GameController implements Initializable {
      */
 
     private void addListenersForPlayer(int playerId) {
-        Hand hand = table.getPlayers().get(playerId).getHand();
-        Waste waste = table.getPlayers().get(playerId).getWaste();
+        Hand hand = table.getPlayersCard().get(playerId).getHand();
+        Waste waste = table.getPlayersCard().get(playerId).getWaste();
         waste.addListener(c -> {
-            Optional<Card> card = waste.takeTopCard();
+            Optional<Card> card = waste.readTopCard();
             ImageView imageView = wastes.get(playerId);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
         hand.addListener(c -> {
-            Optional<Card> card = hand.takeTopCard();
+            Optional<Card> card = hand.readTopCard();
             ImageView imageView = hands.get(playerId);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
@@ -314,7 +307,7 @@ public class GameController implements Initializable {
         a.setContentText(content);
         a.showAndWait();
         Service.getInstance().getClient().close();
-        Stage stageToClose = (Stage)endTurn.getScene().getWindow();
+        Stage stageToClose = (Stage) endTurn.getScene().getWindow();
         stageToClose.close();
         System.exit(0);
     }

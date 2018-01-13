@@ -3,7 +3,9 @@ package pl.edu.agh.to2.russianBank.game;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,34 +14,46 @@ public class Hand extends ICardSet {
     private ObservableList<Card> cards;
     private int position;
 
-    // TODO : add moveCOntroller
-    public Hand(List<Card> cards) {
-        this.cards = FXCollections.observableList(cards);
-        //this.setPosition(0);
+    public Hand() {
+        this.cards = FXCollections.observableArrayList();
     }
 
-    // TODO : swap with Waste when empty -> do we need moveController for this (TODO in PlayerDeck) @J
+    public Hand(List<Card> cards) {
+        this.cards = FXCollections.observableList(cards);
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     @Override
     public Optional<Card> takeTopCard() { // removes top card
-        int i = cards.size();
         return cards.size() > 0 ? Optional.of(cards.remove(cards.size() - 1)) : Optional.empty();
     }
 
     @Override
+    public Optional<Card> readTopCard() {
+        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
+    }
+
+    @Override
     public boolean putCard(Card card) {
-
-        cards.add(card); //to delete
-        //return false;
-
-        //return false;
-        //cards.add(card);
-
-        return true;
+        return false;
     }
 
     @Override
     public boolean enemyPutCard(Card card) {
         return putCard(card);
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
     }
 
     @Override
@@ -50,20 +64,6 @@ public class Hand extends ICardSet {
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    @Override
-    public Optional<Card> readTopCard() {
-        return cards.size() > 0 ? Optional.of(cards.get(cards.size() - 1)) : Optional.empty();
     }
 
     @Override

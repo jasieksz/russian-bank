@@ -15,12 +15,8 @@ import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
-import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import static java.lang.Thread.sleep;
 
 public class ClientCallbacksImpl implements ClientCallbacks {
     private static final Logger LOG = LogManager.getLogger();
@@ -34,7 +30,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     }
 
     @Override
-    public void startGame(GameState gameState) {
+    public void startGame(GameState gameState, MoveController moveController) {
 
         Platform.runLater(() -> {
             try {
@@ -58,6 +54,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 stage.show();
 
                 controller = loader.getController();
+                controller.setMoveController(moveController);
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
 
@@ -123,6 +120,18 @@ public class ClientCallbacksImpl implements ClientCallbacks {
         gameStage.close();
         System.exit(0);
         ex.printStackTrace();
+    }
+
+    @Override
+    public void swap(int handPosition, int wastePosition) {
+        Hand hand = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getHand())
+                .filter(h -> h.getPosition() == handPosition).findFirst().get();
+        Waste waste = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getWaste())
+                .filter(h -> h.getPosition() == wastePosition).findFirst().get();
+
+        controller.getTable().swapPiles(hand, waste);
     }
 
 }
