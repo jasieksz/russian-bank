@@ -71,6 +71,9 @@ public class Client implements AutoCloseable {
         return client.sendMessage(new SwapMessage(handPos, wastePos));
     }
 
+    public CompletableFuture<Void> endGame(boolean won, String cause) {
+        return client.sendMessage(new EndGameMessage(won, cause));
+    }
     /**
      * End my turn.
      *
