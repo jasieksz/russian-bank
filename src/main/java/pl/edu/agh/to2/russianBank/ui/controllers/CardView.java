@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import org.apache.logging.log4j.LogManager;
@@ -12,24 +11,23 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+/**
+ * Class made to enable drag & drop operation on cards
+ */
 
 
 public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
-    private boolean wasHand;
-    private GameController controller;
-    DragEvent event;
 
-    public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController c) {
+
+    public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
         super(image);
         this.cardSet = cardSet;
-        this.wasHand = false;
-        controller = c;
-
 
         setOnDragDetected(event -> {
+
             if (Service.getInstance().isMyTurn()) {
                 if (!(cardSet.getPosition() == 2)) {
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
@@ -39,8 +37,6 @@ public class CardView extends ImageView {
                     imageView.setFitWidth(65);
                     content.putImage(imageView.snapshot(null, null));
                     dragboard.setContent(content);
-                    if (cardSet.getPosition() == 0) this.wasHand = true;
-
                     event.consume();
                 } else {
                     Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -57,6 +53,7 @@ public class CardView extends ImageView {
         setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
 
         setOnDragDropped(event -> {
+
             if (event.getGestureSource() instanceof CardView && event.getGestureTarget() instanceof CardView) {
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
@@ -74,14 +71,12 @@ public class CardView extends ImageView {
                 }
 
                 if(cardSet.getPosition() ==1 || !successful) {
-
                     LOG.info("Turn ended");
                     LOG.info(successful);
                     /*Service.getInstance().setMyTurn(false);
-                    Service.getInstance().markCurrentPlayer(c);
+                    Service.getInstance().markCurrentPlayer(controller);
                     Service.getInstance().getClient().endTurn();
                     sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));*/
-
                 }
             }
             event.consume();

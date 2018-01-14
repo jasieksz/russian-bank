@@ -39,9 +39,7 @@ public class Move implements Command {
         if (result) {
             source.takeTopCard();
         }
-        if(!noObligatoryMoveExists(gameTable, source)) {
-            return false;
-        }
+
         // TODO : can we move this entire if outside of Move? @J
 
         if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
@@ -50,7 +48,6 @@ public class Move implements Command {
             } else {
                 Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
             }
-            ;
         }
         return result;
     }
