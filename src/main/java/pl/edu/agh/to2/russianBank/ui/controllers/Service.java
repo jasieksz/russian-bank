@@ -10,7 +10,12 @@ import pl.edu.agh.to2.russianBank.net.client.Client;
 
 public class Service {
     private Client client;
-    private Boolean isStackTaken = false;
+    private boolean isStackTaken = false;
+    private boolean myTurn = true;
+
+    public boolean isMyTurn() {
+        return myTurn;
+    }
 
     public void setStackTaken(Boolean stackTaken) {
         isStackTaken = stackTaken;
@@ -28,6 +33,10 @@ public class Service {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setMyTurn(boolean turn) {
+        this.myTurn = turn;
     }
 
     public Client getClient() {
@@ -51,7 +60,7 @@ public class Service {
         return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 
-    public void markCurrentPlayer(GameController controller, boolean myTurn) {
+    public void markCurrentPlayer(GameController controller) {
         String marked = "-fx-background-color: #e6c34d; -fx-text-fill: #311c09;";
         String unmarked = "-fx-background-color: none; -fx-text-fill: white;";
         if(myTurn) {

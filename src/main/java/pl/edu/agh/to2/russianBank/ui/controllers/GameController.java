@@ -149,13 +149,14 @@ public class GameController implements Initializable {
 
     @FXML
     public void uncoverCardFromStack() {
-        LOG.debug("Clicked!");
-        Optional<Card> card = table.getPlayersCard().get(0).getHand().readTopCard();
-        card.ifPresent(c -> {
-            hands.get(0).setImage(service.getImageForCard(c));
-        });
-
-        Service.getInstance().setStackTaken(true);
+        LOG.debug("Stack uncovered!");
+        if(Service.getInstance().isMyTurn()) {
+            Optional<Card> card = table.getPlayersCard().get(0).getHand().readTopCard();
+            card.ifPresent(c -> {
+                hands.get(0).setImage(service.getImageForCard(c));
+            });
+            Service.getInstance().setStackTaken(true);
+        }
     }
 
     public void setMoveController(MoveController moveController) {
@@ -164,7 +165,6 @@ public class GameController implements Initializable {
 
     public void setTable(GameTable table) {
         this.table = table;
-
         initializeBoard();
         addListChangeListeners(table);
     }

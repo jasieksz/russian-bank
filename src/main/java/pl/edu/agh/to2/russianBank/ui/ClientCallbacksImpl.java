@@ -129,7 +129,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void startTurn() {
-        Service.getInstance().markCurrentPlayer(controller, true);
+        Service.getInstance().setMyTurn(true);
+        Service.getInstance().markCurrentPlayer(controller);
+
     }
 
 }
