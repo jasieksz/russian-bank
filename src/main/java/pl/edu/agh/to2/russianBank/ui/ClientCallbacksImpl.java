@@ -59,17 +59,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
 
-                /* to test GUI
-                sleep(2000);
-
-                GameTable table = controller.getTable();
-                move(new Move(table.getHouses().get(7),table.getHouses().get(5)));*/
-
             } catch (IOException e) {
                 LOG.error("Error creating game stage", e);
-            } /*catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+            }
         });
     }
 
@@ -137,7 +129,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void startTurn() {
-        Service.getInstance().setMyTurn(true);
+        Service.getInstance().markCurrentPlayer(controller, true);
     }
 
 }

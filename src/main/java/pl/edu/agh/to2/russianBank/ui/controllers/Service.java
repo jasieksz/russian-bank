@@ -1,37 +1,19 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.CardRank;
 import pl.edu.agh.to2.russianBank.game.CardSuit;
 import pl.edu.agh.to2.russianBank.net.client.Client;
 
-import java.io.File;
-import java.util.Observable;
 
 public class Service {
     private Client client;
-    private boolean myTurn = false;
-
-
     private Boolean isStackTaken = false;
 
     public void setStackTaken(Boolean stackTaken) {
         isStackTaken = stackTaken;
-    }
-
-    public Boolean getStackTaken() {
-        return isStackTaken;
     }
 
     private static Service instance;
@@ -69,24 +51,18 @@ public class Service {
         return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 
-    public boolean getMyTurn() {
-        return myTurn;
-    }
-
-    public void setMyTurn(boolean myTurn) {
-        this.myTurn = myTurn;
-    }
-
-    public void changeTurn(GameController controller) {
+    public void markCurrentPlayer(GameController controller, boolean myTurn) {
+        String marked = "-fx-background-color: #e6c34d; -fx-text-fill: #311c09;";
+        String unmarked = "-fx-background-color: none; -fx-text-fill: white;";
         if(myTurn) {
-            controller.myName.setStyle("-fx-background-color: #e6c34d; -fx-text-fill: #311c09;");
-            controller.opponentName.setStyle("-fx-background-color: none; -fx-text-fill: white;");
+            controller.myName.setStyle(marked);
+            controller.opponentName.setStyle(unmarked);
         }
         else {
-            controller.myName.setStyle("-fx-background-color: none; -fx-text-fill: white;");
-            controller.opponentName.setStyle("-fx-background-color: #e6c34d; -fx-text-fill: #311c09;");
+            controller.myName.setStyle(unmarked);
+            controller.opponentName.setStyle(marked);
         }
-    }
 
+    }
 
 }

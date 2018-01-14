@@ -88,9 +88,8 @@ public class CardView extends ImageView {
                 if(cardSet.getPosition() ==1 || !successful) {
 
                     LOG.info("Turn ended");
-                    Service.getInstance().changeTurn(c);
+                    Service.getInstance().markCurrentPlayer(c, false);
                     controller.rootPane.setDisable(true);  //it does not work, we should block stage/scene here
-                    //controller.rootPane.getParent().getScene().getWindow().getScene().setDisable(true);
                     //TODO: send message that turn ended
                     this.event.acceptTransferModes(TransferMode.NONE);
                     Service.getInstance().getClient().endTurn();
