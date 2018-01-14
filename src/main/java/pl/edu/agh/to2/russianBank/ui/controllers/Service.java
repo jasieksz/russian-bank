@@ -11,7 +11,7 @@ import pl.edu.agh.to2.russianBank.net.client.Client;
 public class Service {
     private Client client;
     private boolean isStackTaken = false;
-    private boolean myTurn = true;
+    private boolean myTurn = true;  //
 
     public boolean isMyTurn() {
         return myTurn;
