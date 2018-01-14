@@ -4,10 +4,7 @@ import com.google.common.base.MoreObjects;
 import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Move implements Command {
@@ -26,12 +23,10 @@ public class Move implements Command {
         int targetPos = target.getPosition();
 
         boolean result = false;
-        Map<Integer, Integer> obligatoryMovesMap = getObligatoryMoves(gameTable);
+        List<Integer> obligatoryMoveSources = getObligatoryMoves(gameTable);
 
-        if (obligatoryMovesMap.containsKey(sourcePos)){
-            /*if (obligatoryMovesMap.get(sourcePos) != targetPos)
-                return false;*/
-            if(targetPos < 12)
+        if (obligatoryMoveSources.contains(sourcePos)){
+            if (targetPos < 12)
                 return false;
         }
 
@@ -104,33 +99,30 @@ public class Move implements Command {
         }
     }
 
-    private Map<Integer, Integer> getObligatoryMoves(GameTable gameTable) {
-        Map<Integer, Integer> result = new HashMap<>();
+    private List<Integer> getObligatoryMoves(GameTable gameTable) {
+        List<Integer> result = new ArrayList<>();
         List<Foundation> foundations = gameTable.getFoundations().stream().map(cs -> (Foundation) cs).collect(Collectors.toList());
         List<House> houses = gameTable.getHouses().stream().map(cs -> (House) cs).collect(Collectors.toList());
         List<Hand> hands = gameTable.getPlayersCard().stream().map(pd -> pd.getHand()).filter(hand -> hand.getPosition() == source.getPosition()).collect(Collectors.toList());
         List<Waste> wastes = gameTable.getPlayersCard().stream().map(pd -> pd.getWaste()).filter(waste -> waste.getPosition() == source.getPosition()).collect(Collectors.toList());
 
-        for (House house : houses){
-            if (house.readTopCard().isPresent()){
-                Card card = house.readTopCard().get();
-                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(house.getPosition(), foundation.getPosition()));
-            }
-        }
+        houses.stream().filter(house -> house.readTopCard().isPresent())
+                .forEach(house -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(house.readTopCard().get()))
+                        .forEach(foundation -> result.add(house.getPosition()));
+                });
 
-        for (Hand hand : hands){
-            if (hand.readTopCard().isPresent()){
-                Card card = hand.readTopCard().get();
-                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(hand.getPosition(), foundation.getPosition()));
-            }
-        }
+        hands.stream().filter(hand -> hand.readTopCard().isPresent())
+                .forEach(hand -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(hand.readTopCard().get()))
+                        .forEach(foundation -> result.add(hand.getPosition()));
+                });
 
-        for (Waste waste : wastes){
-            if (waste.readTopCard().isPresent()){
-                Card card = waste.readTopCard().get();
-                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(waste.getPosition(), foundation.getPosition()));
-            }
-        }
+        wastes.stream().filter(waste -> waste.readTopCard().isPresent())
+                .forEach(waste -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(waste.readTopCard().get()))
+                        .forEach(foundation -> result.add(waste.getPosition()));
+                });
 
         return result;
     }
