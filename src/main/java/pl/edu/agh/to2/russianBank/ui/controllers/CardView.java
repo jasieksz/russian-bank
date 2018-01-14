@@ -20,7 +20,6 @@ public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
-    private boolean handIsSource;
 
     /**
      * Constructor, sets events on drag & drop
@@ -37,14 +36,13 @@ public class CardView extends ImageView {
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
-                if(cardSet.getPosition() == 0) {
-                    this.handIsSource = true;
-                    Service.getInstance().setHandIsSource(true);
-                    System.out.println("pozycja"+cardSet.getPosition());
 
-                }
-                else Service.getInstance().setHandIsSource(false);
-                if (!(cardSet.getPosition() == 2)) {
+                if(cardSet.getPosition() == 0)      //if hand is source
+                    Service.getInstance().setHandIsSource(true);
+                else
+                    Service.getInstance().setHandIsSource(false);
+
+                if (!(cardSet.getPosition() == 2)) {    //if source is not opponent's hand
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
                     ImageView imageView = new ImageView(getImage());
@@ -57,14 +55,12 @@ public class CardView extends ImageView {
                     displayAlert("What are you doing? These are not your cards!");
             }
 
-            System.out.println(this.handIsSource);
         });
 
         setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
 
         setOnDragDropped(event -> {
 
-            System.out.println("tu"+this.handIsSource);
             if (event.getGestureSource() instanceof CardView && event.getGestureTarget() instanceof CardView) {
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
@@ -93,10 +89,9 @@ public class CardView extends ImageView {
 
     private void endTurn(CardView sourceCardView, GameController controller) {
         LOG.info("Turn ended");
-        /*Service.getInstance().setMyTurn(false);
+        Service.getInstance().setMyTurn(false);
         Service.getInstance().markCurrentPlayer(controller);
-        Service.getInstance().getClient().endTurn();*/
-        System.out.println(this.handIsSource);
+        Service.getInstance().getClient().endTurn();
         if(Service.getInstance().isHandIsSource())
             sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
     }
