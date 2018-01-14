@@ -39,11 +39,13 @@ public final class MessageSerializer {
 
     private final Gson icardSetGson = new GsonBuilder()
             .registerTypeHierarchyAdapter(ICardSet.class, new ICardSetTypeAdapter())
+            .registerTypeAdapter(ObservableList.class, new ObservableListAdapter())
             .create();
 
 
     private final Gson gson = new GsonBuilder()
             .registerTypeHierarchyAdapter(Message.class, new MessageTypeAdapter())
+            .registerTypeAdapter(ObservableList.class, new ObservableListAdapter())
             .create();
 
     /**
