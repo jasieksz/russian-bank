@@ -1,23 +1,23 @@
 package pl.edu.agh.to2.russianBank.ui;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
-import pl.edu.agh.to2.russianBank.game.GameState;
-import pl.edu.agh.to2.russianBank.game.GameTable;
-import pl.edu.agh.to2.russianBank.game.ICardSet;
-import pl.edu.agh.to2.russianBank.game.Player;
+import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
-import pl.edu.agh.to2.russianBank.ui.controllers.RootLayout;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     }
 
     @Override
-    public void startGame(GameState gameState) {
+    public void startGame(GameState gameState, MoveController moveController) {
 
         Platform.runLater(() -> {
             try {
@@ -50,16 +50,20 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 gameStage = stage;
                 stage.setTitle("Garibaldka");
                 stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
-                Scene scene = new Scene(root, 1200, 1200);
+                Scene scene = new Scene(root, 1200, 800);
 
                 stage.setScene(scene);
                 stage.setMaximized(true);
+                stage.setOnCloseRequest(event -> {
+                        LOG.info("Stage is closing");
+                        System.exit(0);
+                });
                 stage.show();
 
                 controller = loader.getController();
+                controller.setMoveController(moveController);
                 controller.setTable(gameState.getGameTable());
                 controller.setName(gameState.getPlayers());
-
 
             } catch (IOException e) {
                 LOG.error("Error creating game stage", e);
@@ -98,7 +102,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void move(Move move) {
-        //what we should do here???
+        move.execute(controller.getTable());
     }
 
     @Override
@@ -115,6 +119,25 @@ public class ClientCallbacksImpl implements ClientCallbacks {
         gameStage.close();
         System.exit(0);
         ex.printStackTrace();
+    }
+
+    @Override
+    public void swap(int handPosition, int wastePosition) {
+        Hand hand = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getHand())
+                .filter(h -> h.getPosition() == handPosition).findFirst().get();
+        Waste waste = controller.getTable().getPlayersCard().stream()
+                .map(pD -> pD.getWaste())
+                .filter(h -> h.getPosition() == wastePosition).findFirst().get();
+
+        controller.getTable().swapPiles(hand, waste);
+    }
+
+    @Override
+    public void startTurn() {
+        Service.getInstance().setMyTurn(true);
+        Service.getInstance().markCurrentPlayer(controller);
+
     }
 
 }

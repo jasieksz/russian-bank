@@ -8,4 +8,8 @@ public interface MessageVisitor {
     void visit(MoveMessage message);
 
     void visit(StartGameMessage message);
+
+    void visit(SwapMessage message);
+
+    void visit(EndTurnMessage message);
 }

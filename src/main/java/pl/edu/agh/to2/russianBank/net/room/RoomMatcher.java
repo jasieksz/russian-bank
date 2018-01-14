@@ -19,6 +19,7 @@ public class RoomMatcher {
      * assign room to a player
      *
      * @param player
+     * @parem playerName
      * @return room assigned to a player
      */
     public Room assign(PlayerConnection player, String playerName) {

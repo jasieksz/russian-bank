@@ -5,9 +5,13 @@ import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.Player;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+/**
+ * Callback interface for incoming messages.
+ */
 public interface ClientCallbacks {
-    void startGame(GameState gameState);
+    void startGame(GameState gameState, MoveController moveController);
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 
@@ -15,5 +19,14 @@ public interface ClientCallbacks {
 
     void move(Move move);
 
+    void swap(int handPosition, int wastePosition);
+
+    void startTurn();
+
+    /**
+     * General network error occurred, probably fatal.
+     *
+     * @param ex exception describing error details.
+     */
     void networkError(Throwable ex);
 }

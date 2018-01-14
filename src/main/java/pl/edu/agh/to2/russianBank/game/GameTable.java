@@ -9,8 +9,11 @@ public class GameTable {
     private List<PlayerDeck> playersCard; // hand & waste
     private List<House> houses;
     private List<Foundation> foundations;
-
     private List<ICardSet> piles;
+
+    public GameTable(){
+
+    }
 
     public GameTable(List<PlayerDeck> playersCard, List<House> houses, List<Foundation> foundations) {
         Preconditions.checkArgument(foundations.size() == 8);
@@ -22,9 +25,6 @@ public class GameTable {
     }
 
     public GameTable(List<Player> players, List<ICardSet> piles) {
-        Preconditions.checkArgument(foundations.size() == 8);
-        Preconditions.checkArgument(houses.size() == 8);
-        Preconditions.checkArgument(playersCard.size() == 2);
         this.playersCard = new ArrayList<>();
         for (Player player : players) {
             this.playersCard.add(player.getPlayerDeck());
@@ -36,15 +36,24 @@ public class GameTable {
         return piles;
     }
 
-    public List<PlayerDeck> getPlayers() {
+    public List<PlayerDeck> getPlayersCard() {
         return playersCard;
     }
 
-    public List<House> getHouses() {
-        return houses;
+    public List<ICardSet> getHouses() {
+        return piles.subList(4,12); //tu trzba to zmienic
     }
 
-    public List<Foundation> getFoundations() {
-        return foundations;
+    public List<ICardSet> getFoundations() {
+        return piles.subList(12,20);
+    }
+
+    public boolean swapPiles(ICardSet hand, ICardSet waste){
+        if (hand.getSize() == 0){
+            hand.getCards().addAll(waste.getCards());
+            waste.getCards().clear();
+            return true;
+        }
+        return false;
     }
 }

@@ -1,11 +1,13 @@
 package pl.edu.agh.to2.russianBank;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.net.server.Server;
@@ -37,6 +39,11 @@ public class RussianBank extends Application {
             primaryStage.getIcons().add(image);
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
+            primaryStage.setOnCloseRequest(event -> {
+                    LOG.info("Stage is closing");
+                    System.exit(0);
+                }
+            );
             primaryStage.show();
         } catch (IOException e) {
             LOG.error("Error starting app", e);

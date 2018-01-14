@@ -15,7 +15,6 @@ public class Game {
         this.players = players;
         this.gameTable = new GameTable(players, new ArrayList<ICardSet>(createPiles()));
         this.moveController = new MoveController(this.getGameTable());
-        startGame();
     }
 
     public List<Player> getPlayers() {
@@ -42,26 +41,15 @@ public class Game {
         piles.add(players.get(1).getPlayerDeck().getWaste());
 
         for (int i = 4; i < 12; i++) {
-            piles.add(new House(FXCollections.observableArrayList(), i, moveController));
+            House newHouse = new House(FXCollections.observableArrayList(), i);
+            Card startCard = players.get(i%2).getPlayerDeck().getHand().takeTopCard().get();
+            newHouse.putCard(startCard);
+            piles.add(newHouse);
         }
         for (int i = 12; i < 20; i++) {
-            piles.add(new Foundation(FXCollections.observableArrayList(), i, moveController));
+            piles.add(new Foundation(FXCollections.observableArrayList(), i));
         }
         return piles;
-    }
-
-
-    public void startGame() {
-
-        // TODO : shuffle cards, setup houses, etc. ???
-
-        for (int i = 4; i < 12; i++) {
-//            Move move = new Move(players.get(0).getPlayerDeck().getHand().getPosition(), i);
-//            moveController.executeCommand(move);
-        }
-
-
-        return;
     }
 }
 

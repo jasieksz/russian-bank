@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameState;
-import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
@@ -49,7 +48,7 @@ public class GameHandlerImpl implements GameHandler {
             if (room.isFull()) {
                 Game game = new Game(room.getPlayers());
 
-                room.broadcast(new StartGameMessage(new GameState(room.getPlayers(), game.getGameTable())));
+                room.broadcast(new StartGameMessage(new GameState(room.getPlayers(), game.getGameTable()), game.getMoveController()));
             }
         }
 
@@ -72,6 +71,18 @@ public class GameHandlerImpl implements GameHandler {
         @Override
         public void visit(StartGameMessage message) {
             throw new UnsupportedMessageException(message);
+        }
+
+        @Override
+        public void visit(SwapMessage message) {
+            LOG.info("swap");
+            roomMatcher.getRoom(player).unicast(player, message);
+        }
+
+        @Override
+        public void visit(EndTurnMessage message) {
+            LOG.info("end turn");
+            roomMatcher.getRoom(player).unicast(player, message);
         }
     }
 }

@@ -23,17 +23,27 @@ public class Room {
         return playerBConn;
     }
 
-
+    /**
+     * @param playerConn Connection by which player is described
+     * @param name name of the player
+     */
     public void setPlayerA(PlayerConnection playerConn, String name) {
         this.playerAConn = playerConn;
         this.playerA = new Player(name);
     }
 
+    /**
+     * @param playerConn Connection by which player is described
+     * @param name name of the player
+     */
     public void setPlayerB(PlayerConnection playerConn, String name) {
         this.playerBConn = playerConn;
         this.playerB = new Player(name);
     }
 
+    /**
+     * @return List of players assigned to room
+     */
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(playerA);
@@ -41,16 +51,31 @@ public class Room {
         return players;
     }
 
+    /**
+     * checks if both platyers are assigned to this room
+     *
+     * @return true if they're both players in room, otherwise false
+     */
     public boolean isFull() {
         return (playerAConn != null) && (playerBConn != null);
     }
 
+    /**
+     * it is used to send message to another player int the room
+     *
+     * @param sender player described by connection from whom message is sent
+     * @param msg
+     */
     public void unicast(PlayerConnection sender, Message msg) {
         PlayerConnection receiver = sender.equals(playerAConn) ? playerBConn : playerAConn;
         if (receiver != null)
             receiver.sendMessage(msg);
     }
 
+    /**
+     * it is used to send a message to both players
+     * @param msg
+     */
     public void broadcast(Message msg) {
         if (playerAConn != null)
             playerAConn.sendMessage(msg);

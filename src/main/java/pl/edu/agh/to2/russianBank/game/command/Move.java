@@ -1,12 +1,12 @@
 package pl.edu.agh.to2.russianBank.game.command;
 
 import com.google.common.base.MoreObjects;
-import pl.edu.agh.to2.russianBank.game.Card;
-import pl.edu.agh.to2.russianBank.game.GameTable;
-import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Move implements Command {
     private ICardSet source;
@@ -18,37 +18,47 @@ public class Move implements Command {
     }
 
     @Override
-    public Optional<Card> execute(GameTable gameTable) {
-        Optional<Card> result = Optional.empty();
+    public boolean execute(GameTable gameTable) {
+
         int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
-        // TODO : implement put() for each case in corresponding CardSets
-        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) {
-            // MY HAND -> MY WASTE
+
+        boolean result = false;
+        if (!noObligatoryMoveExists(gameTable, source, target)) {
+            return false;
         }
-        else if ((sourcePos == 0 && targetPos == 3) || (sourcePos == 2 && targetPos == 1)) {
-            // MY HAND -> ENEMY WASTE
+
+        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
+            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
+        } else if (targetPos == 1 || targetPos == 3) { // OTHER -> WASTE
+            result = source.readTopCard().map(c -> target.enemyPutCard(c)).orElse(false);
+        } else { // OTHER -> OTHER
+            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
         }
-        else if ((sourcePos == 1 && targetPos == 3) || (sourcePos == 3 && targetPos == 1)){
-            // MY WASTE -> ENEMY WASTE
+
+        if (result) {
+            source.takeTopCard();
         }
-        else if ((sourcePos > 3 && sourcePos < 20) && (targetPos == 1 || targetPos == 3)){
-            // HOUSE -> WASTE (assuming it's always enemy waste)
-        } else {
-            // put correct with target
-            // HOUSE -> HOUSE , WASTE -> HOUSE, HOUSE -> FOUNDATION
-            result = source.takeTopCard();
-            result.ifPresent(card -> target.putCard(card));
+
+        // TODO : can we move this entire if outside of Move? @J
+
+        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
+            if (isHandEmpty(gameTable, sourcePos)) {
+                Service.getInstance().getClient().endGame(true, "winning condition");
+            } else {
+                Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
+            }
         }
         return result;
     }
 
+
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get()); // TODO : isPresent() missing warning
+        target.putCard(source.takeTopCard().get());
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get()); // TODO : isPresent() missing warning
+        source.putCard(target.takeTopCard().get());
     }
 
     @Override
@@ -62,7 +72,6 @@ public class Move implements Command {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(source, target);
     }
 
@@ -72,5 +81,34 @@ public class Move implements Command {
                 .add("source", source)
                 .add("target", target)
                 .toString();
+    }
+
+    private boolean isHandEmpty(GameTable gameTable, int sourcePos) {
+        Waste waste = gameTable.getPlayersCard().stream()
+                .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                .map(pD -> pD.getWaste()).findFirst().get();
+
+        if (gameTable.getPlayersCard().stream()
+                .filter(pD -> pD.getHand().getPosition() == sourcePos)
+                .allMatch(pD -> pD.getWaste().getSize() == 0)) {
+            return true;
+        } else {
+            gameTable.swapPiles(source, waste);
+            return false;
+        }
+    }
+
+    private boolean noObligatoryMoveExists(GameTable gameTable, ICardSet source, ICardSet target) {
+        List<Foundation> foundations = gameTable.getFoundations().stream().map(cs -> (Foundation) cs).collect(Collectors.toList());
+        if ((source.getPosition() == 0 || source.getPosition() == 2) && !(target.getPosition() > 11 && target.getPosition() < 20)) {
+            return source.readTopCard()
+                    .map(card -> foundations.stream().noneMatch(f -> f.tryPutCard(card))) //true if every tryPutCard returns false
+                    .orElse(true); // true if hand is empty
+        }
+        return gameTable.getHouses().stream()
+                .map(ICardSet::readTopCard)
+                .filter(card -> card.isPresent())
+                .noneMatch(card -> foundations.stream()
+                        .anyMatch(f -> f.tryPutCard(card.get()))); //false if there is obligatory move possible
     }
 }
