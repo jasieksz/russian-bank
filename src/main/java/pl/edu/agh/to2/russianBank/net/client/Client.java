@@ -71,7 +71,9 @@ public class Client implements AutoCloseable {
         return client.sendMessage(new SwapMessage(handPos, wastePos));
     }
 
-    //TODO : add CompletableFuture ... WonGame(client.EndGame(true, "winning condition") @Karek Maput
+    public CompletableFuture<Void> endGame(boolean won, String cause) {
+        return client.sendMessage(new EndGameMessage(won, cause));
+    }
 
     /**
      * Waits for client connection to close.
