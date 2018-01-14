@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Hand extends ICardSet {
@@ -69,5 +71,28 @@ public class Hand extends ICardSet {
     @Override
     public void addListener(ListChangeListener<Card> listener) {
         cards.addListener(listener);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hand hand = (Hand) o;
+        return position == hand.position &&
+                Objects.equals(cards, hand.cards);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(cards, position);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("cards", cards)
+                .add("position", position)
+                .toString();
     }
 }

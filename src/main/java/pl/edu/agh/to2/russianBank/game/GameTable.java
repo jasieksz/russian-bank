@@ -1,9 +1,11 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GameTable {
     private List<PlayerDeck> playersCard; // hand & waste
@@ -55,5 +57,32 @@ public class GameTable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameTable gameTable = (GameTable) o;
+        return Objects.equals(playersCard, gameTable.playersCard) &&
+                Objects.equals(houses, gameTable.houses) &&
+                Objects.equals(foundations, gameTable.foundations) &&
+                Objects.equals(piles, gameTable.piles);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(playersCard, houses, foundations, piles);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("playersCard", playersCard)
+                .add("houses", houses)
+                .add("foundations", foundations)
+                .add("piles", piles)
+                .toString();
     }
 }

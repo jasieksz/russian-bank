@@ -1,5 +1,7 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
+
 public enum CardSuit {
     HEARTS(0, "S"),
     CLUBS(1, "T"),
@@ -20,5 +22,13 @@ public enum CardSuit {
 
     public String getRank() {
         return rank;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("suitId", suitId)
+                .add("rank", rank)
+                .toString();
     }
 }
