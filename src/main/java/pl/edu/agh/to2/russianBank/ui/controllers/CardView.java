@@ -21,6 +21,9 @@ public class CardView extends ImageView {
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
 
+    /**
+     * Constructor, sets events on dra
+     */
 
     public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
         super(image);
@@ -73,10 +76,10 @@ public class CardView extends ImageView {
                 if(cardSet.getPosition() ==1 || !successful) {
                     LOG.info("Turn ended");
                     LOG.info(successful);
-                    /*Service.getInstance().setMyTurn(false);
+                    Service.getInstance().setMyTurn(false);
                     Service.getInstance().markCurrentPlayer(controller);
                     Service.getInstance().getClient().endTurn();
-                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));*/
+                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
                 }
             }
             event.consume();
