@@ -20,7 +20,7 @@ public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
-    private boolean handIsSource = false;
+    private boolean handIsSource;
 
     /**
      * Constructor, sets events on drag & drop
@@ -41,6 +41,7 @@ public class CardView extends ImageView {
                     handIsSource = true;
                     System.out.println("pozycja"+cardSet.getPosition());
                 }
+                else handIsSource = false;
                 if (!(cardSet.getPosition() == 2)) {
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
@@ -70,7 +71,6 @@ public class CardView extends ImageView {
 
                 if(cardSet.getPosition() == 1 || !successful)
                     endTurn(sourceCardView,controller);
-                //handIsSource = false;
             }
             event.consume();
         });
