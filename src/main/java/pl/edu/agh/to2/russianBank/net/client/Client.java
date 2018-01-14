@@ -71,6 +71,15 @@ public class Client implements AutoCloseable {
         return client.sendMessage(new SwapMessage(handPos, wastePos));
     }
 
+    /**
+     * End my turn.
+     *
+     * @return a future which completes when message is sent (exits client machine).
+     */
+    public CompletableFuture<Void> endTurn() {
+        return client.sendMessage(new EndTurnMessage());
+    }
+
     //TODO : add CompletableFuture ... WonGame(client.EndGame(true, "winning condition") @Karek Maput
 
     /**
@@ -121,6 +130,11 @@ public class Client implements AutoCloseable {
         @Override
         public void visit(SwapMessage message) {
             clientCallbacks.swap(message.getHandPosition(), message.getWastePosition());
+        }
+
+        @Override
+        public void visit(EndTurnMessage message) {
+            clientCallbacks.startTurn();
         }
 
         @Override

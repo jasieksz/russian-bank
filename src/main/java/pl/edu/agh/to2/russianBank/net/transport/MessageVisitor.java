@@ -10,4 +10,6 @@ public interface MessageVisitor {
     void visit(StartGameMessage message);
 
     void visit(SwapMessage message);
+
+    void visit(EndTurnMessage message);
 }

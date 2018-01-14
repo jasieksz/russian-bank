@@ -21,6 +21,8 @@ public interface ClientCallbacks {
 
     void swap(int handPosition, int wastePosition);
 
+    void startTurn();
+
     /**
      * General network error occurred, probably fatal.
      *

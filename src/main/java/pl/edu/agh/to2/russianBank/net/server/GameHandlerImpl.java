@@ -78,5 +78,11 @@ public class GameHandlerImpl implements GameHandler {
             LOG.info("swap");
             roomMatcher.getRoom(player).unicast(player, message);
         }
+
+        @Override
+        public void visit(EndTurnMessage message) {
+            LOG.info("end turn");
+            roomMatcher.getRoom(player).unicast(player, message);
+        }
     }
 }
