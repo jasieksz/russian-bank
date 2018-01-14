@@ -76,10 +76,10 @@ public class CardView extends ImageView {
                 if(cardSet.getPosition() ==1 || !successful) {
                     LOG.info("Turn ended");
                     LOG.info(successful);
-                    Service.getInstance().setMyTurn(false);
+                    /*Service.getInstance().setMyTurn(false);
                     Service.getInstance().markCurrentPlayer(controller);
                     Service.getInstance().getClient().endTurn();
-                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));*/
                 }
             }
             event.consume();
