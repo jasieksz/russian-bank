@@ -9,10 +9,12 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +32,7 @@ public class CardView extends ImageView {
     private ICardSet cardSet;
     private boolean wasHand;
     private GameController controller;
+    DragEvent event;
     //private SimpleBooleanProperty myTurn = new SimpleBooleanProperty(false);
     //private ObservableBooleanValue myTurn;// =
 
@@ -86,9 +89,10 @@ public class CardView extends ImageView {
 
                     LOG.info("Turn ended");
                     Service.getInstance().changeTurn(c);
-                    controller.rootPane.setDisable(true);  //it does not work
+                    controller.rootPane.setDisable(true);  //it does not work, we should block stage/scene here
                     //controller.rootPane.getParent().getScene().getWindow().getScene().setDisable(true);
                     //TODO: send message that turn ended
+                    this.event.acceptTransferModes(TransferMode.NONE);
                 }
             }
             event.consume();
