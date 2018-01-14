@@ -134,4 +134,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
         controller.getTable().swapPiles(hand, waste);
     }
 
+    @Override
+    public void startTurn() {
+        // TODO:
+    }
+
 }

@@ -28,7 +28,8 @@ public final class MessageSerializer {
             .withType(StartGameMessage.class)
             .withType(EndGameMessage.class)
             .withType(MoveMessage.class)
-            .withType(SwapMessage.class);
+            .withType(SwapMessage.class)
+            .withType(EndTurnMessage.class);
 
     private final ImmutableMap<String, Type> typeMap;
 
