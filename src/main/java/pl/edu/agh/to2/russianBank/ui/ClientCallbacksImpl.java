@@ -47,7 +47,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 gameStage = stage;
                 stage.setTitle("Garibaldka");
                 stage.getIcons().add(new Image(RussianBank.class.getResourceAsStream("image.png")));
-                Scene scene = new Scene(root, 1200, 1200);
+                Scene scene = new Scene(root, 1200, 800);
 
                 stage.setScene(scene);
                 stage.setMaximized(true);

@@ -2,6 +2,10 @@ package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import com.google.common.collect.Lists;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,8 +25,10 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class GameController implements Initializable {
     private static final Logger LOG = LogManager.getLogger();
@@ -134,7 +140,7 @@ public class GameController implements Initializable {
      */
 
     private CardView createField(Image image, ICardSet cardSet) {
-        CardView field = new CardView(image, cardSet, moveController);
+        CardView field = new CardView(image, cardSet, moveController, this);
         field.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
         field.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(100));
         field.setPreserveRatio(true);
@@ -173,7 +179,6 @@ public class GameController implements Initializable {
         Image image4 = service.createImage("karty/Gora2.png");
 
 
-        List<ICardSet> test = table.getFoundations();
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
@@ -227,6 +232,7 @@ public class GameController implements Initializable {
         addImageViews(7, 15, houses.get(6));
         addImageViews(9, 15, houses.get(7));
 
+        //Service.getInstance().addListener(c -> this.myName.setStyle("-fx-background-color: slateblue; -fx-text-fill: white;"));
     }
 
     /**

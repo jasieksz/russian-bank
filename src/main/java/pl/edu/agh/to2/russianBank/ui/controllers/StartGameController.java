@@ -15,6 +15,7 @@ import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameState;
 import pl.edu.agh.to2.russianBank.game.GameTable;
 import pl.edu.agh.to2.russianBank.game.Player;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.Client;
 import pl.edu.agh.to2.russianBank.ui.ClientCallbacksImpl;
 
@@ -69,8 +70,8 @@ public class StartGameController implements Initializable {
                                 e.printStackTrace();
                             }
 
-//                            GameState gameState = createGameState(playerName);
-//                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()));
+                            GameState gameState = createGameState(playerName);
+                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()));
                         });
                     })
                     .exceptionally(e -> {
