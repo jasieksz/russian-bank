@@ -79,6 +79,8 @@ public class CardView extends ImageView {
                     Service.getInstance().setMyTurn(false);
                     Service.getInstance().markCurrentPlayer(c);
                     Service.getInstance().getClient().endTurn();
+                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+
                 }
             }
             event.consume();
