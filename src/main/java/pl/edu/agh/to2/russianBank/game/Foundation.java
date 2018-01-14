@@ -77,7 +77,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
         cards.addListener(listener);
     }
 
-    private boolean tryPutCard(Card card) {
+    public boolean tryPutCard(Card card) {
         if (cards.isEmpty() && card.getRank().getRank() == 1) return true; // putting ACE
         return readTopCard().map(topCard -> isCardCorrect(topCard, card)).orElse(false);
     }
