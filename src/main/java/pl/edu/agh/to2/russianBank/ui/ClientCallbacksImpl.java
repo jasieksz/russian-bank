@@ -15,6 +15,7 @@ import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.client.ClientCallbacks;
 import pl.edu.agh.to2.russianBank.ui.controllers.GameController;
+import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.io.IOException;
 
@@ -136,7 +137,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void startTurn() {
-        // TODO:
+        Service.getInstance().setMyTurn(true);
     }
 
 }

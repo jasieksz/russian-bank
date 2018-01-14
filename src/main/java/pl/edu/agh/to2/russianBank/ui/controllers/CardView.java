@@ -93,6 +93,7 @@ public class CardView extends ImageView {
                     //controller.rootPane.getParent().getScene().getWindow().getScene().setDisable(true);
                     //TODO: send message that turn ended
                     this.event.acceptTransferModes(TransferMode.NONE);
+                    Service.getInstance().getClient().endTurn();
                 }
             }
             event.consume();

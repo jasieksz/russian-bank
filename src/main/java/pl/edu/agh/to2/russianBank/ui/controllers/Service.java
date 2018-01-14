@@ -21,9 +21,7 @@ import java.util.Observable;
 
 public class Service {
     private Client client;
-    private static final Logger LOG = LogManager.getLogger();
-    //private BooleanPro myTurn = new SimpleBooleanProperty(false);
-    private boolean myTurn = false;// =
+    private boolean myTurn = false;
 
 
     private Boolean isStackTaken = false;
