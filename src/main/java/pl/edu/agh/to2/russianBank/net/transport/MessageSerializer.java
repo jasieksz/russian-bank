@@ -8,6 +8,7 @@ import com.google.gson.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pl.edu.agh.to2.russianBank.game.*;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * (De)serializes message from/to JSON.
- *
+ * <p>
  * Requires registering message classes for proper working, see {@link #withType(Class)}.
  */
 public final class MessageSerializer {
@@ -108,7 +109,7 @@ public final class MessageSerializer {
 
     /**
      * Processes Java class name for message class to message type name.
-     *
+     * <p>
      * Currently it strips {@code Message} suffix and converts to camelCase, but this behaviour is not guaranteed.
      */
     public static String getTypeName(String className) {
@@ -140,12 +141,40 @@ public final class MessageSerializer {
         }
     }
 
-    private static class ObservableListAdapter implements JsonDeserializer<ObservableList> {
+    private static class ObservableListAdapter implements JsonSerializer<ObservableList>, JsonDeserializer<ObservableList> {
+        private final ImmutableBiMap<String, Type> typeMap = new ImmutableBiMap.Builder<String, Type>()
+                .put("c", Card.class)
+                .put("m", Move.class)
+                .build();
+
+        @Override
+        public JsonElement serialize(ObservableList src, Type typeOfSrc, JsonSerializationContext context) {
+            final JsonArray array = new JsonArray(src.size());
+            for (Object o : src) {
+                final Class<?> klass = o.getClass();
+                if (!typeMap.containsValue(klass))
+                    throw new IllegalArgumentException(klass.getSimpleName() + " is forbidden in ObservableLists");
+                final JsonObject obj = new JsonObject();
+                obj.add(typeMap.inverse().get(klass), context.serialize(o, klass));
+                array.add(obj);
+            }
+            return array;
+        }
+
         @Override
         public ObservableList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            final JsonArray jsonArray = json.getAsJsonArray();
-            final List<Object> array = Streams.stream(jsonArray)
-                    .map(jsonElement -> context.deserialize(jsonElement, Object.class))
+            final List<Object> array = Streams.stream(json.getAsJsonArray())
+                    .map(jsonObject -> {
+                        final JsonObject object = jsonObject.getAsJsonObject();
+                        final Set<String> rootProps = object.keySet();
+                        if (rootProps.size() != 1)
+                            throw new JsonParseException("expected type object to contain exactly one property.");
+                        final String typeName = rootProps.iterator().next();
+                        if (!typeMap.containsKey(typeName))
+                            throw new JsonParseException("unknown ObservableList item type `" + typeName + "`.");
+                        final JsonElement data = object.get(typeName);
+                        return context.deserialize(data, typeMap.get(typeName));
+                    })
                     .collect(Collectors.toList());
             return FXCollections.observableList(array);
         }
@@ -171,10 +200,10 @@ public final class MessageSerializer {
             final JsonObject object = json.getAsJsonObject();
             final Set<String> rootProps = object.keySet();
             if (rootProps.size() != 1)
-                throw new JsonParseException("Malformed message, expected root object to contain exactly one property.");
+                throw new JsonParseException("expected type object to contain exactly one property.");
             final String typeName = rootProps.iterator().next();
             if (!typeMap.containsKey(typeName))
-                throw new JsonParseException("Malformed message, unknown message type `" + typeName + "`.");
+                throw new JsonParseException("unknown ICardSet child type `" + typeName + "`.");
             final JsonElement data = object.get(typeName);
             return innerGson.fromJson(data, typeMap.get(typeName));
         }
