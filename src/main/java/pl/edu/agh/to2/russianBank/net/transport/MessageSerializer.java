@@ -119,6 +119,13 @@ public final class MessageSerializer {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
     }
 
+    /*
+     * Dear attentive, brave reader!
+     *
+     * The code below is one big pile of hacking. Don't even try to take full grasp of what's going on there.
+     * It'll waste your precious time. We just struggle to emulate polymorphism and overcome type erasure here.
+     */
+
     private class MessageTypeAdapter implements JsonSerializer<Message>, JsonDeserializer<Message> {
         @Override
         public JsonElement serialize(Message src, Type typeOfSrc, JsonSerializationContext context) {
