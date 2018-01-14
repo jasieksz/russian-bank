@@ -78,9 +78,6 @@ public class CardView extends ImageView {
                     LOG.info("Turn ended");
                     Service.getInstance().setMyTurn(false);
                     Service.getInstance().markCurrentPlayer(c);
-                    controller.rootPane.setDisable(true);  //it does not work, we should block stage/scene here
-                    controller.rootPane.getParent().getScene().setOnDragOver(e -> e.acceptTransferModes(TransferMode.NONE));
-                    this.event.acceptTransferModes(TransferMode.NONE);
                     Service.getInstance().getClient().endTurn();
                 }
             }
