@@ -29,7 +29,9 @@ public class Move implements Command {
         Map<Integer, Integer> obligatoryMovesMap = getObligatoryMoves(gameTable);
 
         if (obligatoryMovesMap.containsKey(sourcePos)){
-            if (obligatoryMovesMap.get(sourcePos) != targetPos)
+            /*if (obligatoryMovesMap.get(sourcePos) != targetPos)
+                return false;*/
+            if(targetPos < 12)
                 return false;
         }
 
