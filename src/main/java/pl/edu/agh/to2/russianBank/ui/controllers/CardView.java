@@ -38,10 +38,12 @@ public class CardView extends ImageView {
 
             if (Service.getInstance().isMyTurn()) {
                 if(cardSet.getPosition() == 0) {
-                    handIsSource = true;
+                    this.handIsSource = true;
+                    Service.getInstance().setHandIsSource(true);
                     System.out.println("pozycja"+cardSet.getPosition());
+
                 }
-                else handIsSource = false;
+                else Service.getInstance().setHandIsSource(false);
                 if (!(cardSet.getPosition() == 2)) {
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
@@ -54,12 +56,15 @@ public class CardView extends ImageView {
                 } else
                     displayAlert("What are you doing? These are not your cards!");
             }
+
+            System.out.println(this.handIsSource);
         });
 
         setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
 
         setOnDragDropped(event -> {
 
+            System.out.println("tu"+this.handIsSource);
             if (event.getGestureSource() instanceof CardView && event.getGestureTarget() instanceof CardView) {
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
@@ -91,7 +96,8 @@ public class CardView extends ImageView {
         /*Service.getInstance().setMyTurn(false);
         Service.getInstance().markCurrentPlayer(controller);
         Service.getInstance().getClient().endTurn();*/
-        if(handIsSource)
+        System.out.println(this.handIsSource);
+        if(Service.getInstance().isHandIsSource())
             sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
     }
 
