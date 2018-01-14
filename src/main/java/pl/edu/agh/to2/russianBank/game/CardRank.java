@@ -1,5 +1,7 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
+
 public enum CardRank {
     CARD_2(2),
     CARD_3(3),
@@ -33,5 +35,13 @@ public enum CardRank {
 
     public String getRankName() {
         return rankName;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("rank", rank)
+                .add("rankName", rankName)
+                .toString();
     }
 }

@@ -1,8 +1,13 @@
 package pl.edu.agh.to2.russianBank.net.transport;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.Lists;
 import org.junit.Test;
+import pl.edu.agh.to2.russianBank.game.Game;
+import pl.edu.agh.to2.russianBank.game.GameState;
+import pl.edu.agh.to2.russianBank.game.Player;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +33,17 @@ public class MessageSerializerTest {
                 .withType(TestMessage.class);
         // language=JSON
         assertEquals(new TestMessage(3), serial.deserialize("{\"test\":{\"field\":3}}"));
+    }
+
+    @Test
+    public void serializeAndDeserializeGameState() {
+        final MessageSerializer serial = MessageSerializer.GLOBAL;
+        final List<Player> players = Lists.newArrayList(new Player("a"), new Player("b"));
+        final Game game = new Game(players);
+        final GameState gs = new GameState(players, game.getGameTable());
+        final StartGameMessage msg = new StartGameMessage(gs, game.getMoveController());
+        serial.deserialize(serial.serialize(msg));
+//        assertEquals(msg, serial.deserialize(serial.serialize(msg)));
     }
 
     private class TestMessage extends Message {

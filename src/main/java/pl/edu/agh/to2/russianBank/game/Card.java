@@ -1,8 +1,10 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Card {
     private CardSuit suit;
@@ -26,5 +28,28 @@ public class Card {
 
     public CardRank getRank() {
         return rank;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return suit == card.suit &&
+                rank == card.rank;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(suit, rank);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("suit", suit)
+                .add("rank", rank)
+                .toString();
     }
 }

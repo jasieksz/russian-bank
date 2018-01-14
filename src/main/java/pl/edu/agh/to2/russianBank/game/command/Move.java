@@ -4,7 +4,9 @@ import com.google.common.base.MoreObjects;
 import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -24,8 +26,11 @@ public class Move implements Command {
         int targetPos = target.getPosition();
 
         boolean result = false;
-        if (!noObligatoryMoveExists(gameTable, source, target)) {
-            return false;
+        Map<Integer, Integer> obligatoryMovesMap = getObligatoryMoves(gameTable);
+
+        if (obligatoryMovesMap.containsKey(sourcePos)){
+            if (obligatoryMovesMap.get(sourcePos) != targetPos)
+                return false;
         }
 
         if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
@@ -41,7 +46,6 @@ public class Move implements Command {
         }
 
         // TODO : can we move this entire if outside of Move? @J
-
         if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
             if (isHandEmpty(gameTable, sourcePos)) {
                 Service.getInstance().getClient().endGame(true, "winning condition");
@@ -98,17 +102,34 @@ public class Move implements Command {
         }
     }
 
-    private boolean noObligatoryMoveExists(GameTable gameTable, ICardSet source, ICardSet target) {
+    private Map<Integer, Integer> getObligatoryMoves(GameTable gameTable) {
+        Map<Integer, Integer> result = new HashMap<>();
         List<Foundation> foundations = gameTable.getFoundations().stream().map(cs -> (Foundation) cs).collect(Collectors.toList());
-        if ((source.getPosition() == 0 || source.getPosition() == 2) && !(target.getPosition() > 11 && target.getPosition() < 20)) {
-            return source.readTopCard()
-                    .map(card -> foundations.stream().noneMatch(f -> f.tryPutCard(card))) //true if every tryPutCard returns false
-                    .orElse(true); // true if hand is empty
+        List<House> houses = gameTable.getHouses().stream().map(cs -> (House) cs).collect(Collectors.toList());
+        List<Hand> hands = gameTable.getPlayersCard().stream().map(pd -> pd.getHand()).filter(hand -> hand.getPosition() == source.getPosition()).collect(Collectors.toList());
+        List<Waste> wastes = gameTable.getPlayersCard().stream().map(pd -> pd.getWaste()).filter(waste -> waste.getPosition() == source.getPosition()).collect(Collectors.toList());
+
+        for (House house : houses){
+            if (house.readTopCard().isPresent()){
+                Card card = house.readTopCard().get();
+                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(house.getPosition(), foundation.getPosition()));
+            }
         }
-        return gameTable.getHouses().stream()
-                .map(ICardSet::readTopCard)
-                .filter(card -> card.isPresent())
-                .noneMatch(card -> foundations.stream()
-                        .anyMatch(f -> f.tryPutCard(card.get()))); //false if there is obligatory move possible
+
+        for (Hand hand : hands){
+            if (hand.readTopCard().isPresent()){
+                Card card = hand.readTopCard().get();
+                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(hand.getPosition(), foundation.getPosition()));
+            }
+        }
+
+        for (Waste waste : wastes){
+            if (waste.readTopCard().isPresent()){
+                Card card = waste.readTopCard().get();
+                foundations.stream().filter(foundation -> foundation.tryPutCard(card)).forEach(foundation -> result.put(waste.getPosition(), foundation.getPosition()));
+            }
+        }
+
+        return result;
     }
 }

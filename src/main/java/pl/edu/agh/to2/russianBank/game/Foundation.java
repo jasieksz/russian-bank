@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.russianBank.game;
 
+import com.google.common.base.MoreObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -8,6 +9,7 @@ import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
@@ -85,5 +87,28 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     private boolean isCardCorrect(Card card1, Card card2) { // topcard, new card
         return (card1.getSuit().getSuitId() == card2.getSuit().getSuitId() &&
                 (card1.getRank().getRank() == card2.getRank().getRank() - 1));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Foundation that = (Foundation) o;
+        return position == that.position &&
+                Objects.equals(cards, that.cards);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(cards, position);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("cards", cards)
+                .add("position", position)
+                .toString();
     }
 }
