@@ -20,6 +20,7 @@ public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
+    private boolean handIsSource = false;
 
     /**
      * Constructor, sets events on drag & drop
@@ -36,6 +37,10 @@ public class CardView extends ImageView {
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
+                if(cardSet.getPosition() == 0) {
+                    handIsSource = true;
+                    System.out.println("pozycja"+cardSet.getPosition());
+                }
                 if (!(cardSet.getPosition() == 2)) {
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
@@ -65,6 +70,7 @@ public class CardView extends ImageView {
 
                 if(cardSet.getPosition() == 1 || !successful)
                     endTurn(sourceCardView,controller);
+                //handIsSource = false;
             }
             event.consume();
         });
@@ -82,10 +88,11 @@ public class CardView extends ImageView {
 
     private void endTurn(CardView sourceCardView, GameController controller) {
         LOG.info("Turn ended");
-        Service.getInstance().setMyTurn(false);
+        /*Service.getInstance().setMyTurn(false);
         Service.getInstance().markCurrentPlayer(controller);
-        Service.getInstance().getClient().endTurn();
-        sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+        Service.getInstance().getClient().endTurn();*/
+        if(handIsSource)
+            sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
     }
 
 }
