@@ -187,15 +187,15 @@ public class GameController implements Initializable {
         LOG.info("missaStart value in GameController:"+Service.getInstance().isMissaStart());
         if(Service.getInstance().isMissaStart()) { myIndex = 1; opponentIndex = 0;}
 
-        hands.put(0, createField(image1, table.getPlayersCard().get(myIndex).getHand()));
-        hands.get(0).setOnMouseClicked(event -> {
+        hands.put(myIndex, createField(image1, table.getPlayersCard().get(0).getHand()));
+        hands.get(myIndex).setOnMouseClicked(event -> {
             uncoverCardFromStack();
         });
 
-        hands.put(1, createField(image4, table.getPlayersCard().get(opponentIndex).getHand()));
+        hands.put(opponentIndex, createField(image4, table.getPlayersCard().get(1).getHand()));
 
-        wastes.put(0, createField(image2, table.getPlayersCard().get(myIndex).getWaste()));
-        wastes.put(1, createField(image2, table.getPlayersCard().get(opponentIndex).getWaste()));
+        wastes.put(myIndex, createField(image2, table.getPlayersCard().get(0).getWaste()));
+        wastes.put(opponentIndex, createField(image2, table.getPlayersCard().get(1).getWaste()));
 
         for (int i = 0; i < 8; i++) {
             houses.put(i, new ArrayList<>());
@@ -214,8 +214,8 @@ public class GameController implements Initializable {
         gridPane.getChildren().addAll(wastes.values());
         gridPane.getChildren().addAll(foundations.values());
 
-        GridPane.setConstraints(hands.get(0), 0, 11);
-        GridPane.setConstraints(wastes.get(0), 1, 11);
+        GridPane.setConstraints(hands.get(myIndex), 0, 11);
+        GridPane.setConstraints(wastes.get(myIndex), 1, 11);
         GridPane.setConstraints(foundations.get(0), 12, 3);
         GridPane.setConstraints(foundations.get(1), 12, 5);
         GridPane.setConstraints(foundations.get(2), 12, 7);
@@ -224,8 +224,8 @@ public class GameController implements Initializable {
         GridPane.setConstraints(foundations.get(5), 14, 5);
         GridPane.setConstraints(foundations.get(6), 14, 7);
         GridPane.setConstraints(foundations.get(7), 14, 9);
-        GridPane.setConstraints(wastes.get(1), 25, 1);
-        GridPane.setConstraints(hands.get(1), 26, 1);
+        GridPane.setConstraints(wastes.get(opponentIndex), 25, 1);
+        GridPane.setConstraints(hands.get(opponentIndex), 26, 1);
 
         addImageViews(3, 3, Lists.reverse(houses.get(0)));
         addImageViews(5, 3, Lists.reverse(houses.get(1)));
@@ -290,6 +290,7 @@ public class GameController implements Initializable {
 
     //tu się mogło coś popsuć:
     private void addListenersForPlayer(int playerId) {
+        System.out.println(playerId);
         //if(Service.getInstance().isMissaStart()) playerId = 1;
         Hand hand = table.getPlayersCard().get(playerId).getHand();
         Waste waste = table.getPlayersCard().get(playerId).getWaste();
