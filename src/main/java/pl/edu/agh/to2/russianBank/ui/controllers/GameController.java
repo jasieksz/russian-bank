@@ -78,8 +78,10 @@ public class GameController implements Initializable {
      */
 
     public void setName(List<Player> players) {
-        String name = players.get(0).getName();
-        String opponentName = players.get(1).getName();
+        int index1 = 0, index2=1;
+        if(Service.getInstance().isMissaStart()) {index1 = 1; index2 = 0;}
+        String name = players.get(index1).getName();
+        String opponentName = players.get(index2).getName();
         this.myName.setText(name);
         this.myName.setAlignment(Pos.BOTTOM_CENTER);
 
@@ -179,15 +181,21 @@ public class GameController implements Initializable {
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
-        for (int i = 0; i < 2; i++) {
-            wastes.put(i, createField(image2, table.getPlayersCard().get(i).getWaste()));
-        }
-        hands.put(0, createField(image1, table.getPlayersCard().get(0).getHand()));
+
+        int myIndex = 0;
+        int opponentIndex = 1;
+        LOG.info("missaStart value in GameController:"+Service.getInstance().isMissaStart());
+        if(Service.getInstance().isMissaStart()) { myIndex = 1; opponentIndex = 0;}
+
+        hands.put(0, createField(image1, table.getPlayersCard().get(myIndex).getHand()));
         hands.get(0).setOnMouseClicked(event -> {
             uncoverCardFromStack();
         });
 
-        hands.put(1, createField(image4, table.getPlayersCard().get(1).getHand()));
+        hands.put(1, createField(image4, table.getPlayersCard().get(opponentIndex).getHand()));
+
+        wastes.put(0, createField(image2, table.getPlayersCard().get(myIndex).getWaste()));
+        wastes.put(1, createField(image2, table.getPlayersCard().get(opponentIndex).getWaste()));
 
         for (int i = 0; i < 8; i++) {
             houses.put(i, new ArrayList<>());
@@ -280,7 +288,9 @@ public class GameController implements Initializable {
      * Function to add listeners for hand and waste for chosen player.
      */
 
+    //tu się mogło coś popsuć:
     private void addListenersForPlayer(int playerId) {
+        //if(Service.getInstance().isMissaStart()) playerId = 1;
         Hand hand = table.getPlayersCard().get(playerId).getHand();
         Waste waste = table.getPlayersCard().get(playerId).getWaste();
         waste.addListener(c -> {

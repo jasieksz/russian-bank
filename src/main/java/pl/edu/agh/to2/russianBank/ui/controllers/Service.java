@@ -13,6 +13,10 @@ public class Service {
     private boolean isStackTaken = false;
     private boolean myTurn = true;
     private boolean handIsSource;
+    private boolean missaStart = false;
+    public int myIndex = 0, opponentIndex = 2;
+    public int myWaste = 1, opponentWaste = 3;
+
 
     public void setHandIsSource(boolean handIsSource) {
         this.handIsSource = handIsSource;
@@ -34,6 +38,7 @@ public class Service {
     private Service() {}
 
     public static Service getInstance() {
+
         if (instance == null) {
             instance = new Service();
         }
@@ -50,6 +55,15 @@ public class Service {
 
     public Client getClient() {
         return client;
+    }
+
+    public void setMissaStart(boolean missaStart) {
+        this.missaStart = missaStart;
+        if(missaStart) { myIndex = 2;  opponentIndex = 0; myWaste = 3; opponentWaste = 1;}
+    }
+
+    public boolean isMissaStart() {
+        return missaStart;
     }
 
     public Image getImageForCard(Card card) {

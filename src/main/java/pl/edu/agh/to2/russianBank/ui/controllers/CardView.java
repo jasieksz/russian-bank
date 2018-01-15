@@ -33,16 +33,20 @@ public class CardView extends ImageView {
         super(image);
         this.cardSet = cardSet;
 
+
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
 
-                if(cardSet.getPosition() == 0)      //if hand is source
+                if(cardSet.getPosition() == Service.getInstance().myIndex)      //if hand is source
+                {
                     Service.getInstance().setHandIsSource(true);
+                    System.out.println("Hand was source");
+                }
                 else
                     Service.getInstance().setHandIsSource(false);
 
-                if (!(cardSet.getPosition() == 2)) {    //if source is not opponent's hand
+                if (!(cardSet.getPosition() == Service.getInstance().opponentIndex)) {    //if source is not opponent's hand
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
                     ImageView imageView = new ImageView(getImage());
@@ -70,7 +74,7 @@ public class CardView extends ImageView {
                 if(!successful)
                     displayAlert("This move is incorrect");
 
-                if(cardSet.getPosition() == 1 || !successful)
+                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful)
                     endTurn(sourceCardView,controller);
             }
             event.consume();

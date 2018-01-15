@@ -33,6 +33,9 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     @Override
     public void startGame(GameState gameState, MoveController moveController, boolean missaStart) {
 
+        LOG.info("missaStart value:"+ missaStart);
+        if(missaStart) Service.getInstance().setMissaStart(true);
+
         Platform.runLater(() -> {
             try {
 

@@ -57,21 +57,12 @@ public class StartGameController implements Initializable {
             Client.connect(Constants.SERVER_URI, callbacks)
                     .thenComposeAsync(client -> {
                         LOG.info("Connected, sending hello");
-                        Service.getInstance().setClient(client);        //ok?
+                        Service.getInstance().setClient(client);
                         return client.hello(playerName);
                     })
                     .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
-
-//                            try {
-//                                sleep(500);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//
-                            GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()), false);
                         });
                     })
                     .exceptionally(e -> {
@@ -92,15 +83,4 @@ public class StartGameController implements Initializable {
         });
     }
 
-    //----------- function to test GUI ------------
-
-    private GameState createGameState(String myName) {
-        List<Player> players = new ArrayList<>();
-        players.add(new Player(myName));
-        players.add(new Player("second player"));
-        Game game = new Game(players);
-        GameTable table = game.getGameTable();
-
-        return new GameState(players, table);
-    }
 }
