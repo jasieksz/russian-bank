@@ -71,7 +71,7 @@ public class StartGameController implements Initializable {
 //                            }
 //
                             GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()));
+                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()), false);
                         });
                     })
                     .exceptionally(e -> {

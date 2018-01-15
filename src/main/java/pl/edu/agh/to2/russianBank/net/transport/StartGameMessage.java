@@ -12,10 +12,13 @@ import java.util.Objects;
 public class StartGameMessage extends Message {
     private GameState gameState;
     private MoveController moveController;
+    /** Mesa called Jar Jar Binks, mesa your humble servant! */
+    private boolean missaStart;
 
-    public StartGameMessage(GameState gameState, MoveController moveController) {
+    public StartGameMessage(GameState gameState, MoveController moveController, boolean missaStart) {
         this.gameState = gameState;
         this.moveController = moveController;
+        this.missaStart = missaStart;
     }
 
     public void setGameState(GameState gameState) {
@@ -31,19 +34,28 @@ public class StartGameMessage extends Message {
         return moveController;
     }
 
+    public boolean isMissaStart() {
+        return missaStart;
+    }
+
+    public void setMissaStart(boolean missaStart) {
+        this.missaStart = missaStart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StartGameMessage that = (StartGameMessage) o;
-        return Objects.equals(gameState, that.gameState) &&
+        return missaStart == that.missaStart &&
+                Objects.equals(gameState, that.gameState) &&
                 Objects.equals(moveController, that.moveController);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(gameState, moveController);
+        return Objects.hash(gameState, moveController, missaStart);
     }
 
     @Override
@@ -51,6 +63,7 @@ public class StartGameMessage extends Message {
         return MoreObjects.toStringHelper(this)
                 .add("gameState", gameState)
                 .add("moveController", moveController)
+                .add("missaStart", missaStart)
                 .toString();
     }
 

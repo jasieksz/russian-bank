@@ -11,7 +11,7 @@ import pl.edu.agh.to2.russianBank.game.command.MoveController;
  * Callback interface for incoming messages.
  */
 public interface ClientCallbacks {
-    void startGame(GameState gameState, MoveController moveController);
+    void startGame(GameState gameState, MoveController moveController, boolean missaStart);
 
     void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot);
 
