@@ -54,9 +54,6 @@ public class GameController implements Initializable {
     private Service service = Service.getInstance();
 
     @FXML
-    public AnchorPane rootPane;
-
-    @FXML
     public Label myName;
 
     @FXML
@@ -231,8 +228,6 @@ public class GameController implements Initializable {
         addImageViews(5, 15, houses.get(5));
         addImageViews(7, 15, houses.get(6));
         addImageViews(9, 15, houses.get(7));
-
-        //Service.getInstance().addListener(c -> this.myName.setStyle("-fx-background-color: slateblue; -fx-text-fill: white;"));
     }
 
     /**
@@ -279,13 +274,10 @@ public class GameController implements Initializable {
         if (card.isEmpty()) {
             houses.get(index).get(0).setImage(service.getWhiteImage());
         }
-
     }
 
     /**
      * Function to add listeners for hand and waste for chosen player.
-     *
-     * @param playerId player id
      */
 
     private void addListenersForPlayer(int playerId) {

@@ -11,7 +11,16 @@ import pl.edu.agh.to2.russianBank.net.client.Client;
 public class Service {
     private Client client;
     private boolean isStackTaken = false;
-    private boolean myTurn = true;  //
+    private boolean myTurn = true;
+    private boolean handIsSource;
+
+    public void setHandIsSource(boolean handIsSource) {
+        this.handIsSource = handIsSource;
+    }
+
+    public boolean isHandIsSource() {
+        return handIsSource;
+    }
 
     public boolean isMyTurn() {
         return myTurn;
@@ -53,10 +62,12 @@ public class Service {
     }
 
     public String buildPictureName(CardRank r, CardSuit s) {
+
         return s.getRank() + "_" + r.getRankName();
     }
 
     public Image createImage(String pathname) {
+
         return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 
@@ -71,7 +82,6 @@ public class Service {
             controller.myName.setStyle(unmarked);
             controller.opponentName.setStyle(marked);
         }
-
     }
 
 }

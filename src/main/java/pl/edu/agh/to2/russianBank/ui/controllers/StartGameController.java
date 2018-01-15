@@ -33,12 +33,8 @@ public class StartGameController implements Initializable {
     public Button okButton;
     @FXML
     public TextField nameField;
-    public javafx.scene.control.Button deleteButton;
-    public GameTable table;
     @FXML
     public Label statusLbl;
-
-    private GameController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,21 +53,12 @@ public class StartGameController implements Initializable {
             Client.connect(Constants.SERVER_URI, callbacks)
                     .thenComposeAsync(client -> {
                         LOG.info("Connected, sending hello");
-                        Service.getInstance().setClient(client);        //ok?
+                        Service.getInstance().setClient(client);
                         return client.hello(playerName);
                     })
                     .thenRunAsync(() -> {
                         Platform.runLater(() -> {
                             statusLbl.setText("Waiting for other player...");
-
-//                            try {
-//                                sleep(500);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//
-                            GameState gameState = createGameState(playerName);
-                            callbacks.startGame(gameState, new MoveController(gameState.getGameTable()));
                         });
                     })
                     .exceptionally(e -> {
@@ -90,17 +77,5 @@ public class StartGameController implements Initializable {
             statusLbl.setText("Failed to connect to game server!");
             okButton.setDisable(false);
         });
-    }
-
-    //----------- function to test GUI ------------
-
-    private GameState createGameState(String myName) {
-        List<Player> players = new ArrayList<>();
-        players.add(new Player(myName));
-        players.add(new Player("second player"));
-        Game game = new Game(players);
-        GameTable table = game.getGameTable();
-
-        return new GameState(players, table);
     }
 }

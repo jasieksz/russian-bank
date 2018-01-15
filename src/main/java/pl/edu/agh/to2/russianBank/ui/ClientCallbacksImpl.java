@@ -73,9 +73,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void movingCard(Player player, ICardSet previousSlot, ICardSet newSlot) {
-        //what we should do here??? how to change model? change model and as a result
-        // listeners will change view??? how we can change model (GameTable/Game) here?
-        //controller.setTable(...); ?
+      //in next release, if we want to add button
     }
 
     @Override
@@ -137,7 +135,6 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     public void startTurn() {
         Service.getInstance().setMyTurn(true);
         Service.getInstance().markCurrentPlayer(controller);
-
     }
 
 }

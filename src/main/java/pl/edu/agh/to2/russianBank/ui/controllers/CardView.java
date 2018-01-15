@@ -22,7 +22,11 @@ public class CardView extends ImageView {
     private ICardSet cardSet;
 
     /**
-     * Constructor, sets events on dra
+     * Constructor, sets events on drag & drop
+     * @param image for calling a superclass constructor
+     * @param cardSet ICardSet from model binding with this field
+     * @param moveController instance of moveController from GameController class
+     * @param controller instance of game stage controller
      */
 
     public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
@@ -32,7 +36,13 @@ public class CardView extends ImageView {
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
-                if (!(cardSet.getPosition() == 2)) {
+
+                if(cardSet.getPosition() == 0)      //if hand is source
+                    Service.getInstance().setHandIsSource(true);
+                else
+                    Service.getInstance().setHandIsSource(false);
+
+                if (!(cardSet.getPosition() == 2)) {    //if source is not opponent's hand
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
                     ClipboardContent content = new ClipboardContent();
                     ImageView imageView = new ImageView(getImage());
@@ -41,16 +51,10 @@ public class CardView extends ImageView {
                     content.putImage(imageView.snapshot(null, null));
                     dragboard.setContent(content);
                     event.consume();
-                } else {
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setTitle("Wrong move");
-                    a.setHeaderText("Wrong move");
-                    a.setResizable(true);
-                    String content = "What are you doing? These are not your cards!";
-                    a.setContentText(content);
-                    a.showAndWait();
-                }
+                } else
+                    displayAlert("What are you doing? These are not your cards!");
             }
+
         });
 
         setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
@@ -63,26 +67,33 @@ public class CardView extends ImageView {
 
                 boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
 
-                if(!successful) {
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setTitle("Wrong move");
-                    a.setHeaderText("Wrong move");
-                    a.setResizable(true);
-                    String content = "This move is incorrect";
-                    a.setContentText(content);
-                    a.showAndWait();
-                }
+                if(!successful)
+                    displayAlert("This move is incorrect");
 
-                if(cardSet.getPosition() ==1 || !successful) {
-                    LOG.info("Turn ended");
-                    LOG.info(successful);
-                    /*Service.getInstance().setMyTurn(false);
-                    Service.getInstance().markCurrentPlayer(controller);
-                    Service.getInstance().getClient().endTurn();*/
-                    sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
-                }
+                if(cardSet.getPosition() == 1 || !successful)
+                    endTurn(sourceCardView,controller);
             }
             event.consume();
         });
     }
+
+
+    private void displayAlert(String content) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Wrong move");
+        a.setHeaderText("Wrong move");
+        a.setResizable(true);
+        a.setContentText(content);
+        a.showAndWait();
+    }
+
+    private void endTurn(CardView sourceCardView, GameController controller) {
+        LOG.info("Turn ended");
+        Service.getInstance().setMyTurn(false);
+        Service.getInstance().markCurrentPlayer(controller);
+        Service.getInstance().getClient().endTurn();
+        if(Service.getInstance().isHandIsSource())
+            sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
+    }
+
 }
