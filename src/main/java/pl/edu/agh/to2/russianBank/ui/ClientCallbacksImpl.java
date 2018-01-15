@@ -1,14 +1,12 @@
 package pl.edu.agh.to2.russianBank.ui;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.RussianBank;
@@ -33,7 +31,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
     }
 
     @Override
-    public void startGame(GameState gameState, MoveController moveController) {
+    public void startGame(GameState gameState, MoveController moveController, boolean missaStart) {
 
         Platform.runLater(() -> {
             try {

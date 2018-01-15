@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.Game;
 import pl.edu.agh.to2.russianBank.game.GameState;
+import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import pl.edu.agh.to2.russianBank.net.UnsupportedMessageException;
 import pl.edu.agh.to2.russianBank.net.room.Room;
 import pl.edu.agh.to2.russianBank.net.room.RoomMatcher;
@@ -48,7 +49,10 @@ public class GameHandlerImpl implements GameHandler {
             if (room.isFull()) {
                 Game game = new Game(room.getPlayers());
 
-                room.broadcast(new StartGameMessage(new GameState(room.getPlayers(), game.getGameTable()), game.getMoveController()));
+                final GameState gameState = new GameState(room.getPlayers(), game.getGameTable());
+                final MoveController moveController = game.getMoveController();
+                room.unicast(player, new StartGameMessage(gameState, moveController, false));
+                player.sendMessage(new StartGameMessage(gameState, moveController, true));
             }
         }
 
