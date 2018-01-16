@@ -56,6 +56,7 @@ public class CardView extends ImageView {
                     dragboard.setContent(content);
                     event.consume();
                 } else
+                    //jest opponent Index
                     displayAlert("What are you doing? These are not your cards!");
             }
 

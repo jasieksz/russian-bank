@@ -54,7 +54,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
                 Scene scene = new Scene(root, 1200, 800);
 
                 stage.setScene(scene);
-                stage.setMaximized(true);
+                //stage.setMaximized(true);
                 stage.setOnCloseRequest(event -> {
                         LOG.info("Stage is closing");
                         System.exit(0);

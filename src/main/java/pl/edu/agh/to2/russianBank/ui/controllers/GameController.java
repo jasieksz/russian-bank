@@ -1,6 +1,7 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
 import com.google.common.collect.Lists;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -53,6 +54,9 @@ public class GameController implements Initializable {
 
     private Service service = Service.getInstance();
 
+    private int myPlayerNumberInTable;
+    private int opponentPlayerNumberInTable;
+
     @FXML
     public Label myName;
 
@@ -68,6 +72,10 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        boolean missaStart = service.isMissaStart();
+        myPlayerNumberInTable = missaStart ? 1 : 0;
+        opponentPlayerNumberInTable = missaStart ? 0 : 1;
         initializeButtons();
     }
 
@@ -78,10 +86,9 @@ public class GameController implements Initializable {
      */
 
     public void setName(List<Player> players) {
-        int index1 = 0, index2=1;
-        if(Service.getInstance().isMissaStart()) {index1 = 1; index2 = 0;}
-        String name = players.get(index1).getName();
-        String opponentName = players.get(index2).getName();
+
+        String name = players.get(myPlayerNumberInTable).getName();
+        String opponentName = players.get(opponentPlayerNumberInTable).getName();
         this.myName.setText(name);
         this.myName.setAlignment(Pos.BOTTOM_CENTER);
 
@@ -109,31 +116,6 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initializeButtons() {
-        Image image6 = service.createImage("karty/budzik.png");
-
-        ImageView field1 = new ImageView(image6);
-        field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(150));
-        field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(120));
-
-        final ToggleButton toggle = new ToggleButton();
-        toggle.setGraphic(field1);
-        toggle.setStyle("-fx-background-color: #00802b");
-        field1.imageProperty().bind(Bindings
-                .when(toggle.selectedProperty())
-                .then(image6)
-                .otherwise(image6)
-        );
-
-        HBox hbBtn = new HBox();
-        hbBtn.setAlignment(Pos.CENTER);
-        hbBtn.getChildren().add(toggle);
-        toggle.setOnAction(event -> LOG.debug("Hello World!"));
-        gridPane.add(hbBtn, 25, 11);
-
-        GridPane.setConstraints(endTurn, 25, 9);
-    }
-
     /**
      * Function creates field of type CardView and set in proper position in gridPane.
      */
@@ -149,12 +131,12 @@ public class GameController implements Initializable {
     @FXML
     public void uncoverCardFromStack() {
         LOG.debug("Stack uncovered!");
-        if(Service.getInstance().isMyTurn()) {
-            Optional<Card> card = table.getPlayersCard().get(0).getHand().readTopCard();
+
+        if(service.isMyTurn()) {
+            Optional<Card> card = table.getPlayersCard().get(myPlayerNumberInTable).getHand().readTopCard();
             card.ifPresent(c -> {
                 hands.get(0).setImage(service.getImageForCard(c));
             });
-            Service.getInstance().setStackTaken(true);
         }
     }
 
@@ -177,25 +159,19 @@ public class GameController implements Initializable {
         Image image2 = service.getWhiteImage();
         Image image4 = service.createImage("karty/Gora2.png");
 
-
         for (int i = 0; i < 8; i++) {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
 
-        int myIndex = 0;
-        int opponentIndex = 1;
-        LOG.info("missaStart value in GameController:"+Service.getInstance().isMissaStart());
-        if(Service.getInstance().isMissaStart()) { myIndex = 1; opponentIndex = 0;}
-
-        hands.put(myIndex, createField(image1, table.getPlayersCard().get(0).getHand()));
-        hands.get(myIndex).setOnMouseClicked(event -> {
+        hands.put(0, createField(image1, table.getPlayersCard().get(myPlayerNumberInTable).getHand()));
+        hands.get(0).setOnMouseClicked(event -> {
             uncoverCardFromStack();
         });
 
-        hands.put(opponentIndex, createField(image4, table.getPlayersCard().get(1).getHand()));
+        hands.put(1, createField(image4, table.getPlayersCard().get(opponentPlayerNumberInTable).getHand()));
 
-        wastes.put(myIndex, createField(image2, table.getPlayersCard().get(0).getWaste()));
-        wastes.put(opponentIndex, createField(image2, table.getPlayersCard().get(1).getWaste()));
+        wastes.put(0, createField(image2, table.getPlayersCard().get(myPlayerNumberInTable).getWaste()));
+        wastes.put(1, createField(image2, table.getPlayersCard().get(opponentPlayerNumberInTable).getWaste()));
 
         for (int i = 0; i < 8; i++) {
             houses.put(i, new ArrayList<>());
@@ -214,8 +190,8 @@ public class GameController implements Initializable {
         gridPane.getChildren().addAll(wastes.values());
         gridPane.getChildren().addAll(foundations.values());
 
-        GridPane.setConstraints(hands.get(myIndex), 0, 11);
-        GridPane.setConstraints(wastes.get(myIndex), 1, 11);
+        GridPane.setConstraints(hands.get(0), 0, 11);
+        GridPane.setConstraints(wastes.get(0), 1, 11);
         GridPane.setConstraints(foundations.get(0), 12, 3);
         GridPane.setConstraints(foundations.get(1), 12, 5);
         GridPane.setConstraints(foundations.get(2), 12, 7);
@@ -224,8 +200,8 @@ public class GameController implements Initializable {
         GridPane.setConstraints(foundations.get(5), 14, 5);
         GridPane.setConstraints(foundations.get(6), 14, 7);
         GridPane.setConstraints(foundations.get(7), 14, 9);
-        GridPane.setConstraints(wastes.get(opponentIndex), 25, 1);
-        GridPane.setConstraints(hands.get(opponentIndex), 26, 1);
+        GridPane.setConstraints(wastes.get(1), 25, 1);
+        GridPane.setConstraints(hands.get(1), 26, 1);
 
         addImageViews(3, 3, Lists.reverse(houses.get(0)));
         addImageViews(5, 3, Lists.reverse(houses.get(1)));
@@ -267,6 +243,7 @@ public class GameController implements Initializable {
         for (int i = 0; i < table.getPlayersCard().size(); i++) {
             addListenersForPlayer(i);
         }
+
     }
 
     private void refreshHouse(int index, ICardSet house) {
@@ -287,26 +264,29 @@ public class GameController implements Initializable {
     /**
      * Function to add listeners for hand and waste for chosen player.
      */
-
-    //tu się mogło coś popsuć:
     private void addListenersForPlayer(int playerId) {
         System.out.println(playerId);
-        //if(Service.getInstance().isMissaStart()) playerId = 1;
+        int index;
+        if(playerId == myPlayerNumberInTable) {index = 0;}
+        else index = 1;
+        int finalIndex = index;
+
         Hand hand = table.getPlayersCard().get(playerId).getHand();
         Waste waste = table.getPlayersCard().get(playerId).getWaste();
+
         waste.addListener(c -> {
             Optional<Card> card = waste.readTopCard();
-            ImageView imageView = wastes.get(playerId);
+            ImageView imageView = wastes.get(finalIndex);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
         hand.addListener(c -> {
             Optional<Card> card = hand.readTopCard();
-            ImageView imageView = hands.get(playerId);
+            ImageView imageView = hands.get(index);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
     }
 
-    public void handleClickAction(ActionEvent actionEvent) throws Exception {
+    public void handleClickAction() throws Exception {
         LOG.debug("End turn clicked!");
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("End turn");
@@ -315,10 +295,38 @@ public class GameController implements Initializable {
         String content = "Try again...";
         a.setContentText(content);
         a.showAndWait();
-        Service.getInstance().getClient().close();
+        service.getClient().close();
         Stage stageToClose = (Stage) endTurn.getScene().getWindow();
         stageToClose.close();
         System.exit(0);
     }
 
+    /**
+     * To use in next release
+     */
+
+    private void initializeButtons() {
+        Image image6 = service.createImage("karty/budzik.png");
+
+        ImageView field1 = new ImageView(image6);
+        field1.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(150));
+        field1.fitHeightProperty().bind(gridPane.heightProperty().multiply(row1.getPercentHeight()).divide(120));
+
+        final ToggleButton toggle = new ToggleButton();
+        toggle.setGraphic(field1);
+        toggle.setStyle("-fx-background-color: #00802b");
+        field1.imageProperty().bind(Bindings
+                .when(toggle.selectedProperty())
+                .then(image6)
+                .otherwise(image6)
+        );
+
+        HBox hbBtn = new HBox();
+        hbBtn.setAlignment(Pos.CENTER);
+        hbBtn.getChildren().add(toggle);
+        toggle.setOnAction(event -> LOG.debug("Button clicked"));
+        gridPane.add(hbBtn, 25, 11);
+
+        GridPane.setConstraints(endTurn, 25, 9);
+    }
 }

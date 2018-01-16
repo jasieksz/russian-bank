@@ -10,7 +10,6 @@ import pl.edu.agh.to2.russianBank.net.client.Client;
 
 public class Service {
     private Client client;
-    private boolean isStackTaken = false;
     private boolean myTurn = true;
     private boolean handIsSource;
     private boolean missaStart = false;
@@ -28,10 +27,6 @@ public class Service {
 
     public boolean isMyTurn() {
         return myTurn;
-    }
-
-    public void setStackTaken(Boolean stackTaken) {
-        isStackTaken = stackTaken;
     }
 
     private static Service instance;
