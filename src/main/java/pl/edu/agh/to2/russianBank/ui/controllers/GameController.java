@@ -76,6 +76,9 @@ public class GameController implements Initializable {
         boolean missaStart = service.isMissaStart();
         myPlayerNumberInTable = missaStart ? 1 : 0;
         opponentPlayerNumberInTable = missaStart ? 0 : 1;
+        
+        service.setMyTurn(missaStart);
+        service.markCurrentPlayer(this);
         initializeButtons();
     }
 
@@ -269,14 +272,13 @@ public class GameController implements Initializable {
         int index;
         if(playerId == myPlayerNumberInTable) {index = 0;}
         else index = 1;
-        int finalIndex = index;
 
         Hand hand = table.getPlayersCard().get(playerId).getHand();
         Waste waste = table.getPlayersCard().get(playerId).getWaste();
 
         waste.addListener(c -> {
             Optional<Card> card = waste.readTopCard();
-            ImageView imageView = wastes.get(finalIndex);
+            ImageView imageView = wastes.get(index);
             imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
         });
         hand.addListener(c -> {
