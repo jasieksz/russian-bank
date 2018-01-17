@@ -1,13 +1,7 @@
 package pl.edu.agh.to2.russianBank.ui.controllers;
 
-import com.google.common.collect.Lists;
-import com.sun.org.apache.xpath.internal.SourceTree;
+
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -26,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -40,12 +33,9 @@ public class GameController implements Initializable {
     public ColumnConstraints col1;
 
     private GameTable table;
-
     private MoveController moveController;
-
-    public GameTable getTable() {
-        return table;
-    }
+    private int myPlayerNumberInTable;
+    private int opponentPlayerNumberInTable;
 
     private Map<Integer, CardView> foundations = new HashMap<>();
     private Map<Integer, CardView> hands = new HashMap<>();
@@ -53,9 +43,6 @@ public class GameController implements Initializable {
     private Map<Integer, List<CardView>> houses = new HashMap<>();
 
     private Service service = Service.getInstance();
-
-    private int myPlayerNumberInTable;
-    private int opponentPlayerNumberInTable;
 
     @FXML
     public Label myName;
@@ -66,20 +53,24 @@ public class GameController implements Initializable {
     @FXML
     public Button endTurn;
 
+    private StyleBuilder styleBuilder = new StyleBuilder();
 
     public void initialize() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         boolean missaStart = service.isMissaStart();
         myPlayerNumberInTable = missaStart ? 1 : 0;
         opponentPlayerNumberInTable = missaStart ? 0 : 1;
-        
+
         service.setMyTurn(missaStart);
         service.markCurrentPlayer(this);
         initializeButtons();
+    }
+
+    public GameTable getTable() {
+        return table;
     }
 
     /**
@@ -87,9 +78,7 @@ public class GameController implements Initializable {
      *
      * @param players list of players in this instance of game
      */
-
     public void setName(List<Player> players) {
-
         String name = players.get(myPlayerNumberInTable).getName();
         String opponentName = players.get(opponentPlayerNumberInTable).getName();
         this.myName.setText(name);
@@ -102,22 +91,9 @@ public class GameController implements Initializable {
         this.opponentName.setText(opponentName);
         this.opponentName.setAlignment(Pos.BOTTOM_CENTER);
 
-        GridPane.setHalignment(this.opponentName, HPos.CENTER);
-        GridPane.setValignment(this.opponentName, VPos.BOTTOM);
-        GridPane.setConstraints(this.opponentName, 25, 3, 2, 2);
+        styleBuilder.setLabelsPositions(this.myName, this.opponentName);
     }
 
-    /**
-     * Function set ImageViews in proper position in stage
-     *
-     * @param images list of CardView e.g. foundations, houses...
-     */
-
-    private void addImageViews(int row, int minColumn, List<CardView> images) {
-        for (int i = 0; i < images.size(); i++) {
-            GridPane.setConstraints(images.get(i), minColumn + i, row);
-        }
-    }
 
     /**
      * Function creates field of type CardView and set in proper position in gridPane.
@@ -132,9 +108,8 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    public void uncoverCardFromStack() {
+    private void uncoverCardFromStack() {
         LOG.debug("Stack uncovered!");
-
         if(service.isMyTurn()) {
             Optional<Card> card = table.getPlayersCard().get(myPlayerNumberInTable).getHand().readTopCard();
             card.ifPresent(c -> {
@@ -150,7 +125,8 @@ public class GameController implements Initializable {
     public void setTable(GameTable table) {
         this.table = table;
         initializeBoard();
-        addListChangeListeners(table);
+        ListenersAdder listenersAdder = new ListenersAdder(foundations, hands, wastes, houses);
+        listenersAdder.addListChangeListeners(table, myPlayerNumberInTable);
     }
 
     /**
@@ -167,10 +143,7 @@ public class GameController implements Initializable {
         }
 
         hands.put(0, createField(image1, table.getPlayersCard().get(myPlayerNumberInTable).getHand()));
-        hands.get(0).setOnMouseClicked(event -> {
-            uncoverCardFromStack();
-        });
-
+        hands.get(0).setOnMouseClicked(event -> uncoverCardFromStack());
         hands.put(1, createField(image4, table.getPlayersCard().get(opponentPlayerNumberInTable).getHand()));
 
         wastes.put(0, createField(image2, table.getPlayersCard().get(myPlayerNumberInTable).getWaste()));
@@ -193,99 +166,8 @@ public class GameController implements Initializable {
         gridPane.getChildren().addAll(wastes.values());
         gridPane.getChildren().addAll(foundations.values());
 
-        GridPane.setConstraints(hands.get(0), 0, 11);
-        GridPane.setConstraints(wastes.get(0), 1, 11);
-        GridPane.setConstraints(foundations.get(0), 12, 3);
-        GridPane.setConstraints(foundations.get(1), 12, 5);
-        GridPane.setConstraints(foundations.get(2), 12, 7);
-        GridPane.setConstraints(foundations.get(3), 12, 9);
-        GridPane.setConstraints(foundations.get(4), 14, 3);
-        GridPane.setConstraints(foundations.get(5), 14, 5);
-        GridPane.setConstraints(foundations.get(6), 14, 7);
-        GridPane.setConstraints(foundations.get(7), 14, 9);
-        GridPane.setConstraints(wastes.get(1), 25, 1);
-        GridPane.setConstraints(hands.get(1), 26, 1);
-
-        addImageViews(3, 3, Lists.reverse(houses.get(0)));
-        addImageViews(5, 3, Lists.reverse(houses.get(1)));
-        addImageViews(7, 3, Lists.reverse(houses.get(2)));
-        addImageViews(9, 3, Lists.reverse(houses.get(3)));
-
-        addImageViews(3, 15, houses.get(4));
-        addImageViews(5, 15, houses.get(5));
-        addImageViews(7, 15, houses.get(6));
-        addImageViews(9, 15, houses.get(7));
-    }
-
-    /**
-     * Function adds listeners to each Card from each pile. Each listener waits for changes and when they occur
-     * it checks all lists in view and sets proper image in position which changes.
-     *
-     * @param table it is state of table received from server
-     */
-
-    private void addListChangeListeners(GameTable table) {
-        for (int i = 0; i < table.getHouses().size(); i++) {
-            ICardSet house = table.getHouses().get(i);
-            final int index = i;
-            house.addListener(c -> refreshHouse(index, house));
-            refreshHouse(index, house);
-        }
-
-        for (int i = 0; i < table.getFoundations().size(); i++) {
-            ICardSet foundation = table.getFoundations().get(i);
-            final int index = i;
-
-            foundation.addListener(c -> {
-                Optional<Card> card = foundation.readTopCard();
-                ImageView imageView = foundations.get(index);
-                imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
-            });
-        }
-
-        for (int i = 0; i < table.getPlayersCard().size(); i++) {
-            addListenersForPlayer(i);
-        }
-
-    }
-
-    private void refreshHouse(int index, ICardSet house) {
-        List<Card> card = house.getCards();
-        for (int j = 0; j < houses.get(index).size(); j++) {
-            if (j < card.size()) {
-                houses.get(index).get(j).setImage(service.getImageForCard(card.get(j)));
-            } else {
-                houses.get(index).get(j).setImage(null);
-            }
-        }
-
-        if (card.isEmpty()) {
-            houses.get(index).get(0).setImage(service.getWhiteImage());
-        }
-    }
-
-    /**
-     * Function to add listeners for hand and waste for chosen player.
-     */
-    private void addListenersForPlayer(int playerId) {
-        System.out.println(playerId);
-        int index;
-        if(playerId == myPlayerNumberInTable) {index = 0;}
-        else index = 1;
-
-        Hand hand = table.getPlayersCard().get(playerId).getHand();
-        Waste waste = table.getPlayersCard().get(playerId).getWaste();
-
-        waste.addListener(c -> {
-            Optional<Card> card = waste.readTopCard();
-            ImageView imageView = wastes.get(index);
-            imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
-        });
-        hand.addListener(c -> {
-            Optional<Card> card = hand.readTopCard();
-            ImageView imageView = hands.get(index);
-            imageView.setImage(card.map(e -> service.getImageForCard(e)).orElse(service.getWhiteImage()));
-        });
+        StyleBuilder builder = new StyleBuilder();
+        builder.setPosition(foundations, hands, wastes, houses);
     }
 
     public void handleClickAction() throws Exception {
@@ -306,7 +188,6 @@ public class GameController implements Initializable {
     /**
      * To use in next release
      */
-
     private void initializeButtons() {
         Image image6 = service.createImage("karty/budzik.png");
 
