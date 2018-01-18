@@ -80,19 +80,16 @@ public class Service {
         return new Image(RussianBank.class.getResourceAsStream(pathname));
     }
 
-    //coś popsułam:
     public void markCurrentPlayer(GameController controller) {
-        //String marked = "-fx-background-color: #3333ff; -fx-text-fill: white;";
+        String marked = "-fx-background-color: #3333ff; -fx-text-fill: white;";
         String unmarked = "-fx-background-color: none; -fx-text-fill: white;";
         if(myTurn) {
-            //controller.myName.setStyle(marked);
-            controller.myName.getStyleClass().clear();
-            controller.myName.getStyleClass().add("startButton");
+            controller.myName.setStyle(marked);
             controller.opponentName.setStyle(unmarked);
         }
         else {
             controller.myName.setStyle(unmarked);
-            controller.opponentName.getStyleClass().add("startButton");
+            controller.opponentName.setStyle(marked);
         }
     }
 
