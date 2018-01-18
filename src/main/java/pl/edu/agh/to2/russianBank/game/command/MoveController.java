@@ -3,13 +3,16 @@ package pl.edu.agh.to2.russianBank.game.command;
 import com.google.common.base.MoreObjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.to2.russianBank.game.GameTable;
+import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MoveController {
-    private GameTable gameTable;
+        private GameTable gameTable;
     private ObservableList<Command> commandStack = FXCollections
             .observableArrayList();
     private ObservableList<Command> unmadeCommandStack = FXCollections
@@ -17,6 +20,10 @@ public class MoveController {
 
     public MoveController(GameTable gameTable) {
         this.gameTable = gameTable;
+    }
+
+    public GameTable getGameTable() {
+        return gameTable;
     }
 
     public boolean executeCommand(Command command) {
@@ -71,6 +78,49 @@ public class MoveController {
                 .add("commandStack", commandStack)
                 .add("unmadeCommandStack", unmadeCommandStack)
                 .toString();
+    }
+
+    public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
+        ICardSet source = move.getSource();
+        List<Integer> result = new ArrayList<>();
+
+        List<Foundation> foundations = gameTable.getFoundations()
+                .stream()
+                .map(cs -> (Foundation) cs)
+                .collect(Collectors.toList());
+        List<House> houses = gameTable.getHouses()
+                .stream()
+                .map(cs -> (House) cs)
+                .collect(Collectors.toList());
+        List<Hand> hands = gameTable.getPlayersCard()
+                .stream()
+                .map(PlayerDeck::getHand)
+                .filter(hand -> hand.getPosition() == source.getPosition())
+                .collect(Collectors.toList());
+        List<Waste> wastes = gameTable.getPlayersCard().stream()
+                .map(PlayerDeck::getWaste)
+                .filter(waste -> waste.getPosition() == source.getPosition())
+                .collect(Collectors.toList());
+
+        houses.stream().filter(house -> house.readTopCard().isPresent())
+                .forEach(house -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(house.readTopCard().get()))
+                        .forEach(foundation -> result.add(house.getPosition()));
+                });
+
+        hands.stream().filter(hand -> hand.readTopCard().isPresent())
+                .forEach(hand -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(hand.readTopCard().get()))
+                        .forEach(foundation -> result.add(hand.getPosition()));
+                });
+
+        wastes.stream().filter(waste -> waste.readTopCard().isPresent())
+                .forEach(waste -> {foundations.stream()
+                        .filter(foundation -> foundation.tryPutCard(waste.readTopCard().get()))
+                        .forEach(foundation -> result.add(waste.getPosition()));
+                });
+
+        return result;
     }
 }
 

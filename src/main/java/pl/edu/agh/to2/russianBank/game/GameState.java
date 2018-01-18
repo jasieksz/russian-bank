@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class GameState {
 
+    // TODO : unpack players
     private List<Player> players;
     private GameTable gameTable;
 

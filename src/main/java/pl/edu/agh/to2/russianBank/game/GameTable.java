@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameTable {
+    // TODO : unpack playersCard
     private List<PlayerDeck> playersCard; // hand & waste
     private List<House> houses;
     private List<Foundation> foundations;
@@ -43,11 +44,11 @@ public class GameTable {
     }
 
     public List<ICardSet> getHouses() {
-        return piles.subList(4,12); //tu trzba to zmienic
+        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1); //tu trzba to zmienic
     }
 
     public List<ICardSet> getFoundations() {
-        return piles.subList(12,20);
+        return piles.subList(CardSetPosition.FOUNDATION_1.getPosition(), CardSetPosition.FOUNDATION_8.getPosition()+1);
     }
 
     public boolean swapPiles(ICardSet hand, ICardSet waste){
