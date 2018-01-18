@@ -94,11 +94,9 @@ public class GameController implements Initializable {
         styleBuilder.setLabelsPositions(this.myName, this.opponentName);
     }
 
-
     /**
      * Function creates field of type CardView and set in proper position in gridPane.
      */
-
     private CardView createField(Image image, ICardSet cardSet) {
         CardView field = new CardView(image, cardSet, moveController, this);
         field.fitWidthProperty().bind(gridPane.widthProperty().multiply(col1.getPercentWidth()).divide(100));
@@ -134,6 +132,22 @@ public class GameController implements Initializable {
      * to proper map (foundations, houses, hands, wastes).
      */
     private void initializeBoard() {
+        addFieldsToMaps();
+
+        houses.values().stream().flatMap(Collection::stream).forEach(imageView -> {
+            imageView.setPreserveRatio(true);
+            gridPane.getChildren().add(imageView);
+        });
+
+        gridPane.getChildren().addAll(hands.values());
+        gridPane.getChildren().addAll(wastes.values());
+        gridPane.getChildren().addAll(foundations.values());
+
+        StyleBuilder builder = new StyleBuilder();
+        builder.setPosition(foundations, hands, wastes, houses);
+    }
+
+    private void addFieldsToMaps() {
         Image image1 = service.createImage("karty/Gora1.png");
         Image image2 = service.getWhiteImage();
         Image image4 = service.createImage("karty/Gora2.png");
@@ -156,18 +170,6 @@ public class GameController implements Initializable {
             }
             houses.get(i).get(0).setImage(service.getWhiteImage());
         }
-
-        houses.values().stream().flatMap(Collection::stream).forEach(imageView -> {
-            imageView.setPreserveRatio(true);
-            gridPane.getChildren().add(imageView);
-        });
-
-        gridPane.getChildren().addAll(hands.values());
-        gridPane.getChildren().addAll(wastes.values());
-        gridPane.getChildren().addAll(foundations.values());
-
-        StyleBuilder builder = new StyleBuilder();
-        builder.setPosition(foundations, hands, wastes, houses);
     }
 
     public void handleClickAction() throws Exception {
@@ -203,7 +205,6 @@ public class GameController implements Initializable {
                 .then(image6)
                 .otherwise(image6)
         );
-
         HBox hbBtn = new HBox();
         hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().add(toggle);
