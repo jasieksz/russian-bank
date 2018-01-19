@@ -74,7 +74,7 @@ public class CardView extends ImageView {
                 boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
 
                 if(successful){
-                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet, this.cardSet));
+                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
                 }
 
                 if(!successful)

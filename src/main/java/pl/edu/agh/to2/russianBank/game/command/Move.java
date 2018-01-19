@@ -5,6 +5,8 @@ import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.*;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Move implements Command {
@@ -62,6 +64,11 @@ public class Move implements Command {
                 Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
             }
         }
+        org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
+
+        LOG.debug(gameTable.getPiles().get(source.getPosition()));
+        LOG.debug(gameTable.getPiles().get(target.getPosition()));
+
         return result;
     }
 

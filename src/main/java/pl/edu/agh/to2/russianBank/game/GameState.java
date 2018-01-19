@@ -10,11 +10,11 @@ public class GameState {
 
     // TODO : unpack players
     private List<Player> players;
-    private GameTable gameTable;
+    //private GameTable gameTable;
 
     public GameState(List<Player> players, GameTable gameTable) {
         this.players = players;
-        this.gameTable = gameTable;
+        //this.gameTable = gameTable;
     }
 
     public GameState(Player playerA, Player playerB, GameTable gameTable) {
@@ -25,30 +25,30 @@ public class GameState {
         return players;
     }
 
-    public GameTable getGameTable() {
-        return gameTable;
-    }
+    //public GameTable getGameTable() {
+    //    return gameTable;
+    //}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameState gameState = (GameState) o;
-        return Objects.equals(players, gameState.players) &&
-                Objects.equals(gameTable, gameState.gameTable);
+        return Objects.equals(players, gameState.players);// &&
+                //Objects.equals(gameTable, gameState.gameTable);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(players, gameTable);
+        return Objects.hash(players);//, gameTable);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("players", players)
-                .add("gameTable", gameTable)
+                //.add("gameTable", gameTable)
                 .toString();
     }
 }

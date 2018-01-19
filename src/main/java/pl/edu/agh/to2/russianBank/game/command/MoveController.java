@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MoveController {
-        private GameTable gameTable;
+    private GameTable gameTable;
     private ObservableList<Command> commandStack = FXCollections
             .observableArrayList();
     private ObservableList<Command> unmadeCommandStack = FXCollections
