@@ -101,8 +101,12 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void move(Move move) {
+        Move move1 = move;
+        move.toString();
         move.execute(controller.getTable());
+        
     }
+
 
     @Override
     public void networkError(Throwable ex) {
