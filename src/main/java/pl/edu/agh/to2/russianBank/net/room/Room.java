@@ -23,6 +23,14 @@ public class Room {
         return playerBConn;
     }
 
+    public Player getPlayerA() {
+        return playerA;
+    }
+
+    public Player getPlayerB() {
+        return playerB;
+    }
+
     /**
      * @param playerConn Connection by which player is described
      * @param name name of the player
@@ -39,16 +47,6 @@ public class Room {
     public void setPlayerB(PlayerConnection playerConn, String name) {
         this.playerBConn = playerConn;
         this.playerB = new Player(name);
-    }
-
-    /**
-     * @return List of players assigned to room
-     */
-    public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(playerA);
-        players.add(playerB);
-        return players;
     }
 
     /**

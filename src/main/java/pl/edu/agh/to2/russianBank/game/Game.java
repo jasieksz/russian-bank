@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game {
@@ -16,6 +17,10 @@ public class Game {
         this.players = players;
         this.gameTable = new GameTable(players, new ArrayList<ICardSet>(createPiles()));
         this.moveController = new MoveController(this.getGameTable());
+    }
+
+    public Game(Player playerA, Player playerB) {
+        this(Arrays.asList(playerA, playerB));
     }
 
     public List<Player> getPlayers() {
