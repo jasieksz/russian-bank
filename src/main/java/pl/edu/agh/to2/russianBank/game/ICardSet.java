@@ -33,7 +33,7 @@ public abstract class ICardSet {
     public abstract void addListener(ListChangeListener<Card> listener);
 
     public boolean makeMove(ICardSet source, MoveController moveController) {
-        // TODO : TEST THIS!!!
+        // TODO : TEST THIS!
         Move move = new Move(source, this);
         List<Integer> obligatoryMoveSources = moveController.getObligatoryMoves(moveController.getGameTable(), move);
         boolean executeResult = moveController.executeCommand(move);
