@@ -9,24 +9,32 @@ import java.util.stream.Collectors;
 
 public class Move implements Command {
 
-    private ICardSet source;
-    private ICardSet target;
+    private int source;
+    private int target;
 
-    public Move(ICardSet source, ICardSet target) {
+    public Move(int source, int target) {
         this.source = source;
         this.target = target;
     }
 
-    public ICardSet getSource() {
-        return source;
+    public ICardSet getSource(GameTable gameTable) {
+        return gameTable.getPiles().stream()
+                .filter(s -> s.getPosition() == this.source)
+                .findFirst()
+                .get();
     }
-
-    public ICardSet getTarget() {
-        return target;
+// TODO change move
+    public ICardSet getTarget(GameTable gameTable) {
+        return gameTable.getPiles().stream()
+                .filter(t -> t.getPosition() == this.target)
+                .findFirst()
+                .get();
     }
 
     @Override
     public boolean execute(GameTable gameTable) {
+        ICardSet source = getSource(gameTable);
+        ICardSet target = getTarget(gameTable);
 
         int sourcePos = source.getPosition();
         int targetPos = target.getPosition();
@@ -59,11 +67,11 @@ public class Move implements Command {
 
 
     public void redo(GameTable gameTable) {
-        target.getCards().add(source.getCards().remove(source.getCards().size()-1));
+        getTarget(gameTable).getCards().add(getSource(gameTable).getCards().remove(getSource(gameTable).getCards().size()-1));
     }
 
     public void undo(GameTable gameTable) {
-        source.getCards().add(target.getCards().remove(target.getCards().size()-1));
+        getSource(gameTable).getCards().add(getTarget(gameTable).getCards().remove(getTarget(gameTable).getCards().size()-1));
     }
 
     @Override
@@ -98,7 +106,7 @@ public class Move implements Command {
                 .allMatch(pD -> pD.getWaste().getSize() == 0)) {
             return true;
         } else {
-            gameTable.swapPiles(source, waste);
+            gameTable.swapPiles(getSource(gameTable), waste);
             return false;
         }
     }

@@ -81,7 +81,7 @@ public class MoveController {
     }
 
     public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
-        ICardSet source = move.getSource();
+        ICardSet source = move.getSource(gameTable);
         List<Integer> result = new ArrayList<>();
 
         List<Foundation> foundations = gameTable.getFoundations()
