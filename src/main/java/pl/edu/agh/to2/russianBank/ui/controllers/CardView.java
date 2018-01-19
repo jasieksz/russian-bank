@@ -9,6 +9,7 @@ import javafx.scene.input.TransferMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
+import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 /**
@@ -71,6 +72,10 @@ public class CardView extends ImageView {
                 CardView targetCardView = (CardView) event.getGestureTarget();
 
                 boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
+
+                if(successful){
+                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                }
 
                 if(!successful)
                     displayAlert("This move is incorrect");
