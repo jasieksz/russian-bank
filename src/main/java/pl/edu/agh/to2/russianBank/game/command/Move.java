@@ -8,12 +8,21 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Move implements Command {
+
     private ICardSet source;
     private ICardSet target;
 
     public Move(ICardSet source, ICardSet target) {
         this.source = source;
         this.target = target;
+    }
+
+    public ICardSet getSource() {
+        return source;
+    }
+
+    public ICardSet getTarget() {
+        return target;
     }
 
     @Override
@@ -23,16 +32,11 @@ public class Move implements Command {
         int targetPos = target.getPosition();
 
         boolean result = false;
-        List<Integer> obligatoryMoveSources = getObligatoryMoves(gameTable);
 
-        if (obligatoryMoveSources.contains(sourcePos)){
-            if (targetPos < 12)
-                return false;
-        }
-
-        if ((sourcePos == 0 && targetPos == 1) || (sourcePos == 2 && targetPos == 3)) { // MY HAND -> MY WASTE
+        if ((sourcePos == CardSetPosition.HAND_1.getPosition() && targetPos == CardSetPosition.WASTE_1.getPosition())
+                || (sourcePos == CardSetPosition.HAND_2.getPosition() && targetPos == CardSetPosition.WASTE_2.getPosition())) { // MY HAND -> MY WASTE
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
-        } else if (targetPos == 1 || targetPos == 3) { // OTHER -> WASTE
+        } else if (targetPos == CardSetPosition.WASTE_1.getPosition() || targetPos == CardSetPosition.WASTE_2.getPosition()) { // OTHER -> WASTE
             result = source.readTopCard().map(c -> target.enemyPutCard(c)).orElse(false);
         } else { // OTHER -> OTHER
             result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
@@ -43,7 +47,7 @@ public class Move implements Command {
         }
 
         // TODO : can we move this entire if outside of Move? @J
-        if ((sourcePos == 0 || sourcePos == 2) && source.getSize() == 0) {
+        if ((sourcePos == CardSetPosition.HAND_1.getPosition() || sourcePos == CardSetPosition.HAND_2.getPosition()) && source.getSize() == 0) {
             if (isHandEmpty(gameTable, sourcePos)) {
                 Service.getInstance().getClient().endGame(true, "winning condition");
             } else {
@@ -55,11 +59,11 @@ public class Move implements Command {
 
 
     public void redo(GameTable gameTable) {
-        target.putCard(source.takeTopCard().get());
+        target.getCards().add(source.getCards().remove(source.getCards().size()-1));
     }
 
     public void undo(GameTable gameTable) {
-        source.putCard(target.takeTopCard().get());
+        source.getCards().add(target.getCards().remove(target.getCards().size()-1));
     }
 
     @Override
@@ -97,33 +101,5 @@ public class Move implements Command {
             gameTable.swapPiles(source, waste);
             return false;
         }
-    }
-
-    private List<Integer> getObligatoryMoves(GameTable gameTable) {
-        List<Integer> result = new ArrayList<>();
-        List<Foundation> foundations = gameTable.getFoundations().stream().map(cs -> (Foundation) cs).collect(Collectors.toList());
-        List<House> houses = gameTable.getHouses().stream().map(cs -> (House) cs).collect(Collectors.toList());
-        List<Hand> hands = gameTable.getPlayersCard().stream().map(pd -> pd.getHand()).filter(hand -> hand.getPosition() == source.getPosition()).collect(Collectors.toList());
-        List<Waste> wastes = gameTable.getPlayersCard().stream().map(pd -> pd.getWaste()).filter(waste -> waste.getPosition() == source.getPosition()).collect(Collectors.toList());
-
-        houses.stream().filter(house -> house.readTopCard().isPresent())
-                .forEach(house -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(house.readTopCard().get()))
-                        .forEach(foundation -> result.add(house.getPosition()));
-                });
-
-        hands.stream().filter(hand -> hand.readTopCard().isPresent())
-                .forEach(hand -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(hand.readTopCard().get()))
-                        .forEach(foundation -> result.add(hand.getPosition()));
-                });
-
-        wastes.stream().filter(waste -> waste.readTopCard().isPresent())
-                .forEach(waste -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(waste.readTopCard().get()))
-                        .forEach(foundation -> result.add(waste.getPosition()));
-                });
-
-        return result;
     }
 }

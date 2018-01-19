@@ -47,9 +47,8 @@ public class GameHandlerImpl implements GameHandler {
             LOG.info("room assigned for player {}", message.getPlayerName());
 
             if (room.isFull()) {
-                Game game = new Game(room.getPlayers());
-
-                final GameState gameState = new GameState(room.getPlayers(), game.getGameTable());
+                Game game = new Game(room.getPlayerA(), room.getPlayerB());
+                final GameState gameState = new GameState(room.getPlayerA(), room.getPlayerB(), game.getGameTable());
                 final MoveController moveController = game.getMoveController();
                 room.unicast(player, new StartGameMessage(gameState, moveController, false));
                 player.sendMessage(new StartGameMessage(gameState, moveController, true));

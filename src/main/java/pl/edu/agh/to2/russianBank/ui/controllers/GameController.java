@@ -33,6 +33,11 @@ public class GameController implements Initializable {
     public ColumnConstraints col1;
 
     private GameTable table;
+
+    public MoveController getMoveController() {
+        return moveController;
+    }
+
     private MoveController moveController;
     private int myPlayerNumberInTable;
     private int opponentPlayerNumberInTable;

@@ -2,17 +2,23 @@ package pl.edu.agh.to2.russianBank.game;
 
 import com.google.common.base.MoreObjects;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class GameState {
 
+    // TODO : unpack players
     private List<Player> players;
     private GameTable gameTable;
 
     public GameState(List<Player> players, GameTable gameTable) {
         this.players = players;
         this.gameTable = gameTable;
+    }
+
+    public GameState(Player playerA, Player playerB, GameTable gameTable) {
+        this(Arrays.asList(playerA, playerB), gameTable);
     }
 
     public List<Player> getPlayers() {
