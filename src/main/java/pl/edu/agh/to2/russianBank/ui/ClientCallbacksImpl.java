@@ -101,7 +101,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void move(Move move) {
-        move.execute(controller.getTable());
+        controller.getMoveController().executeCommand(move);
     }
 
     @Override
