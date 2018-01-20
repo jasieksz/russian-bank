@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import java.util.List;
 import java.util.Map;
 
+
 public class StyleBuilder {
 
     public void setPosition(Map<Integer, CardView> foundations, Map<Integer,
