@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MoveController {
-        private GameTable gameTable;
+    private GameTable gameTable;
     private ObservableList<Command> commandStack = FXCollections
             .observableArrayList();
     private ObservableList<Command> unmadeCommandStack = FXCollections
@@ -81,7 +81,7 @@ public class MoveController {
     }
 
     public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
-        ICardSet source = move.getSource();
+        ICardSet source = move.getSource(gameTable);
         List<Integer> result = new ArrayList<>();
 
         List<Foundation> foundations = gameTable.getFoundations()

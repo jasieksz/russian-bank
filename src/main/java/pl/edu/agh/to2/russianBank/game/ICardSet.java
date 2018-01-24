@@ -34,14 +34,14 @@ public abstract class ICardSet {
 
     public boolean makeMove(ICardSet source, MoveController moveController) {
         // TODO : TEST THIS!!!
-        Move move = new Move(source, this);
+        Move move = new Move(source.getPosition(), this.getPosition());
         List<Integer> obligatoryMoveSources = moveController.getObligatoryMoves(moveController.getGameTable(), move);
         boolean executeResult = moveController.executeCommand(move);
 
-        if (executeResult && obligatoryMoveSources.contains(source.getPosition()) && this.getPosition() < CardSetPosition.FOUNDATION_1.getPosition()){
+        /*if (executeResult && obligatoryMoveSources.contains(source.getPosition()) && this.getPosition() < CardSetPosition.FOUNDATION_1.getPosition()){
             moveController.undo();
             return false;
-        }
+        }*/
         return executeResult;
     }
 }

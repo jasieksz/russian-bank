@@ -11,12 +11,13 @@ import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.command.Move;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
+
 /**
  * Class made to enable drag & drop operation on cards
  */
 
 
-class CardView extends ImageView {
+public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
@@ -29,9 +30,10 @@ class CardView extends ImageView {
      * @param controller instance of game stage controller
      */
 
-     CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
+    public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
         super(image);
         this.cardSet = cardSet;
+
 
         setOnDragDetected(event -> {
 
@@ -42,9 +44,8 @@ class CardView extends ImageView {
                     Service.getInstance().setHandIsSource(true);
                     System.out.println("Hand was source");
                 }
-                else{
+                else
                     Service.getInstance().setHandIsSource(false);
-                }
 
                 if (!(cardSet.getPosition() == Service.getInstance().opponentIndex)) {    //if source is not opponent's hand
                     Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
@@ -55,10 +56,9 @@ class CardView extends ImageView {
                     content.putImage(imageView.snapshot(null, null));
                     dragboard.setContent(content);
                     event.consume();
-                } else {
-                    //exists opponent Index
+                } else
+                    //jest opponent Index
                     displayAlert("What are you doing? These are not your cards!");
-                }
             }
 
         });
@@ -73,25 +73,28 @@ class CardView extends ImageView {
 
                 boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
 
-                if(!successful) {
+                if(successful){
+                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                }
+
+                if(!successful)
                     displayAlert("This move is incorrect");
-                }
-                Service.getInstance().getClient().move(new Move(sourceCardView.cardSet, this.cardSet));
-                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful){
+
+                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful)
                     endTurn(sourceCardView,controller);
-                }
             }
             event.consume();
         });
     }
 
+
     private void displayAlert(String content) {
-        Alert wrongMove = new Alert(Alert.AlertType.INFORMATION);
-        wrongMove.setTitle("Wrong move");
-        wrongMove.setHeaderText("Wrong move");
-        wrongMove.setResizable(true);
-        wrongMove.setContentText(content);
-        wrongMove.showAndWait();
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Wrong move");
+        a.setHeaderText("Wrong move");
+        a.setResizable(true);
+        a.setContentText(content);
+        a.showAndWait();
     }
 
     private void endTurn(CardView sourceCardView, GameController controller) {
@@ -99,9 +102,8 @@ class CardView extends ImageView {
         Service.getInstance().setMyTurn(false);
         Service.getInstance().markCurrentPlayer(controller);
         Service.getInstance().getClient().endTurn();
-        if(Service.getInstance().isHandIsSource()) {
+        if(Service.getInstance().isHandIsSource())
             sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
-        }
     }
 
 }

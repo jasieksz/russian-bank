@@ -23,6 +23,7 @@ public class Game {
         this(Arrays.asList(playerA, playerB));
     }
 
+
     public List<Player> getPlayers() {
         return players;
     }

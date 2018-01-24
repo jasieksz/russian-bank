@@ -12,7 +12,7 @@ public class ListenersAdder {
     private Map<Integer, CardView> hands;
     private Map<Integer, CardView> wastes;
     private Map<Integer, List<CardView>> houses;
-
+    org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
 
     ListenersAdder(Map<Integer, CardView> foundations, Map<Integer, CardView> hands, Map<Integer, CardView> wastes,
                    Map<Integer, List<CardView>> houses) {
@@ -66,6 +66,8 @@ public class ListenersAdder {
         if (card.isEmpty()) {
             houses.get(index).get(0).setImage(service.getWhiteImage());
         }
+        LOG.debug(houses.get(index));
+
     }
 
     /**

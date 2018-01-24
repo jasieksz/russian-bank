@@ -63,7 +63,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
                 controller = loader.getController();
                 controller.setMoveController(moveController);
-                controller.setTable(gameState.getGameTable());
+                controller.setTable(moveController.getGameTable());
                 controller.setName(gameState.getPlayers());
 
             } catch (IOException e) {
