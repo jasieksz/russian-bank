@@ -8,21 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameTable {
-    // TODO : unpack playersCard
-    //private List<PlayerDeck> playersCard; // hand & waste
-    //private List<House> houses;
-    //private List<Foundation> foundations;
     private List<ICardSet> piles;
-
     public GameTable(){
 
     }
 
-    public GameTable(List<Player> players, List<ICardSet> piles) {
-        /*this.playersCard = new ArrayList<>();
-        for (Player player : players) {
-            this.playersCard.add(player.getPlayerDeck());
-        }*/
+    public GameTable(List<ICardSet> piles) {
         this.piles = piles;
     }
 
@@ -51,7 +42,8 @@ public class GameTable {
         return piles.subList(CardSetPosition.FOUNDATION_1.getPosition(), CardSetPosition.FOUNDATION_8.getPosition()+1);
     }
 
-    public boolean swapPiles(ICardSet hand, ICardSet waste){
+    public boolean swapPiles(int handPos, int wastePos){
+
         if (hand.getSize() == 0){
             hand.getCards().addAll(waste.getCards());
             waste.getCards().clear();
