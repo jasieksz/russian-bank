@@ -9,29 +9,20 @@ import java.util.Objects;
 
 public class GameTable {
     // TODO : unpack playersCard
-    private List<PlayerDeck> playersCard; // hand & waste
-    private List<House> houses;
-    private List<Foundation> foundations;
+    //private List<PlayerDeck> playersCard; // hand & waste
+    //private List<House> houses;
+    //private List<Foundation> foundations;
     private List<ICardSet> piles;
 
     public GameTable(){
 
     }
 
-    public GameTable(List<PlayerDeck> playersCard, List<House> houses, List<Foundation> foundations) {
-        Preconditions.checkArgument(foundations.size() == 8);
-        Preconditions.checkArgument(houses.size() == 8);
-        Preconditions.checkArgument(playersCard.size() == 2);
-        this.playersCard = playersCard;
-        this.houses = houses;
-        this.foundations = foundations;
-    }
-
     public GameTable(List<Player> players, List<ICardSet> piles) {
-        this.playersCard = new ArrayList<>();
+        /*this.playersCard = new ArrayList<>();
         for (Player player : players) {
             this.playersCard.add(player.getPlayerDeck());
-        }
+        }*/
         this.piles = piles;
     }
 
@@ -39,8 +30,17 @@ public class GameTable {
         return piles;
     }
 
-    public List<PlayerDeck> getPlayersCard() {
+    public List<ICardSet> getPlayersCards(int playerNr) {
+
+        return playerNr == 0 ? piles.subList(0,2) : piles.subList(2,4);
+    }
+
+    /*public List<PlayerDeck> getPlayersCard() {
         return playersCard;
+    }*/
+
+    public List<ICardSet> getPlayersCards() {
+        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1); //tu trzba to zmienic
     }
 
     public List<ICardSet> getHouses() {
@@ -65,24 +65,24 @@ public class GameTable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameTable gameTable = (GameTable) o;
-        return Objects.equals(playersCard, gameTable.playersCard) &&
+        return /*Objects.equals(playersCard, gameTable.playersCard) &&
                 Objects.equals(houses, gameTable.houses) &&
-                Objects.equals(foundations, gameTable.foundations) &&
+                Objects.equals(foundations, gameTable.foundations) &&*/
                 Objects.equals(piles, gameTable.piles);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(playersCard, houses, foundations, piles);
+        return Objects.hash(piles);//Objects.hash(playersCard, houses, foundations, piles);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("playersCard", playersCard)
+                /*.add("playersCard", playersCard)
                 .add("houses", houses)
-                .add("foundations", foundations)
+                .add("foundations", foundations)*/
                 .add("piles", piles)
                 .toString();
     }

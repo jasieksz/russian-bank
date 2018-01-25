@@ -47,7 +47,7 @@ public class ListenersAdder {
             });
         }
 
-        for (int i = 0; i < table.getPlayersCard().size(); i++) {
+        for (int i = 0; i < 2; i++) {
             addListenersForPlayer(i, table, myPlayerNumberInTable);
         }
 
@@ -79,8 +79,8 @@ public class ListenersAdder {
         if(playerId == myPlayerNumberInTable) {index = 0;}
         else index = 1;
 
-        Hand hand = table.getPlayersCard().get(playerId).getHand();
-        Waste waste = table.getPlayersCard().get(playerId).getWaste();
+        ICardSet hand = table.getPlayersCards(playerId).get(0);
+        ICardSet waste = table.getPlayersCards(playerId).get(1);
 
         waste.addListener(c -> {
             Optional<Card> card = waste.readTopCard();

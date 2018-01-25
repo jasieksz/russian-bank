@@ -58,11 +58,11 @@ public class Move implements Command {
 
         // TODO : can we move this entire if outside of Move? @J
         if ((sourcePos == CardSetPosition.HAND_1.getPosition() || sourcePos == CardSetPosition.HAND_2.getPosition()) && source.getSize() == 0) {
-            if (isHandEmpty(gameTable, sourcePos)) {
+            /*if (isHandEmpty(gameTable, sourcePos)) {
                 Service.getInstance().getClient().endGame(true, "winning condition");
-            } else {
+            } else {*/
                 Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
-            }
+            //}
         }
         org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
 
@@ -103,7 +103,7 @@ public class Move implements Command {
                 .toString();
     }
 
-    private boolean isHandEmpty(GameTable gameTable, int sourcePos) {
+    /*private boolean isHandEmpty(GameTable gameTable, int sourcePos) {
         Waste waste = gameTable.getPlayersCard().stream()
                 .filter(pD -> pD.getHand().getPosition() == sourcePos)
                 .map(pD -> pD.getWaste()).findFirst().get();
@@ -116,5 +116,5 @@ public class Move implements Command {
             gameTable.swapPiles(getSource(gameTable), waste);
             return false;
         }
-    }
+    }*/
 }

@@ -80,7 +80,8 @@ public class MoveController {
                 .toString();
     }
 
-    public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
+    //TODO
+    /*public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
         ICardSet source = move.getSource(gameTable);
         List<Integer> result = new ArrayList<>();
 
@@ -92,11 +93,33 @@ public class MoveController {
                 .stream()
                 .map(cs -> (House) cs)
                 .collect(Collectors.toList());
-        List<Hand> hands = gameTable.getPlayersCard()
+        /*List<Hand> hands = gameTable.getPlayersCard()
                 .stream()
                 .map(PlayerDeck::getHand)
                 .filter(hand -> hand.getPosition() == source.getPosition())
                 .collect(Collectors.toList());
+                */
+
+        /*ICardSet h = gameTable.getPlayersCards(0).get(0);
+        ICardSet h2 = gameTable.getPlayersCards(1).get(0);
+        List<Hand> hands;
+
+        if(h.getPosition() == source.getPosition())
+        {
+            List<Hand> hands =
+        }
+        else {
+
+        }
+
+            List<Hand> hands = gameTable.getPlayersCards(0).get(0)
+        List<Hand> hands = gameTable.getPlayersCards()
+                .stream()
+                .map(PlayerDeck::getHand)
+                .filter(hand -> hand.getPosition() == source.getPosition())
+                .collect(Collectors.toList());
+
+
         List<Waste> wastes = gameTable.getPlayersCard().stream()
                 .map(PlayerDeck::getWaste)
                 .filter(waste -> waste.getPosition() == source.getPosition())
@@ -121,6 +144,6 @@ public class MoveController {
                 });
 
         return result;
-    }
+    }*/
 }
 

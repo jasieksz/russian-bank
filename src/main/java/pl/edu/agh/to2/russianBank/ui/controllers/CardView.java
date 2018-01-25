@@ -56,11 +56,12 @@ public class CardView extends ImageView {
                     content.putImage(imageView.snapshot(null, null));
                     dragboard.setContent(content);
                     event.consume();
-                } else
-                    //jest opponent Index
+                } else {
+                    //is opponent Index
                     displayAlert("What are you doing? These are not your cards!");
-            }
+                }
 
+            }
         });
 
         setOnDragOver(e -> e.acceptTransferModes(TransferMode.ANY));
@@ -68,25 +69,29 @@ public class CardView extends ImageView {
         setOnDragDropped(event -> {
 
             if (event.getGestureSource() instanceof CardView && event.getGestureTarget() instanceof CardView) {
+
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
 
-                boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
+                System.out.println("tu jestem");
 
+                boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
+                System.out.println("czy udany"+ successful);
                 if(successful){
-                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                    Service.getInstance().getClient()
+                            .move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
                 }
 
                 if(!successful)
                     displayAlert("This move is incorrect");
 
-                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful)
+                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful) {
                     endTurn(sourceCardView,controller);
+                }
             }
             event.consume();
         });
     }
-
 
     private void displayAlert(String content) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);

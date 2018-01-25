@@ -25,9 +25,9 @@ public class GameState {
         return players;
     }
 
-    //public GameTable getGameTable() {
-    //    return gameTable;
-    //}
+    /*public GameTable getGameTable() {
+        return gameTable;
+    }*/
 
     @Override
     public boolean equals(Object o) {
