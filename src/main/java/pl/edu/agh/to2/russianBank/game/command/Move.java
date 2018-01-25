@@ -35,7 +35,7 @@ public class Move implements Command {
     }
 
     @Override
-    public boolean execute(GameTable gameTable) {
+    public int execute(GameTable gameTable) {
         ICardSet source = getSource(gameTable);
         ICardSet target = getTarget(gameTable);
 
@@ -64,18 +64,18 @@ public class Move implements Command {
 
         // TODO : can we move this entire if outside of Move? @J
         if (emptyHand(gameTable).test(this)) {
-            /*if (isHandEmpty(gameTable, sourcePos)) {
-                Service.getInstance().getClient().endGame(true, "winning condition");
-            } else {*/
-                Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
-            //}
+            if (isCorrespondingWasteEmpty(gameTable).test(this)){
+                return MoveCodes.WIN.getCode();
+            } else if (gameTable.swapHandWaste(sourcePos, sourcePos + 1)){
+                return MoveCodes.SWAP.getCode();
+            }
         }
         org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
 
         LOG.debug(gameTable.getPiles().get(source.getPosition()));
         LOG.debug(gameTable.getPiles().get(target.getPosition()));
 
-        return result;
+        return result ? MoveCodes.ACC.getCode() : MoveCodes.REJ.getCode();
     }
 
 
@@ -128,18 +128,10 @@ public class Move implements Command {
                 && move.getSource(gameTable).getSize() == 0);
     }
 
-    /*private boolean isHandEmpty(GameTable gameTable, int sourcePos) {
-        Waste waste = gameTable.getPlayersCard().stream()
-                .filter(pD -> pD.getHand().getPosition() == sourcePos)
-                .map(pD -> pD.getWaste()).findFirst().get();
-
-        if (gameTable.getPlayersCard().stream()
-                .filter(pD -> pD.getHand().getPosition() == sourcePos)
-                .allMatch(pD -> pD.getWaste().getSize() == 0)) {
-            return true;
-        } else {
-            gameTable.swapPiles(getSource(gameTable), waste);
-            return false;
-        }
-    }*/
+    private static Predicate<Move> isCorrespondingWasteEmpty(GameTable gameTable) {
+        return move ->
+                (gameTable.getPiles()
+                .get(move.source + 1)
+                .getSize() == 0);
+    }
 }

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveCodes;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 /**
@@ -24,10 +25,11 @@ public class CardView extends ImageView {
 
     /**
      * Constructor, sets events on drag & drop
-     * @param image for calling a superclass constructor
-     * @param cardSet ICardSet from model binding with this field
+     *
+     * @param image          for calling a superclass constructor
+     * @param cardSet        ICardSet from model binding with this field
      * @param moveController instance of moveController from GameController class
-     * @param controller instance of game stage controller
+     * @param controller     instance of game stage controller
      */
 
     public CardView(Image image, ICardSet cardSet, MoveController moveController, GameController controller) {
@@ -39,12 +41,11 @@ public class CardView extends ImageView {
 
             if (Service.getInstance().isMyTurn()) {
 
-                if(cardSet.getPosition() == Service.getInstance().myIndex)      //if hand is source
+                if (cardSet.getPosition() == Service.getInstance().myIndex)      //if hand is source
                 {
                     Service.getInstance().setHandIsSource(true);
                     System.out.println("Hand was source");
-                }
-                else
+                } else
                     Service.getInstance().setHandIsSource(false);
 
                 if (!(cardSet.getPosition() == Service.getInstance().opponentIndex)) {    //if source is not opponent's hand
@@ -75,18 +76,27 @@ public class CardView extends ImageView {
 
                 System.out.println("tu jestem");
 
-                boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
-                System.out.println("czy udany"+ successful);
-                if(successful){
-                    Service.getInstance().getClient()
-                            .move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                int moveResult = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
+                System.out.println("czy udany" + moveResult);
+
+                if (moveResult == MoveCodes.ACC.getCode()) {
+                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                }
+                else if (moveResult == MoveCodes.REJ.getCode()) {
+                    displayAlert("This move is incorrect");
+                }
+                else if (moveResult == MoveCodes.SWAP.getCode()) {
+                    Service.getInstance().getClient().move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+                    System.out.println("CardView Swap : " + Integer.toString(sourceCardView.cardSet.getPosition()));
+                    Service.getInstance().getClient().swapHandWaste(sourceCardView.cardSet.getPosition(), sourceCardView.cardSet.getPosition()+1); // TODO : check if correct
+                    endTurn(sourceCardView, controller);
+                }
+                else if (moveResult == MoveCodes.WIN.getCode()) {
+                    Service.getInstance().getClient().endGame(true, "winning condition");
                 }
 
-                if(!successful)
-                    displayAlert("This move is incorrect");
-
-                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful) {
-                    endTurn(sourceCardView,controller);
+                if (cardSet.getPosition() == Service.getInstance().myWaste || moveResult == MoveCodes.REJ.getCode()) {
+                    endTurn(sourceCardView, controller);
                 }
             }
             event.consume();
@@ -107,7 +117,7 @@ public class CardView extends ImageView {
         Service.getInstance().setMyTurn(false);
         Service.getInstance().markCurrentPlayer(controller);
         Service.getInstance().getClient().endTurn();
-        if(Service.getInstance().isHandIsSource())
+        if (Service.getInstance().isHandIsSource())
             sourceCardView.setImage(Service.getInstance().createImage("karty/Gora1.png"));
     }
 

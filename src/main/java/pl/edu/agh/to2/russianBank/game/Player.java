@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Player {
 
@@ -21,6 +22,8 @@ public class Player {
             }
         }
         Collections.shuffle(tmp);
+        tmp = tmp.stream().filter(card -> card.getRank().getRank() <= 3).collect(Collectors.toList());
+        System.out.println("TMP SIZE IN PLAYER : " + Integer.toString(tmp.size()));
         this.playerDeck = new PlayerDeck(new Hand(tmp), new Waste());
     }
 

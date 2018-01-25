@@ -56,6 +56,7 @@ public class Game {
         for (int i = CardSetPosition.FOUNDATION_1.getPosition(); i <= CardSetPosition.FOUNDATION_8.getPosition(); i++) {
             piles.add(new Foundation(FXCollections.observableArrayList(), i));
         }
+
         return piles;
     }
 }

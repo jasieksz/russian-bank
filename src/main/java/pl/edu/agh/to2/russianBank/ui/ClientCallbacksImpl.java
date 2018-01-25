@@ -121,20 +121,10 @@ public class ClientCallbacksImpl implements ClientCallbacks {
         ex.printStackTrace();
     }
 
-    //@Override
-    /*public void swap(int handPosition, int wastePosition) {
-        Hand hand = controller.getTable().getPlayersCard().stream()
-                .map(pD -> pD.getHand())
-                .filter(h -> h.getPosition() == handPosition).findFirst().get();
-        Waste waste = controller.getTable().getPlayersCard().stream()
-                .map(pD -> pD.getWaste())
-                .filter(h -> h.getPosition() == wastePosition).findFirst().get();
-
-        controller.getTable().swapPiles(hand, waste);
-    }*/
-
     @Override
     public void swap(int handPosition, int wastePosition) {
+        System.out.println("CCIMPL SWAP");
+        controller.getTable().swapHandWaste(handPosition, wastePosition);
     }
 
     @Override
