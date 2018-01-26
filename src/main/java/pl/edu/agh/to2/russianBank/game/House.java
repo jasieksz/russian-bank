@@ -16,7 +16,7 @@ public class House extends ICardSet {
     private int position;
 
     public House() {
-        this.cards = FXCollections.observableArrayList();
+        this(FXCollections.observableArrayList());
     }
 
     public House(ObservableList<Card> cards, int position) {

@@ -16,7 +16,7 @@ public class Hand extends ICardSet {
     private int position;
 
     public Hand() {
-        this.cards = FXCollections.observableArrayList();
+        this(FXCollections.observableArrayList());
     }
 
     public Hand(List<Card> cards) {

@@ -16,7 +16,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
     private int position;
 
     public Foundation() {
-        this.cards = FXCollections.observableArrayList();
+        this(FXCollections.observableArrayList());
     }
 
     public Foundation(ObservableList<Card> cards, int position) {
