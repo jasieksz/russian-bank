@@ -26,13 +26,14 @@ public class MoveController {
         return gameTable;
     }
 
-    public boolean executeCommand(Command command) {
-        if (command.execute(gameTable)) {
+    public int executeCommand(Command command) {
+        int result = command.execute(gameTable);
+        if (result > MoveCodes.REJ.getCode()) {
             commandStack.add(command);
             unmadeCommandStack.clear();
-            return true;
+            return result;
         }
-        return false;
+        return result;
     }
 
     public void redo() {

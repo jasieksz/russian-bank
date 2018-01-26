@@ -132,6 +132,7 @@ public class Client implements AutoCloseable {
 
         @Override
         public void visit(SwapMessage message) {
+            System.out.println("VISIT SWAP");
             clientCallbacks.swap(message.getHandPosition(), message.getWastePosition());
         }
 

@@ -5,6 +5,7 @@ import pl.edu.agh.to2.russianBank.game.*;
 import pl.edu.agh.to2.russianBank.ui.controllers.Service;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class Move implements Command {
     }
 
     @Override
-    public boolean execute(GameTable gameTable) {
+    public int execute(GameTable gameTable) {
         ICardSet source = getSource(gameTable);
         ICardSet target = getTarget(gameTable);
 
@@ -43,13 +44,18 @@ public class Move implements Command {
 
         boolean result = false;
 
-        if ((sourcePos == CardSetPosition.HAND_1.getPosition() && targetPos == CardSetPosition.WASTE_1.getPosition())
-                || (sourcePos == CardSetPosition.HAND_2.getPosition() && targetPos == CardSetPosition.WASTE_2.getPosition())) { // MY HAND -> MY WASTE
-            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
-        } else if (targetPos == CardSetPosition.WASTE_1.getPosition() || targetPos == CardSetPosition.WASTE_2.getPosition()) { // OTHER -> WASTE
-            result = source.readTopCard().map(c -> target.enemyPutCard(c)).orElse(false);
-        } else { // OTHER -> OTHER
-            result = source.readTopCard().map(c -> target.putCard(c)).orElse(false);
+        if (myHandToMyWaste().test(this)) {
+            result = source.readTopCard()
+                    .map(target::putCard)
+                    .orElse(false);
+        } else if (otherToAnyWaste().test(this)) {
+            result = source.readTopCard()
+                    .map(target::enemyPutCard)
+                    .orElse(false);
+        } else {
+            result = source.readTopCard()
+                    .map(target::putCard)
+                    .orElse(false);
         }
 
         if (result) {
@@ -57,19 +63,19 @@ public class Move implements Command {
         }
 
         // TODO : can we move this entire if outside of Move? @J
-        if ((sourcePos == CardSetPosition.HAND_1.getPosition() || sourcePos == CardSetPosition.HAND_2.getPosition()) && source.getSize() == 0) {
-            /*if (isHandEmpty(gameTable, sourcePos)) {
-                Service.getInstance().getClient().endGame(true, "winning condition");
-            } else {*/
-                Service.getInstance().getClient().swapHandWaste(sourcePos, sourcePos + 1);
-            //}
+        if (emptyHand(gameTable).test(this)) {
+            if (isCorrespondingWasteEmpty(gameTable).test(this)){
+                return MoveCodes.WIN.getCode();
+            } else if (gameTable.swapHandWaste(sourcePos, sourcePos + 1)){
+                return MoveCodes.SWAP.getCode();
+            }
         }
         org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
 
         LOG.debug(gameTable.getPiles().get(source.getPosition()));
         LOG.debug(gameTable.getPiles().get(target.getPosition()));
 
-        return result;
+        return result ? MoveCodes.ACC.getCode() : MoveCodes.REJ.getCode();
     }
 
 
@@ -103,18 +109,29 @@ public class Move implements Command {
                 .toString();
     }
 
-    /*private boolean isHandEmpty(GameTable gameTable, int sourcePos) {
-        Waste waste = gameTable.getPlayersCard().stream()
-                .filter(pD -> pD.getHand().getPosition() == sourcePos)
-                .map(pD -> pD.getWaste()).findFirst().get();
+    private static Predicate<Move> myHandToMyWaste() {
+        return move -> (move.source == CardSetPosition.HAND_1.getPosition()
+                    && move.target == CardSetPosition.WASTE_1.getPosition())
+                || (move.source == CardSetPosition.HAND_2.getPosition()
+                && move.target == CardSetPosition.WASTE_2.getPosition());
+    }
 
-        if (gameTable.getPlayersCard().stream()
-                .filter(pD -> pD.getHand().getPosition() == sourcePos)
-                .allMatch(pD -> pD.getWaste().getSize() == 0)) {
-            return true;
-        } else {
-            gameTable.swapPiles(getSource(gameTable), waste);
-            return false;
-        }
-    }*/
+    private static Predicate<Move> otherToAnyWaste() {
+        return move -> (move.target == CardSetPosition.WASTE_1.getPosition()
+                || move.target == CardSetPosition.WASTE_2.getPosition());
+
+    }
+
+    private static Predicate<Move> emptyHand(GameTable gameTable) {
+        return move -> ((move.source == CardSetPosition.HAND_1.getPosition()
+                || move.source == CardSetPosition.HAND_2.getPosition())
+                && move.getSource(gameTable).getSize() == 0);
+    }
+
+    private static Predicate<Move> isCorrespondingWasteEmpty(GameTable gameTable) {
+        return move ->
+                (gameTable.getPiles()
+                .get(move.source + 1)
+                .getSize() == 0);
+    }
 }

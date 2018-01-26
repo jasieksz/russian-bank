@@ -6,26 +6,19 @@ import pl.edu.agh.to2.russianBank.game.command.MoveController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Game {
-    // TODO : unpack players
-    private List<Player> players;
+    private Player playerOne;
+    private Player playerTwo;
     private GameTable gameTable;
     private MoveController moveController;
 
-    public Game(List<Player> players) {
-        this.players = players;
-        this.gameTable = new GameTable(players, new ArrayList<ICardSet>(createPiles()));
-        this.moveController = new MoveController(this.getGameTable());
-    }
-
     public Game(Player playerA, Player playerB) {
-        this(Arrays.asList(playerA, playerB));
-    }
-
-
-    public List<Player> getPlayers() {
-        return players;
+        this.playerOne = playerA;
+        this.playerTwo = playerB;
+        this.gameTable = new GameTable(new ArrayList<ICardSet>(createPiles()));
+        this.moveController = new MoveController(this.getGameTable());
     }
 
     public GameTable getGameTable() {
@@ -38,25 +31,32 @@ public class Game {
 
     private List<ICardSet> createPiles() {
         List<ICardSet> piles = new ArrayList<>();
-        // TODO : change positions to ENUM
-        players.get(0).getPlayerDeck().getHand().setPosition(0);
-        players.get(0).getPlayerDeck().getWaste().setPosition(1);
-        players.get(1).getPlayerDeck().getHand().setPosition(2);
-        players.get(1).getPlayerDeck().getWaste().setPosition(3);
-        piles.add(players.get(0).getPlayerDeck().getHand());
-        piles.add(players.get(0).getPlayerDeck().getWaste());
-        piles.add(players.get(1).getPlayerDeck().getHand());
-        piles.add(players.get(1).getPlayerDeck().getWaste());
+        Hand p1Hand = playerOne.getPlayerDeck().getHand();
+        Waste p1Waste = playerOne.getPlayerDeck().getWaste();
+        Hand p2Hand = playerTwo.getPlayerDeck().getHand();
+        Waste p2Waste = playerTwo.getPlayerDeck().getWaste();
+
+        p1Hand.setPosition(0);
+        p1Waste.setPosition(1);
+        p2Hand.setPosition(2);
+        p2Waste.setPosition(3);
+        piles.add(p1Hand);
+        piles.add(p1Waste);
+        piles.add(p2Hand);
+        piles.add(p2Waste);
 
         for (int i = CardSetPosition.HOUSE_1.getPosition(); i <= CardSetPosition.HOUSE_8.getPosition(); i++) {
             House newHouse = new House(FXCollections.observableArrayList(), i);
-            Card startCard = players.get(i%2).getPlayerDeck().getHand().takeTopCard().get();
-            newHouse.putCard(startCard);
+            Optional<Card> startCard =  (i < CardSetPosition.HOUSE_1.getPosition() + 4) ?
+                    p1Hand.takeTopCard() :
+                    p2Hand.takeTopCard();
+            startCard.map(newHouse::putCard);
             piles.add(newHouse);
         }
         for (int i = CardSetPosition.FOUNDATION_1.getPosition(); i <= CardSetPosition.FOUNDATION_8.getPosition(); i++) {
             piles.add(new Foundation(FXCollections.observableArrayList(), i));
         }
+
         return piles;
     }
 }

@@ -10,11 +10,11 @@ import java.util.Objects;
 public class GameTable {
     private List<ICardSet> piles;
 
-    public GameTable(){
+    public GameTable() {
 
     }
 
-    public GameTable(List<Player> players, List<ICardSet> piles) {
+    public GameTable(List<ICardSet> piles) {
         this.piles = piles;
     }
 
@@ -23,22 +23,22 @@ public class GameTable {
     }
 
     public List<ICardSet> getPlayersCards(int playerNr) {
-
-        return playerNr == 0 ? piles.subList(0,2) : piles.subList(2,4);
+        return playerNr == 0 ? piles.subList(0, 2) : piles.subList(2, 4);
     }
 
     public List<ICardSet> getHouses() {
-        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1);
+        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition() + 1);
     }
 
     public List<ICardSet> getFoundations() {
-        return piles.subList(CardSetPosition.FOUNDATION_1.getPosition(), CardSetPosition.FOUNDATION_8.getPosition()+1);
+        return piles.subList(CardSetPosition.FOUNDATION_1.getPosition(), CardSetPosition.FOUNDATION_8.getPosition() + 1);
     }
 
-    public boolean swapPiles(ICardSet hand, ICardSet waste){
-        if (hand.getSize() == 0){
-            hand.getCards().addAll(waste.getCards());
-            waste.getCards().clear();
+    public boolean swapHandWaste(int handPos, int wastePos) {
+        if (piles.get(handPos).getSize() == 0) {
+            System.out.println("GAMETABLE SWAP");
+            piles.get(handPos).getCards().addAll(piles.get(wastePos).getCards());
+            piles.get(wastePos).getCards().clear();
             return true;
         }
         return false;
@@ -54,7 +54,6 @@ public class GameTable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(piles);
     }
 
