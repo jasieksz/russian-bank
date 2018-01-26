@@ -110,7 +110,6 @@ public class GameController implements Initializable {
         return field;
     }
 
-    //TODO how to do pretty code here?
     @FXML
     private void uncoverCardFromStack() {
         LOG.debug("Stack uncovered!");

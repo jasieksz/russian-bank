@@ -16,8 +16,8 @@ public class Service {
     private boolean missaStart = false;
     public int myHandIndex = CardSetPosition.HAND_1.getPosition();
     public int opponentHandIndex = CardSetPosition.HAND_2.getPosition();
-    public int myWaste = CardSetPosition.WASTE_1.getPosition();
-    public int opponentWaste = CardSetPosition.WASTE_2.getPosition();
+    public int myWasteIndex = CardSetPosition.WASTE_1.getPosition();
+    public int opponentWasteIndex = CardSetPosition.WASTE_2.getPosition();
 
 
     public void setHandIsSource(boolean handIsSource) {
@@ -55,7 +55,12 @@ public class Service {
 
     public void setMissaStart(boolean missaStart) {
         this.missaStart = missaStart;
-        if(missaStart) { myHandIndex = 2;  opponentHandIndex = 0; myWaste = 3; opponentWaste = 1;}
+        if(missaStart) { 
+            myHandIndex = 2;  
+            opponentHandIndex = 0; 
+            myWasteIndex = 3;
+            opponentWasteIndex = 1;
+        }
     }
 
     public boolean isMissaStart() {

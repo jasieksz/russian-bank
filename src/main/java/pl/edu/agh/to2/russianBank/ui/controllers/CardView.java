@@ -109,7 +109,7 @@ public class CardView extends ImageView {
     }
 
     private void tryEndTurn(int successful, CardView sourceCardView, GameController controller) {
-        if(cardSet.getPosition() == Service.getInstance().myWaste || successful == MoveCodes.REJ.getCode() ||
+        if(cardSet.getPosition() == Service.getInstance().myWasteIndex || successful == MoveCodes.REJ.getCode() ||
                 successful == MoveCodes.SWAP.getCode()) {
             endTurn(sourceCardView,controller);
         }
