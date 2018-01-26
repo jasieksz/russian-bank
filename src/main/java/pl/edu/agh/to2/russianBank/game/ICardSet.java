@@ -32,15 +32,9 @@ public abstract class ICardSet {
     public abstract void addListener(ListChangeListener<Card> listener);
 
     public int makeMove(ICardSet source, MoveController moveController) {
-        // TODO : TEST THIS!!!
         Move move = new Move(source.getPosition(), this.getPosition());
-        //List<Integer> obligatoryMoveSources = moveController.getObligatoryMoves(moveController.getGameTable(), move);
         int executeResult = moveController.executeCommand(move);
-
-        /*if (executeResult && obligatoryMoveSources.contains(source.getPosition()) && this.getPosition() < CardSetPosition.FOUNDATION_1.getPosition()){
-            moveController.undo();
-            return false;
-        }*/
+        // TODO : MoveController.getObligatoryMoves()
         return executeResult;
     }
 }

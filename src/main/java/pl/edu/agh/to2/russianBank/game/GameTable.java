@@ -23,7 +23,9 @@ public class GameTable {
     }
 
     public List<ICardSet> getPlayersCards(int playerNr) {
-        return playerNr == 0 ? piles.subList(0, 2) : piles.subList(2, 4);
+        return playerNr == 0 ?
+                piles.subList(CardSetPosition.HAND_1.getPosition(), CardSetPosition.WASTE_1.getPosition()+1) :
+                piles.subList(CardSetPosition.HAND_2.getPosition(), CardSetPosition.WASTE_2.getPosition()+1);
     }
 
     public List<ICardSet> getHouses() {
@@ -36,7 +38,6 @@ public class GameTable {
 
     public boolean swapHandWaste(int handPos, int wastePos) {
         if (piles.get(handPos).getSize() == 0) {
-            System.out.println("GAMETABLE SWAP");
             piles.get(handPos).getCards().addAll(piles.get(wastePos).getCards());
             piles.get(wastePos).getCards().clear();
             return true;

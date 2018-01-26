@@ -20,14 +20,14 @@ public class Move implements Command {
         this.target = target;
     }
 
-    public ICardSet getSource(GameTable gameTable) {
+    private ICardSet getSource(GameTable gameTable) {
         return gameTable.getPiles().stream()
                 .filter(s -> s.getPosition() == this.source)
                 .findFirst()
                 .get();
     }
-// TODO change move
-    public ICardSet getTarget(GameTable gameTable) {
+
+    private ICardSet getTarget(GameTable gameTable) {
         return gameTable.getPiles().stream()
                 .filter(t -> t.getPosition() == this.target)
                 .findFirst()
@@ -62,16 +62,16 @@ public class Move implements Command {
             source.takeTopCard();
         }
 
-        // TODO : can we move this entire if outside of Move? @J
         if (emptyHand(gameTable).test(this)) {
             if (isCorrespondingWasteEmpty(gameTable).test(this)){
                 return MoveCodes.WIN.getCode();
-            } else if (gameTable.swapHandWaste(sourcePos, sourcePos + 1)){
+            }
+            else if (gameTable.swapHandWaste(sourcePos, sourcePos + 1)){
                 return MoveCodes.SWAP.getCode();
             }
         }
-        org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
 
+        org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
         LOG.debug(gameTable.getPiles().get(source.getPosition()));
         LOG.debug(gameTable.getPiles().get(target.getPosition()));
 

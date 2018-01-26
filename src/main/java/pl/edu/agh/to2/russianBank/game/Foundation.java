@@ -34,7 +34,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     @Override
     public Optional<Card> takeTopCard() {
-        return Optional.empty(); // always false - illeagal move
+        throw new UnsupportedOperationException("Nie można brać kart z foundation");
     }
 
     @Override
