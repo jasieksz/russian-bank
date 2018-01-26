@@ -4,9 +4,10 @@ import javafx.collections.FXCollections;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Game {
     private Player playerOne;
@@ -31,10 +32,10 @@ public class Game {
 
     private List<ICardSet> createPiles() {
         List<ICardSet> piles = new ArrayList<>();
-        Hand p1Hand = playerOne.getPlayerDeck().getHand();
-        Waste p1Waste = playerOne.getPlayerDeck().getWaste();
-        Hand p2Hand = playerTwo.getPlayerDeck().getHand();
-        Waste p2Waste = playerTwo.getPlayerDeck().getWaste();
+        Hand p1Hand = createHand();
+        Waste p1Waste = new Waste();
+        Hand p2Hand = createHand();
+        Waste p2Waste = new Waste();
 
         p1Hand.setPosition(0);
         p1Waste.setPosition(1);
@@ -47,7 +48,7 @@ public class Game {
 
         for (int i = CardSetPosition.HOUSE_1.getPosition(); i <= CardSetPosition.HOUSE_8.getPosition(); i++) {
             House newHouse = new House(FXCollections.observableArrayList(), i);
-            Optional<Card> startCard =  (i < CardSetPosition.HOUSE_1.getPosition() + 4) ?
+            Optional<Card> startCard = (i < CardSetPosition.HOUSE_1.getPosition() + 4) ?
                     p1Hand.takeTopCard() :
                     p2Hand.takeTopCard();
             startCard.map(newHouse::putCard);
@@ -58,6 +59,18 @@ public class Game {
         }
 
         return piles;
+    }
+
+    private static Hand createHand() {
+        List<Card> tmp = new ArrayList<>();
+        for (CardSuit suit : CardSuit.values()) {
+            for (CardRank rank : CardRank.values()) {
+                tmp.add(new Card(suit, rank));
+            }
+        }
+        Collections.shuffle(tmp);
+        tmp = tmp.stream().filter(card -> card.getRank().getRank() <= 3).collect(Collectors.toList());
+        return new Hand(tmp);
     }
 }
 

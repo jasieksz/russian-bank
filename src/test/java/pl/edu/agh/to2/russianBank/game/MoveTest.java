@@ -19,8 +19,6 @@ public class MoveTest {
     private static Card card4 = new Card(CardSuit.SPADES, CardRank.QUEEN);
     private static List<Card> cardList = new ArrayList<>();
     private static List<Card> cardList2 = new ArrayList<>();
-    private PlayerDeck playerDeck1 = new PlayerDeck(new Hand(cardList), new Waste());
-    private PlayerDeck playerDeck2 = new PlayerDeck(new Hand(cardList2), new Waste());
     private GameTable gameTable = new GameTable();
 
 
