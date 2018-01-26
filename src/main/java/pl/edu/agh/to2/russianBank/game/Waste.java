@@ -47,7 +47,7 @@ public class Waste extends ICardSet {
 
     @Override
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return cards;
     }
 
     @Override

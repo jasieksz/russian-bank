@@ -54,7 +54,7 @@ public class Foundation extends ICardSet { // ACE -> 2 -> 3 -> ... -> KING
 
     @Override
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return cards;
     }
 
     @Override
