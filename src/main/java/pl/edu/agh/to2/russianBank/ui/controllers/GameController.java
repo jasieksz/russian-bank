@@ -110,15 +110,17 @@ public class GameController implements Initializable {
         return field;
     }
 
+    //TODO how to do pretty code here?
     @FXML
     private void uncoverCardFromStack() {
         LOG.debug("Stack uncovered!");
         if(service.isMyTurn()) {
-            //Optional<Card> card = table.getPlayersCard().get(myPlayerNumberInTable).getHand().readTopCard();
-            Optional<Card> card = table.getPlayersCards(myPlayerNumberInTable).get(0).readTopCard();
-            card.ifPresent(c -> {
-                hands.get(0).setImage(service.getImageForCard(c));
-            });
+            table.getPlayersCards(myPlayerNumberInTable)
+                    .get(0)
+                    .readTopCard()
+                    .ifPresent(card ->
+                            hands.get(0)
+                            .setImage(service.getImageForCard(card)));
         }
     }
 
@@ -140,7 +142,12 @@ public class GameController implements Initializable {
      */
     private void initializeBoard() {
         addFieldsToMaps();
+        addPilesToGridPane();
+        StyleBuilder builder = new StyleBuilder();
+        builder.setPosition(foundations, hands, wastes, houses);
+    }
 
+    private void addPilesToGridPane() {
         houses.values().stream().flatMap(Collection::stream).forEach(imageView -> {
             imageView.setPreserveRatio(true);
             gridPane.getChildren().add(imageView);
@@ -150,8 +157,6 @@ public class GameController implements Initializable {
         gridPane.getChildren().addAll(wastes.values());
         gridPane.getChildren().addAll(foundations.values());
 
-        StyleBuilder builder = new StyleBuilder();
-        builder.setPosition(foundations, hands, wastes, houses);
     }
 
     private void addFieldsToMaps() {
@@ -163,14 +168,9 @@ public class GameController implements Initializable {
             foundations.put(i, createField(image2, table.getFoundations().get(i)));
         }
 
-        //hands.put(0, createField(image1, table.getPlayersCards().get(myPlayerNumberInTable).getHand()));
         hands.put(0, createField(image1, table.getPlayersCards(myPlayerNumberInTable).get(0)));
         hands.get(0).setOnMouseClicked(event -> uncoverCardFromStack());
-        //hands.put(1, createField(image4, table.getPlayersCard().get(opponentPlayerNumberInTable).getHand()));
         hands.put(1, createField(image4, table.getPlayersCards(opponentPlayerNumberInTable).get(0)));
-
-        //wastes.put(0, createField(image2, table.getPlayersCard().get(myPlayerNumberInTable).getWaste()));
-        //wastes.put(1, createField(image2, table.getPlayersCard().get(opponentPlayerNumberInTable).getWaste()));
 
         wastes.put(0, createField(image2, table.getPlayersCards(myPlayerNumberInTable).get(1)));
         wastes.put(1, createField(image2, table.getPlayersCards(opponentPlayerNumberInTable).get(1)));
@@ -185,18 +185,10 @@ public class GameController implements Initializable {
     }
 
     public void handleClickAction() throws Exception {
-        LOG.debug("End turn clicked!");
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("End turn");
-        a.setHeaderText("End turn");
-        a.setResizable(true);
-        String content = "Try again...";
-        a.setContentText(content);
-        a.showAndWait();
-        service.getClient().close();
-        Stage stageToClose = (Stage) endTurn.getScene().getWindow();
-        stageToClose.close();
-        System.exit(0);
+        LOG.info("Turn ended");
+        Service.getInstance().setMyTurn(false);
+        Service.getInstance().markCurrentPlayer(this);
+        Service.getInstance().getClient().endTurn();
     }
 
     /**

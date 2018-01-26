@@ -30,21 +30,17 @@ public class StartGameController implements Initializable {
     private static final Logger LOG = LogManager.getLogger();
 
     @FXML
-    public Button okButton;
+    private Button okButton;
     @FXML
-    public TextField nameField;
-    public javafx.scene.control.Button deleteButton;
-    public GameTable table;
+    private TextField nameField;
     @FXML
-    public Label statusLbl;
-
-    private GameController controller;
+    private Label statusLbl;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void handleOkAction(ActionEvent actionEvent) {
+    public void handleOkAction() {
         String playerName = nameField.getText();
 
         okButton.setDisable(true);

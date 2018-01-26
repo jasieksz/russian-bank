@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,8 @@ public class CardView extends ImageView {
 
     private static final Logger LOG = LogManager.getLogger();
     private ICardSet cardSet;
+    private int miniatureHight = 100;
+    private int miniatureWidth = 65;
 
     /**
      * Constructor, sets events on drag & drop
@@ -38,29 +41,8 @@ public class CardView extends ImageView {
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
-
-                if(cardSet.getPosition() == Service.getInstance().myIndex)      //if hand is source
-                {
-                    Service.getInstance().setHandIsSource(true);
-                    System.out.println("Hand was source");
-                }
-                else
-                    Service.getInstance().setHandIsSource(false);
-
-                if (!(cardSet.getPosition() == Service.getInstance().opponentIndex)) {    //if source is not opponent's hand
-                    Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    ImageView imageView = new ImageView(getImage());
-                    imageView.setFitHeight(100);
-                    imageView.setFitWidth(65);
-                    content.putImage(imageView.snapshot(null, null));
-                    dragboard.setContent(content);
-                    event.consume();
-                } else {
-                    //is opponent Index
-                    displayAlert("What are you doing? These are not your cards!");
-                }
-
+                setHandIsSource();
+                showMove(event);
             }
         });
 
@@ -73,24 +55,55 @@ public class CardView extends ImageView {
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
 
-                System.out.println("tu jestem");
-
                 boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
-                System.out.println("czy udany"+ successful);
-                if(successful){
-                    Service.getInstance().getClient()
-                            .move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
-                }
-
-                if(!successful)
-                    displayAlert("This move is incorrect");
-
-                if(cardSet.getPosition() == Service.getInstance().myWaste || !successful) {
-                    endTurn(sourceCardView,controller);
-                }
+                sendMove(successful, sourceCardView);
+                tryEndTurn(successful, sourceCardView, controller);
             }
             event.consume();
         });
+    }
+
+    private void setHandIsSource() {
+        if(cardSet.getPosition() == Service.getInstance().myHandIndex)
+        {
+            Service.getInstance().setHandIsSource(true);
+            System.out.println("Hand was source");
+        }
+        else {
+            Service.getInstance().setHandIsSource(false);
+        }
+    }
+
+    private void showMove(MouseEvent event) {
+        if ((cardSet.getPosition() == Service.getInstance().opponentHandIndex)) {
+            displayAlert("What are you doing? These are not your cards!");
+        }
+        else {
+            Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            ImageView imageView = new ImageView(getImage());
+            imageView.setFitHeight(miniatureHight);
+            imageView.setFitWidth(miniatureWidth);
+            content.putImage(imageView.snapshot(null, null));
+            dragboard.setContent(content);
+            event.consume();
+        }
+    }
+
+    private void sendMove(boolean successful, CardView sourceCardView) {
+        if(successful){
+            Service.getInstance().getClient()
+                    .move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
+        }
+        else {
+            displayAlert("This move is incorrect");
+        }
+    }
+
+    private void tryEndTurn(boolean successful, CardView sourceCardView, GameController controller) {
+        if(cardSet.getPosition() == Service.getInstance().myWaste || !successful) {
+            endTurn(sourceCardView,controller);
+        }
     }
 
     private void displayAlert(String content) {

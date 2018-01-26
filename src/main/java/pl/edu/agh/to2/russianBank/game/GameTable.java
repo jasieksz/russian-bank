@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameTable {
-    // TODO : unpack playersCard
-    //private List<PlayerDeck> playersCard; // hand & waste
-    //private List<House> houses;
-    //private List<Foundation> foundations;
     private List<ICardSet> piles;
 
     public GameTable(){
@@ -19,10 +15,6 @@ public class GameTable {
     }
 
     public GameTable(List<Player> players, List<ICardSet> piles) {
-        /*this.playersCard = new ArrayList<>();
-        for (Player player : players) {
-            this.playersCard.add(player.getPlayerDeck());
-        }*/
         this.piles = piles;
     }
 
@@ -35,16 +27,8 @@ public class GameTable {
         return playerNr == 0 ? piles.subList(0,2) : piles.subList(2,4);
     }
 
-    /*public List<PlayerDeck> getPlayersCard() {
-        return playersCard;
-    }*/
-
-    public List<ICardSet> getPlayersCards() {
-        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1); //tu trzba to zmienic
-    }
-
     public List<ICardSet> getHouses() {
-        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1); //tu trzba to zmienic
+        return piles.subList(CardSetPosition.HOUSE_1.getPosition(), CardSetPosition.HOUSE_8.getPosition()+1);
     }
 
     public List<ICardSet> getFoundations() {
@@ -65,24 +49,18 @@ public class GameTable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameTable gameTable = (GameTable) o;
-        return /*Objects.equals(playersCard, gameTable.playersCard) &&
-                Objects.equals(houses, gameTable.houses) &&
-                Objects.equals(foundations, gameTable.foundations) &&*/
-                Objects.equals(piles, gameTable.piles);
+        return Objects.equals(piles, gameTable.piles);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(piles);//Objects.hash(playersCard, houses, foundations, piles);
+        return Objects.hash(piles);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                /*.add("playersCard", playersCard)
-                .add("houses", houses)
-                .add("foundations", foundations)*/
                 .add("piles", piles)
                 .toString();
     }

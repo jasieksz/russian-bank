@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class StyleBuilder {
 
+
     public void setPosition(Map<Integer, CardView> foundations, Map<Integer,
             CardView> hands,Map<Integer, CardView> wastes, Map<Integer, List<CardView>> houses) {
         GridPane.setConstraints(hands.get(0), 0, 11);

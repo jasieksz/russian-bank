@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import pl.edu.agh.to2.russianBank.RussianBank;
 import pl.edu.agh.to2.russianBank.game.Card;
 import pl.edu.agh.to2.russianBank.game.CardRank;
+import pl.edu.agh.to2.russianBank.game.CardSetPosition;
 import pl.edu.agh.to2.russianBank.game.CardSuit;
 import pl.edu.agh.to2.russianBank.net.client.Client;
 
@@ -13,8 +14,10 @@ public class Service {
     private boolean myTurn = true;
     private boolean handIsSource;
     private boolean missaStart = false;
-    public int myIndex = 0, opponentIndex = 2;
-    public int myWaste = 1, opponentWaste = 3;
+    public int myHandIndex = CardSetPosition.HAND_1.getPosition();
+    public int opponentHandIndex = CardSetPosition.HAND_2.getPosition();
+    public int myWaste = CardSetPosition.WASTE_1.getPosition();
+    public int opponentWaste = CardSetPosition.WASTE_2.getPosition();
 
 
     public void setHandIsSource(boolean handIsSource) {
@@ -29,15 +32,13 @@ public class Service {
         return myTurn;
     }
 
-    private static Service instance;
     private Service() {}
 
-    public static Service getInstance() {
-
-        if (instance == null) {
-            instance = new Service();
-        }
-        return instance;
+    private final static class ServiceHolder {
+        private final static Service instance = new Service();
+    }
+    public final static Service getInstance() {
+        return ServiceHolder.instance;
     }
 
     public void setClient(Client client) {
@@ -54,7 +55,7 @@ public class Service {
 
     public void setMissaStart(boolean missaStart) {
         this.missaStart = missaStart;
-        if(missaStart) { myIndex = 2;  opponentIndex = 0; myWaste = 3; opponentWaste = 1;}
+        if(missaStart) { myHandIndex = 2;  opponentHandIndex = 0; myWaste = 3; opponentWaste = 1;}
     }
 
     public boolean isMissaStart() {

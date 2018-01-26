@@ -135,6 +135,7 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
     @Override
     public void swap(int handPosition, int wastePosition) {
+
     }
 
     @Override
