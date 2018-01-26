@@ -69,7 +69,7 @@ public class Game {
             }
         }
         Collections.shuffle(tmp);
-        tmp = tmp.stream().filter(card -> card.getRank().getRank() <= 3).collect(Collectors.toList());
+//        tmp = tmp.stream().filter(card -> card.getRank().getRank() <= 3).collect(Collectors.toList());
         return new Hand(tmp);
     }
 }
