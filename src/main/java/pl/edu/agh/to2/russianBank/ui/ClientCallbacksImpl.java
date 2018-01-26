@@ -38,7 +38,6 @@ public class ClientCallbacksImpl implements ClientCallbacks {
 
         Platform.runLater(() -> {
             try {
-
                 startGameStage.close();
                 startGameStage = null;
 

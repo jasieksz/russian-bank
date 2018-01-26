@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import pl.edu.agh.to2.russianBank.game.ICardSet;
 import pl.edu.agh.to2.russianBank.game.command.Move;
+import pl.edu.agh.to2.russianBank.game.command.MoveCodes;
 import pl.edu.agh.to2.russianBank.game.command.MoveController;
 
 /**
@@ -37,7 +38,6 @@ public class CardView extends ImageView {
         super(image);
         this.cardSet = cardSet;
 
-
         setOnDragDetected(event -> {
 
             if (Service.getInstance().isMyTurn()) {
@@ -55,7 +55,7 @@ public class CardView extends ImageView {
                 CardView sourceCardView = (CardView) event.getGestureSource();
                 CardView targetCardView = (CardView) event.getGestureTarget();
 
-                boolean successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
+                int successful = targetCardView.cardSet.makeMove(sourceCardView.cardSet, moveController);
                 sendMove(successful, sourceCardView);
                 tryEndTurn(successful, sourceCardView, controller);
             }
@@ -90,18 +90,27 @@ public class CardView extends ImageView {
         }
     }
 
-    private void sendMove(boolean successful, CardView sourceCardView) {
-        if(successful){
+    private void sendMove(int successful, CardView sourceCardView) {
+        if(successful == MoveCodes.ACC.getCode()){
             Service.getInstance().getClient()
                     .move(new Move(sourceCardView.cardSet.getPosition(), this.cardSet.getPosition()));
         }
-        else {
+        else if (successful == MoveCodes.REJ.getCode()){
             displayAlert("This move is incorrect");
+        }
+        else if (successful == MoveCodes.SWAP.getCode()){
+            Service.getInstance().getClient()
+                    .swapHandWaste(sourceCardView.cardSet.getPosition(),sourceCardView.cardSet.getPosition() + 1);
+
+        }
+        else if(successful == MoveCodes.WIN.getCode()) {
+            Service.getInstance().getClient().endGame(true, "You won");
         }
     }
 
-    private void tryEndTurn(boolean successful, CardView sourceCardView, GameController controller) {
-        if(cardSet.getPosition() == Service.getInstance().myWaste || !successful) {
+    private void tryEndTurn(int successful, CardView sourceCardView, GameController controller) {
+        if(cardSet.getPosition() == Service.getInstance().myWaste || successful == MoveCodes.REJ.getCode() ||
+                successful == MoveCodes.SWAP.getCode()) {
             endTurn(sourceCardView,controller);
         }
     }
