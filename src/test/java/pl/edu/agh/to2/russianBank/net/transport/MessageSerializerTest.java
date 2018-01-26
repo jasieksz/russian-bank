@@ -41,7 +41,7 @@ public class MessageSerializerTest {
         final Player playerA = new Player("a");
         final Player playerB = new Player("b");
         final Game game = new Game(playerA, playerB);
-        final GameState gs = new GameState(playerA, playerB, game.getGameTable());
+        final GameState gs = new GameState(playerA, playerB);
         final StartGameMessage msg = new StartGameMessage(gs, game.getMoveController(), false);
         serial.deserialize(serial.serialize(msg));
 //        assertEquals(msg, serial.deserialize(serial.serialize(msg)));

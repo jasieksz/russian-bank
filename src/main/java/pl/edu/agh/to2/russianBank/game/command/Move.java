@@ -20,14 +20,14 @@ public class Move implements Command {
         this.target = target;
     }
 
-    private ICardSet getSource(GameTable gameTable) {
+    public ICardSet getSource(GameTable gameTable) {
         return gameTable.getPiles().stream()
                 .filter(s -> s.getPosition() == this.source)
                 .findFirst()
                 .get();
     }
 
-    private ICardSet getTarget(GameTable gameTable) {
+    public ICardSet getTarget(GameTable gameTable) {
         return gameTable.getPiles().stream()
                 .filter(t -> t.getPosition() == this.target)
                 .findFirst()

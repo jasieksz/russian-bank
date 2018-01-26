@@ -82,69 +82,69 @@ public class MoveController {
     }
 
     //TODO
-    /*public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
-        ICardSet source = move.getSource(gameTable);
-        List<Integer> result = new ArrayList<>();
-
-        List<Foundation> foundations = gameTable.getFoundations()
-                .stream()
-                .map(cs -> (Foundation) cs)
-                .collect(Collectors.toList());
-        List<House> houses = gameTable.getHouses()
-                .stream()
-                .map(cs -> (House) cs)
-                .collect(Collectors.toList());
-        /*List<Hand> hands = gameTable.getPlayersCard()
-                .stream()
-                .map(PlayerDeck::getHand)
-                .filter(hand -> hand.getPosition() == source.getPosition())
-                .collect(Collectors.toList());
-                */
-
-        /*ICardSet h = gameTable.getPlayersCards(0).get(0);
-        ICardSet h2 = gameTable.getPlayersCards(1).get(0);
-        List<Hand> hands;
-
-        if(h.getPosition() == source.getPosition())
-        {
-            List<Hand> hands =
-        }
-        else {
-
-        }
-
-            List<Hand> hands = gameTable.getPlayersCards(0).get(0)
-        List<Hand> hands = gameTable.getPlayersCards()
-                .stream()
-                .map(PlayerDeck::getHand)
-                .filter(hand -> hand.getPosition() == source.getPosition())
-                .collect(Collectors.toList());
-
-
-        List<Waste> wastes = gameTable.getPlayersCard().stream()
-                .map(PlayerDeck::getWaste)
-                .filter(waste -> waste.getPosition() == source.getPosition())
-                .collect(Collectors.toList());
-
-        houses.stream().filter(house -> house.readTopCard().isPresent())
-                .forEach(house -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(house.readTopCard().get()))
-                        .forEach(foundation -> result.add(house.getPosition()));
-                });
-
-        hands.stream().filter(hand -> hand.readTopCard().isPresent())
-                .forEach(hand -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(hand.readTopCard().get()))
-                        .forEach(foundation -> result.add(hand.getPosition()));
-                });
-
-        wastes.stream().filter(waste -> waste.readTopCard().isPresent())
-                .forEach(waste -> {foundations.stream()
-                        .filter(foundation -> foundation.tryPutCard(waste.readTopCard().get()))
-                        .forEach(foundation -> result.add(waste.getPosition()));
-                });
-
-        return result;
-    }*/
+//    public List<Integer> getObligatoryMoves(GameTable gameTable, Move move) {
+//        ICardSet source = move.getSource(gameTable);
+//        List<Integer> result = new ArrayList<>();
+//
+//        List<Foundation> foundations = gameTable.getFoundations()
+//                .stream()
+//                .map(cs -> (Foundation) cs)
+//                .collect(Collectors.toList());
+//        List<House> houses = gameTable.getHouses()
+//                .stream()
+//                .map(cs -> (House) cs)
+//                .collect(Collectors.toList());
+//        List<Hand> hands = gameTable.getPlayersCard()
+//                .stream()
+//                .map(PlayerDeck::getHand)
+//                .filter(hand -> hand.getPosition() == source.getPosition())
+//                .collect(Collectors.toList());
+//
+//
+//        ICardSet h = gameTable.getPlayersCards(0).get(0);
+//        ICardSet h2 = gameTable.getPlayersCards(1).get(0);
+//        List<Hand> hands;
+//
+//        if(h.getPosition() == source.getPosition())
+//        {
+//            List<Hand> hands =
+//        }
+//        else {
+//
+//        }
+//
+//            List<Hand> hands = gameTable.getPlayersCards(0).get(0)
+//        List<Hand> hands = gameTable.getPlayersCards()
+//                .stream()
+//                .map(PlayerDeck::getHand)
+//                .filter(hand -> hand.getPosition() == source.getPosition())
+//                .collect(Collectors.toList());
+//
+//
+//        List<Waste> wastes = gameTable.getPlayersCard().stream()
+//                .map(PlayerDeck::getWaste)
+//                .filter(waste -> waste.getPosition() == source.getPosition())
+//                .collect(Collectors.toList());
+//
+//        houses.stream().filter(house -> house.readTopCard().isPresent())
+//                .forEach(house -> {foundations.stream()
+//                        .filter(foundation -> foundation.tryPutCard(house.readTopCard().get()))
+//                        .forEach(foundation -> result.add(house.getPosition()));
+//                });
+//
+//        hands.stream().filter(hand -> hand.readTopCard().isPresent())
+//                .forEach(hand -> {foundations.stream()
+//                        .filter(foundation -> foundation.tryPutCard(hand.readTopCard().get()))
+//                        .forEach(foundation -> result.add(hand.getPosition()));
+//                });
+//
+//        wastes.stream().filter(waste -> waste.readTopCard().isPresent())
+//                .forEach(waste -> {foundations.stream()
+//                        .filter(foundation -> foundation.tryPutCard(waste.readTopCard().get()))
+//                        .forEach(foundation -> result.add(waste.getPosition()));
+//                });
+//
+//        return result;
+//    }
 }
 
